@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zosei.github.io/astro-swiper-zosei/sitemap.xml

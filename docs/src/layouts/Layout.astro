@@ -7,14 +7,19 @@ import { SITE_CONFIG } from '../config/site';
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
 }
 
 const {
 	title = `Astro Swiper Zosei v${SITE_CONFIG.version} - Componente Swiper.js para Astro 7+ & 5+`,
 	description = 'El componente definitivo de Swiper.js para Astro con Tailwind CSS v4, Compound Component (<Sw.Slide>), Intersection Observer y configuración 100% declarativa.',
+	image,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://zosei.github.io/astro-swiper-zosei';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image || `${siteUrl}/og-image.svg`;
 ---
 
 <!doctype html>
@@ -24,8 +29,59 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Primary Meta Tags -->
 		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<meta name="keywords" content="astro, swiper, swiper.js, astro component, carousel, slider, tailwind css v4, typescript, responsive slider, 3d carousel, coverflow, cards effect, image gallery, web development, withastro" />
+		<meta name="author" content="Zosei" />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		<meta name="theme-color" content="#6366f1" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Astro Swiper Zosei — Modern Swiper Component for Astro" />
+		<meta property="og:site_name" content="Astro Swiper Zosei" />
+		<meta property="og:locale" content="es_ES" />
+		<meta property="og:locale:alternate" content="en_US" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalUrl} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:creator" content="@Zosei" />
+
+		<!-- Google Structured Data (JSON-LD) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "SoftwareApplication",
+			"name": "astro-swiper-zosei",
+			"operatingSystem": "All",
+			"applicationCategory": "DeveloperApplication",
+			"description": description,
+			"url": siteUrl,
+			"softwareVersion": SITE_CONFIG.version,
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"author": {
+				"@type": "Person",
+				"name": "Zosei"
+			}
+		})} />
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

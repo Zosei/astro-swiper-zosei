@@ -52,7 +52,8 @@ function createAgentDoc(root) {
   if (fs.existsSync(sourceFile)) {
     fs.copyFileSync(sourceFile, targetFile);
   } else {
-    const fallbackContent = `# 🤖 ASTRO SWIPER ZOSEI — AI AGENT SYSTEM GUIDE\n\nUse the concise compound syntax in Astro:\n\`\`\`astro\n---\nimport Sw from 'astro-swiper-zosei';\n---\n\n<Sw slidesPerView={3} spaceBetween={20} pagination navigation>\n  <Sw.Wrap>\n    <Sw.Slide>Slide 1</Sw.Slide>\n    <Sw.Slide>Slide 2</Sw.Slide>\n    <Sw.Slide>Slide 3</Sw.Slide>\n  </Sw.Wrap>\n  <Sw.Prev />\n  <Sw.Next />\n  <Sw.Pag />\n</Sw>\n\`\`\`\n`;
+    // Fallback completo y exhaustivo
+    const fallbackContent = fs.readFileSync(path.join(__dirname, '../../docs/AGENTS/astro-swiper-zosei.md'), 'utf8');
     fs.writeFileSync(targetFile, fallbackContent, 'utf8');
   }
 
@@ -67,7 +68,6 @@ async function runCli() {
     process.exit(0);
   }
 
-  // Si no es terminal interactiva (CI/CD o script automatizado)
   if (!process.stdin.isTTY) {
     createAgentDoc(root);
     process.exit(0);
@@ -99,7 +99,11 @@ async function runCli() {
       console.log(`${c.magenta}├${c.reset}  ${c.green}✔${c.reset}  ${c.bold}Guía de IA creada con éxito en:${c.reset} ${c.cyan}${relativePath}${c.reset}`);
       console.log(`${c.magenta}│${c.reset}     ${c.dim}Compatible con Cursor, Windsurf, Claude, Copilot, ChatGPT y Antigravity.${c.reset}`);
       console.log(`${c.magenta}│${c.reset}`);
-      console.log(`${c.magenta}└${c.reset}  ${c.green}🚀 ¡Todo listo para crear carruseles modernos con <Sw>!${c.reset}\n`);
+      console.log(`${c.magenta}├${c.reset}  ${c.yellow}⭐ ¡Muchas gracias por elegir Astro Swiper Zosei!${c.reset}`);
+      console.log(`${c.magenta}│${c.reset}     ${c.dim}🌐 Documentación & 50+ Demos en vivo:${c.reset} ${c.cyan}https://zosei.github.io/astro-swiper-zosei/${c.reset}`);
+      console.log(`${c.magenta}│${c.reset}     ${c.dim}🌟 Apóyanos con una estrella en GitHub:${c.reset} ${c.cyan}https://github.com/Zosei/astro-swiper-zosei${c.reset}`);
+      console.log(`${c.magenta}│${c.reset}`);
+      console.log(`${c.magenta}└${c.reset}  ${c.green}🚀 ¡Todo listo para crear experiencias visuales increíbles en Astro!${c.reset}\n`);
     } else {
       console.log(`${c.magenta}│${c.reset}`);
       console.log(`${c.magenta}└${c.reset}  ${c.yellow}ℹ  Generación de documentación omitida.${c.reset}\n`);

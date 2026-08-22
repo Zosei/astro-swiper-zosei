@@ -70,6 +70,7 @@ const swiperConfig: Record<string, any> = {
   ...(pagination ? { pagination: typeof pagination === 'object' ? { el: `.${uniqueClass} .swiper-pagination`, clickable: true, ...pagination } : { el: `.${uniqueClass} .swiper-pagination`, clickable: true } } : {}),
   ...(scrollbar ? { scrollbar: typeof scrollbar === 'object' ? { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true, ...scrollbar } : { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true } } : {}),
   ...(breakpoints ? { breakpoints } : {}),
+  ...props,
   ...options,
 };
 
