@@ -55,6 +55,8 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
 
+  packages/create-astro-swiper-zosei: {}
+
 packages:
 
   '@astrojs/compiler-binding-darwin-arm64@0.3.2':
