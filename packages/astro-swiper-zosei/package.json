@@ -1,11 +1,14 @@
 {
   "name": "astro-swiper-zosei",
-  "version": "0.14.3",
+  "version": "0.14.5",
   "description": "Astro component for swiper, dedicated to slider / carousel / photo swiper / slide, including thumbnails",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "astro-swiper-zosei": "./scripts/init.cjs"
+  },
   "scripts": {
-    "postinstall": "node ./scripts/postinstall.cjs",
+    "postinstall": "node ./scripts/init.cjs",
     "preversion": "pnpm run build && pnpm run test",
     "format": "biome format --write && prettier -w \"**/*.astro\"",
     "lint": "biome lint",
