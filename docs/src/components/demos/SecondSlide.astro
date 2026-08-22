@@ -1,0 +1,17 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 text-white font-sans text-xs">
+  <div class="font-bold text-indigo-400 mb-2">{title} Demo</div>
+  <div class="font-mono text-slate-300 text-[11px] leading-relaxed">
+    <slot />
+  </div>
+</div>

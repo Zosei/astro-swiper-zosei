@@ -1,0 +1,40 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Image } from 'astro:assets';
+import type { DemoSlide } from '../../data/slides';
+
+interface Props {
+  slide: DemoSlide;
+  showImage?: boolean;
+  aspect?: string;
+}
+
+const {
+  slide,
+  showImage = true,
+  aspect = 'aspect-video'
+} = Astro.props;
+---
+
+<div class={`relative w-full h-full min-h-[160px] ${aspect} rounded-2xl overflow-hidden group select-none shadow-lg`}>
+  {showImage ? (
+    <Image
+      src={slide.img}
+      alt={slide.title}
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  ) : (
+    <div class={`w-full h-full bg-gradient-to-br ${slide.gradient} p-6 flex flex-col justify-between text-white`}>
+      <div class="flex justify-between items-center">
+        <span class="text-xs px-2.5 py-1 rounded-full bg-black/25 font-mono backdrop-blur-sm border border-white/10">Slide #{slide.id}</span>
+        <span class="text-xs font-mono opacity-80">{slide.color}</span>
+      </div>
+      <div>
+        <h3 class="text-lg font-extrabold tracking-tight">{slide.title}</h3>
+        <p class="text-xs opacity-80 mt-1">{slide.subtitle}</p>
+      </div>
+    </div>
+  )}
+</div>

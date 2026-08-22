@@ -1,0 +1,52 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(8);
+---
+
+<!-- main swiper, with big slides -->
+<Swiper
+  loop={true}
+  navigation={true}
+  thumbs="#myswiper-thumbnail"
+  class="w-full max-w-[455px] mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+</Swiper>
+
+<!-- thumbnail swiper, with small slides to follow progress -->
+<Swiper
+  id="myswiper-thumbnail"
+  class="myswiper-thumbnail w-full max-w-[455px] mx-auto mt-3"
+  spaceBetween={10}
+  slidesPerView={4}
+  freeMode={true}
+  watchSlidesProgress={true}
+  loop={true}
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-xl overflow-hidden aspect-video cursor-pointer opacity-50 transition-all">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+</Swiper>
+
+
+
+
+

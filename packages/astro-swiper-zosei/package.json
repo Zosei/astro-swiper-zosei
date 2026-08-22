@@ -1,0 +1,87 @@
+{
+  "name": "astro-swiper-zosei",
+  "version": "0.14.1",
+  "description": "Astro component for swiper, dedicated to slider / carousel / photo swiper / slide, including thumbnails",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.cjs",
+    "preversion": "pnpm run build && pnpm run test",
+    "format": "biome format --write && prettier -w \"**/*.astro\"",
+    "lint": "biome lint",
+    "test": "pnpm run --filter docs test",
+    "build": "pnpm run --filter docs build",
+    "dev": "pnpm run --filter docs dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zosei/astro-swiper-zosei.git",
+    "directory": "astro-swiper-zosei"
+  },
+  "author": "Zosei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zosei/astro-swiper-zosei/issues"
+  },
+  "homepage": "https://zosei.github.io/astro-dev/packages/astro-swiper-zosei/",
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./index.ts"
+    },
+    "./swiper": "./swiper.ts"
+  },
+  "files": [
+    "index.ts",
+    "swiper.ts",
+    "src/**",
+    "scripts/**",
+    "AGENTS/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.6.5",
+    "pnpm": ">=7.1.0"
+  },
+  "packageManager": "pnpm@10.30.3",
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.10",
+    "@types/node": "^26.2.0",
+    "astro": "^7.2.4",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^7.0.2"
+  },
+  "keywords": [
+    "swiper",
+    "withastro",
+    "astro-component",
+    "image",
+    "carousel",
+    "swiper",
+    "slider",
+    "slideshow",
+    "gallery",
+    "lightweight",
+    "touch",
+    "responsive",
+    "thumbnail"
+  ],
+  "dependencies": {
+    "swiper": "^14.1.0"
+  },
+  "peerDependencies": {
+    "astro": ">=5.0.0",
+    "swiper": ">=11.0.0"
+  },
+  "peerDependenciesMeta": {
+    "astro": {
+      "optional": true
+    },
+    "swiper": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,54 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import {
+  Swiper,
+  SwiperWrapper,
+  SwiperSlide,
+  SwiperButtonPrev,
+  SwiperButtonNext,
+} from "astro-swiper-zosei";
+import type { AstroSwiperType } from "astro-swiper-zosei";
+import slide1 from '../assets/slides/slide-1.svg';
+import slide2 from '../assets/slides/slide-2.svg';
+import slide3 from '../assets/slides/slide-3.svg';
+
+const astroSwiperOptions: AstroSwiperType = {
+  options: {
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test No Swiper Wrapper</title>
+  </head>
+  <body class="bg-[#080b11] text-white p-8">
+    <!-- Slider main container WITHOUT SwiperWrapper to test console warning -->
+    <Swiper options={astroSwiperOptions.options} class="not-content w-[455px] aspect-video">
+      <!-- Slides directly without SwiperWrapper -->
+      <SwiperSlide>
+        <img src={slide1.src} class="w-full h-full object-cover" />
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src={slide2.src} class="w-full h-full object-cover" />
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src={slide3.src} class="w-full h-full object-cover" />
+      </SwiperSlide>
+
+      <!-- navigation buttons -->
+      <SwiperButtonPrev />
+      <SwiperButtonNext />
+    </Swiper>
+  </body>
+</html>

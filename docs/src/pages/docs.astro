@@ -1,0 +1,234 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import Layout from '../layouts/Layout.astro';
+import CodeBlock from '../components/common/CodeBlock.astro';
+
+const swiperProps = [
+  { name: 'direction', type: "'horizontal' | 'vertical'", default: "'horizontal'", desc: 'Dirección del desplazamiento de los slides.' },
+  { name: 'slidesPerView', type: "number | 'auto'", default: '1', desc: 'Cantidad de diapositivas visibles simultáneamente en el viewport.' },
+  { name: 'spaceBetween', type: 'number', default: '0', desc: 'Espacio en píxeles de separación (gap) entre cada diapositiva.' },
+  { name: 'loop', type: 'boolean', default: 'false', desc: 'Activa el ciclo infinito continuo donde el último slide enlaza con el primero.' },
+  { name: 'rewind', type: 'boolean', default: 'false', desc: 'Regresa al primer slide al llegar al final del carrusel.' },
+  { name: 'speed', type: 'number', default: '300', desc: 'Duración de la animación de transición en milisegundos.' },
+  { name: 'effect', type: "'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'cards' | 'creative'", default: "'slide'", desc: 'Efecto de transición visual tridimensional o plano.' },
+  { name: 'autoplay', type: 'boolean | AutoplayOptions', default: 'false', desc: 'Configura reproducción automática con delay, pauseOnMouseEnter, disableOnInteraction, etc.' },
+  { name: 'pauseWhenHidden', type: 'boolean', default: 'false', desc: 'Pausa el autoplay con Intersection Observer automáticamente cuando el carrusel no está visible en pantalla.' },
+  { name: 'lazyInit', type: 'boolean', default: 'false', desc: 'Inicializa la instancia de Swiper solo cuando el carrusel entra al viewport del navegador.' },
+  { name: 'navigation', type: 'boolean | NavigationOptions', default: 'false', desc: 'Habilita botones anterior/siguiente de navegación.' },
+  { name: 'pagination', type: 'boolean | PaginationOptions', default: 'false', desc: 'Habilita paginación (bullets clicables, números de fracción o barra de progreso).' },
+  { name: 'scrollbar', type: 'boolean | ScrollbarOptions', default: 'false', desc: 'Habilita barra de desplazamiento interactiva y arrastrable.' },
+  { name: 'breakpoints', type: 'Record<number, SwiperOptions>', default: 'undefined', desc: 'Configuración responsiva adaptativa según el ancho de pantalla en píxeles.' },
+  { name: 'grabCursor', type: 'boolean', default: 'false', desc: 'Muestra cursor de agarre interactivo (grab / grabbing) al pasar el ratón.' },
+  { name: 'centeredSlides', type: 'boolean', default: 'false', desc: 'Centra el slide activo en el medio del contenedor.' },
+  { name: 'autoHeight', type: 'boolean', default: 'false', desc: 'Ajusta la altura del carrusel dinámicamente según la altura del slide activo.' },
+  { name: 'freeMode', type: 'boolean | FreeModeOptions', default: 'false', desc: 'Permite arrastre libre e inercial sin ajuste forzado a bordes de slides.' },
+  { name: 'keyboard', type: 'boolean | KeyboardOptions', default: 'false', desc: 'Habilita navegación mediante las teclas de flecha del teclado físico.' },
+  { name: 'mousewheel', type: 'boolean | MousewheelOptions', default: 'false', desc: 'Habilita navegación mediante la rueda de desplazamiento del ratón o touchpad.' },
+  { name: 'zoom', type: 'boolean | ZoomOptions', default: 'false', desc: 'Habilita zoom interactivo mediante doble clic o gesto táctil de pellizco.' },
+  { name: 'grid', type: '{ rows: number, fill?: "row" | "column" }', default: 'undefined', desc: 'Disposición en cuadrícula matricial multi-fila 2D.' },
+  { name: 'thumbs', type: 'string | { swiper?: string | Swiper }', default: 'undefined', desc: 'Selector del carrusel de miniaturas sincronizado (ej: "#my-thumbs" o ".my-thumbs").' },
+  { name: 'options', type: 'AstroSwiperOptions', default: '{}', desc: 'Objeto de configuración de bajo nivel de Swiper.js para casos avanzados.' },
+  { name: 'addDefaultClass', type: 'boolean', default: 'true', desc: 'Añade automáticamente la clase CSS requerida ".swiper" al contenedor principal.' },
+  { name: 'useCustomElement', type: 'boolean', default: 'true', desc: 'Utiliza el custom element web component <astro-swiper-zosei>.' },
+];
+
+const subcomponents = [
+  {
+    name: 'Swiper / Swiper.Container',
+    desc: 'Contenedor principal con gestión de ciclo de vida, Intersection Observer y configuración declarativa.',
+    props: 'direction, slidesPerView, spaceBetween, loop, effect, autoplay, navigation, pagination, scrollbar, ...',
+  },
+  {
+    name: 'Swiper.Wrapper / Wrapper',
+    desc: 'Contenedor flex/grid obligatorio de los slides. Envuelve directamente los elementos Slide.',
+    props: 'class, id, ...HTMLAttributes<"div">',
+  },
+  {
+    name: 'Swiper.Slide / Slide',
+    desc: 'Diapositiva individual para alojar imágenes, tarjetas, contenido HTML o componentes Astro.',
+    props: 'class, lazy, ...HTMLAttributes<"div">',
+  },
+  {
+    name: 'Swiper.ButtonPrev / Swiper.ButtonNext',
+    desc: 'Botones modernos de navegación con iconos SVG nítidos y variantes de Tailwind v4.',
+    props: 'variant ("glass" | "solid" | "glow" | "minimal" | "ghost"), size ("sm" | "md" | "lg"), color ("indigo" | "purple" | "cyan" | "emerald" | "rose" | "white"), rounded',
+  },
+  {
+    name: 'Swiper.Pagination / Pagination',
+    desc: 'Indicador de paginación por bullets, números de fracción o barra de progreso.',
+    props: 'variant ("pills" | "glow" | "dots"), color ("indigo" | "purple" | "cyan" | "emerald" | "rose" | "white")',
+  },
+  {
+    name: 'Swiper.Scrollbar / Scrollbar',
+    desc: 'Barra de desplazamiento arrastrable personalizada con soporte de arrastre gestual.',
+    props: 'color ("indigo" | "purple" | "cyan" | "emerald" | "white"), class',
+  },
+  {
+    name: 'Swiper.LazyPreloader / LazyPreloader',
+    desc: 'Spinner SVG animado para carga diferida (lazy load) de imágenes y assets pesados.',
+    props: 'color, class ("swiper-lazy-preloader")',
+  },
+];
+---
+
+<Layout title="Documentación de Props y API - Astro Swiper">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 py-12">
+    <!-- Header -->
+    <div class="space-y-4 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 text-indigo-300 text-xs font-bold border border-indigo-500/20 shadow-inner">
+        <span data-i18n="docs.badge">📖 Referencia de TypeScript & Props</span>
+      </div>
+      <h1 data-i18n="docs.title" class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+        Documentación de Parámetros y API
+      </h1>
+      <p data-i18n="docs.subtitle" class="text-slate-300 text-base sm:text-lg leading-relaxed">
+        Configura carruseles completos en Astro pasando props directamente a <code class="text-indigo-400 font-mono font-bold bg-indigo-500/10 px-2 py-0.5 rounded">&lt;Swiper /&gt;</code> o usando el patrón de importación única <code class="text-purple-400 font-mono font-bold bg-purple-500/10 px-2 py-0.5 rounded">&lt;Swiper.Slide /&gt;</code>.
+      </p>
+    </div>
+
+    <!-- Instalación y Patrones de Importación -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+      <h2 data-i18n="docs.quickInstall" class="text-xl font-bold text-white flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+        Instalación en tu Proyecto Astro (Astro 5+ & 7+ Ready)
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <span class="text-xs text-slate-400 font-mono">1. Instala con pnpm:</span>
+          <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-indigo-300 flex items-center justify-between">
+            <span>pnpm add astro-swiper-zosei swiper</span>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <span class="text-xs text-slate-400 font-mono">2. O con npm:</span>
+          <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-indigo-300 flex items-center justify-between">
+            <span>npm install astro-swiper-zosei swiper</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patrón 1: Importación Única con Dot Notation (Compound Component) -->
+      <div class="pt-4 border-t border-slate-800 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 data-i18n="docs.singleImportTitle" class="text-sm font-bold text-indigo-300 flex items-center gap-2">
+            <span>✨ Patrón de Importación Única (Compound Component):</span>
+          </h3>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Recomendado</span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Importa únicamente <code class="text-indigo-400 font-mono">Swiper</code> y accede a todos sus subcomponentes (<code class="text-indigo-300 font-mono">Swiper.Wrapper</code>, <code class="text-indigo-300 font-mono">Swiper.Slide</code>, <code class="text-indigo-300 font-mono">Swiper.ButtonNext</code>, <code class="text-indigo-300 font-mono">Swiper.Pagination</code>) para un código más limpio y modular:
+        </p>
+        <CodeBlock
+          lang="astro"
+          code={`---
+import Swiper from 'astro-swiper-zosei';
+---
+
+<Swiper slidesPerView={3} spaceBetween={20} loop navigation pagination class="py-6">
+  <Swiper.Wrapper>
+    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 1</Swiper.Slide>
+    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 2</Swiper.Slide>
+    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 3</Swiper.Slide>
+  </Swiper.Wrapper>
+  <Swiper.ButtonPrev />
+  <Swiper.ButtonNext />
+  <Swiper.Pagination />
+</Swiper>`}
+        />
+      </div>
+    </div>
+
+    <!-- Tabla de Props de <Swiper /> -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 data-i18n="docs.propsTableTitle" class="text-2xl font-black text-white">Parámetros del Componente &lt;Swiper /&gt;</h2>
+          <p data-i18n="docs.propsTableSubtitle" class="text-sm text-slate-400 mt-1">Todas las propiedades son tipadas e inferidas automáticamente por TypeScript.</p>
+        </div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-bold">
+          {swiperProps.length} <span data-i18n="docs.propsCount">Props Soportadas</span>
+        </span>
+      </div>
+
+      <div class="overflow-x-auto rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl backdrop-blur-xl">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="bg-slate-950/80 text-slate-200 border-b border-slate-800 font-mono text-xs uppercase tracking-wider">
+            <tr>
+              <th data-i18n="docs.colProp" class="px-6 py-4 font-bold text-indigo-400">Propiedad</th>
+              <th data-i18n="docs.colType" class="px-6 py-4 font-bold text-purple-400">Tipo TypeScript</th>
+              <th data-i18n="docs.colDefault" class="px-6 py-4 font-bold text-cyan-400">Por Defecto</th>
+              <th data-i18n="docs.colDesc" class="px-6 py-4 font-bold text-slate-300">Descripción & Comportamiento</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/80 text-slate-300">
+            {swiperProps.map((p) => (
+              <tr class="hover:bg-indigo-500/[0.04] transition-colors">
+                <td class="px-6 py-4 font-mono font-bold text-indigo-300 whitespace-nowrap">{p.name}</td>
+                <td class="px-6 py-4 font-mono text-purple-300 text-xs whitespace-nowrap">{p.type}</td>
+                <td class="px-6 py-4 font-mono text-cyan-300 text-xs whitespace-nowrap">{p.default}</td>
+                <td class="px-6 py-4 text-slate-300 leading-relaxed">{p.desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Subcomponentes Exportados -->
+    <div class="space-y-6">
+      <div>
+        <h2 data-i18n="docs.subcomponentsTitle" class="text-2xl font-black text-white">Componentes Auxiliares y Variantes</h2>
+        <p data-i18n="docs.subcomponentsSubtitle" class="text-sm text-slate-400 mt-1">Componentes modulares estilizados con Tailwind CSS v4 para navegación, paginación y miniaturas.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {subcomponents.map((c) => (
+          <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-xl space-y-3">
+            <h3 class="text-base font-extrabold text-indigo-300 font-mono">{c.name}</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{c.desc}</p>
+            <div class="pt-2 border-t border-slate-800/80">
+              <span class="text-[11px] font-mono text-slate-400 block font-semibold mb-1">Props y Opciones:</span>
+              <span class="text-[11px] font-mono text-purple-300 leading-relaxed bg-slate-950/60 p-2 rounded-xl block border border-slate-800">
+                {c.props}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- API y Funciones Utilitarias -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+      <div>
+        <h2 data-i18n="docs.clientApiTitle" class="text-2xl font-black text-white">Funciones Utilitarias en el Cliente</h2>
+        <p data-i18n="docs.clientApiSubtitle" class="text-sm text-slate-400 mt-1">Para acceder a la instancia programática de Swiper cuando sea necesario.</p>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-base font-bold text-indigo-300 font-mono">getSwiperFromUniqueSelector(selector, options?)</h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Permite recuperar la instancia viva de Swiper asociada a un selector (ID o clase) en scripts de cliente para llamar a métodos como <code class="font-mono text-indigo-300">swiper.slideNext()</code>, <code class="font-mono text-indigo-300">swiper.slideTo(index)</code> o eventos <code class="font-mono text-indigo-300">swiper.on(...)</code>.
+        </p>
+
+        <CodeBlock
+          lang="astro"
+          code={`<script>
+  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
+
+  window.addEventListener('load', () => {
+    const swiper = getSwiperFromUniqueSelector('#my-swiper-id');
+    if (swiper) {
+      console.log('Slide activo:', swiper.activeIndex);
+      swiper.on('slideChange', () => {
+        console.log('Nuevo índice:', swiper.activeIndex);
+      });
+    }
+  });
+</script>`}
+        />
+      </div>
+    </div>
+  </div>
+</Layout>

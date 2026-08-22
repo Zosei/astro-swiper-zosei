@@ -1,0 +1,20 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(5);
+---
+
+<Swiper class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl">
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+</Swiper>

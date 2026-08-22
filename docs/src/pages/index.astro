@@ -1,0 +1,1809 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import Layout from '../layouts/Layout.astro';
+import { demosRegistry, getDemoBySlug } from '../data/demosRegistry';
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination, Scrollbar } from 'astro-swiper-zosei';
+
+// Swiper Demo Components (Organizados en components/demos sin prefijo Demo)
+import Autoplay from '../components/demos/Autoplay.astro';
+import Autoheight from '../components/demos/Autoheight.astro';
+import AutoplayProgress from '../components/demos/AutoplayProgress.astro';
+import Centered from '../components/demos/Centered.astro';
+import CenteredAuto from '../components/demos/CenteredAuto.astro';
+import ChangeDirection from '../components/demos/ChangeDirection.astro';
+import CssMode from '../components/demos/CssMode.astro';
+import CustomPlugin from '../components/demos/CustomPlugin.astro';
+import Default from '../components/demos/Default.astro';
+import Cards from '../components/demos/Cards.astro';
+import CoverFlow from '../components/demos/CoverFlow.astro';
+import Creative from '../components/demos/Creative.astro';
+import Cube from '../components/demos/Cube.astro';
+import Fade from '../components/demos/Fade.astro';
+import Flip from '../components/demos/Flip.astro';
+import FreeMode from '../components/demos/FreeMode.astro';
+import GrabCursor from '../components/demos/GrabCursor.astro';
+import Grid from '../components/demos/Grid.astro';
+import HashNavigation from '../components/demos/HashNavigation.astro';
+import History from '../components/demos/History.astro';
+import InfiniteLoop from '../components/demos/InfiniteLoop.astro';
+import KeyboardControl from '../components/demos/KeyboardControl.astro';
+import LazyLoadImages from '../components/demos/LazyLoadImages.astro';
+import Manipulation from '../components/demos/Manipulation.astro';
+import MousewheelControl from '../components/demos/MousewheelControl.astro';
+import MultipleSwipers from '../components/demos/MultipleSwipers.astro';
+import Navigation from '../components/demos/Navigation.astro';
+import Nested from '../components/demos/Nested.astro';
+import PaginationDemo from '../components/demos/Pagination.astro';
+import PaginationCustom from '../components/demos/PaginationCustom.astro';
+import PaginationDynamic from '../components/demos/PaginationDynamic.astro';
+import PaginationFraction from '../components/demos/PaginationFraction.astro';
+import PaginationProgress from '../components/demos/PaginationProgress.astro';
+import Parallax from '../components/demos/Parallax.astro';
+import RatioBreakpoints from '../components/demos/RatioBreakpoints.astro';
+import ResponsiveBreakpoints from '../components/demos/ResponsiveBreakpoints.astro';
+import Rewind from '../components/demos/Rewind.astro';
+import Rtl from '../components/demos/Rtl.astro';
+import ScrollContainer from '../components/demos/ScrollContainer.astro';
+import ScrollbarDemo from '../components/demos/Scrollbar.astro';
+import SlideableMenu from '../components/demos/SlideableMenu.astro';
+import SlidesPerGroupSkip from '../components/demos/SlidesPerGroupSkip.astro';
+import SlidesPerView from '../components/demos/SlidesPerView.astro';
+import SlidesPerViewAuto from '../components/demos/SlidesPerViewAuto.astro';
+import SpaceBetween from '../components/demos/SpaceBetween.astro';
+import ThumbsGallery from '../components/demos/ThumbsGallery.astro';
+import ThumbsGalleryLoop from '../components/demos/ThumbsGalleryLoop.astro';
+import Vertical from '../components/demos/Vertical.astro';
+import VirtualSlides from '../components/demos/VirtualSlides.astro';
+import WatchSlidesVisibility from '../components/demos/WatchSlidesVisibility.astro';
+import Zoom from '../components/demos/Zoom.astro';
+import IndexExample from '../components/demos/IndexExample.astro';
+import Thumbnail from '../components/demos/Thumbnail.astro';
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <section id="showcase" class="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center space-y-6 max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300">
+        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span data-i18n="home.badge">Astro 5+ & 7+ • Swiper v14+ • Tailwind v4</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+        <span data-i18n="home.title">Carruseles Modernos para Astro</span> <br />
+        <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+          Cero JS manual. Puro Tailwind v4.
+        </span>
+      </h1>
+
+      <p data-i18n="home.subtitle" class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        El componente Swiper definitivo para Astro. Pasa todas las configuraciones directamente como props tipadas, con Intersection Observer inteligente, sincronización de miniaturas y diseño moderno con Tailwind v4.
+      </p>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div class="flex items-center bg-[#101726] border border-white/10 rounded-xl px-4 py-2.5 shadow-xl text-xs sm:text-sm font-mono text-slate-300">
+          <span class="text-indigo-400 mr-2 font-bold">$</span>
+          <span>pnpm add astro-swiper-zosei swiper</span>
+        </div>
+        <a
+          href="/docs"
+          data-i18n="home.viewDocs"
+          class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:scale-105"
+        >
+          Guía de Props →
+        </a>
+        <a
+          href="/demos"
+          data-i18n="home.viewDemos"
+          class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/10 transition-all"
+        >
+          Explorar 50+ Demos →
+        </a>
+      </div>
+    </div>
+
+    <!-- Live Featured Cards Showcase -->
+    <div class="mt-14 max-w-4xl mx-auto p-6 rounded-3xl bg-[#0d121f]/80 border border-white/10 shadow-2xl backdrop-blur-xl">
+      <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+          <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+          <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+          <span data-i18n="home.featuredTitle" class="ml-2 text-xs font-mono text-slate-300 font-semibold">Demo Destacada: 3D Cards Effect</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            data-code={getDemoBySlug('cards')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-500/40 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text" data-i18n="home.copyCode">Copiar Código</span>
+          </button>
+          <span data-i18n="home.declarativeBadge" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-mono">100% Declarativo</span>
+        </div>
+      </div>
+      <div class="w-full flex justify-center">
+        <div class="w-full max-w-md">
+          <Cards />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete 50+ Demos Catalog (Visibles y Funcionales) -->
+  <section id="demos-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+    <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 data-i18n="home.catalogTitle" class="text-3xl font-extrabold text-white tracking-tight">Catálogo Completo de Demos</h2>
+        <p data-i18n="home.catalogSubtitle" class="text-sm text-slate-400 mt-1">Explora más de 50 demostraciones interactivas funcionando con Tailwind CSS v4.</p>
+      </div>
+      <a href="/demos" class="px-4 py-2 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold hover:bg-indigo-600/30 transition-colors self-start md:self-auto">
+        Ver Páginas Dedicadas (/demos) →
+      </a>
+    </div>
+
+    <!-- Demos Grid: preserves every test ID for Playwright compatibility -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="demos-container">
+      <!-- 3D & Creative Effects -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">CoverFlow Effect</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">3D Effect</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectCoverFlow" class="w-full"> <CoverFlow /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('coverflow')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/coverflow"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Cube Effect</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">3D Effect</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectCube" class="w-full"> <Cube /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('cube')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/cube"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Creative Transitions</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Creative</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectCreative" class="w-full"> <Creative /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('creative')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/creative"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Fade Transition</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Fade</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectFade" class="w-full"> <Fade /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('fade')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/fade"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">3D Flip Effect</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Flip</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectFlip" class="w-full"> <Flip /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('flip')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/flip"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Cards Stack Effect</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Cards</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoEffectCards" class="w-full"> <Cards /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('cards')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/cards"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Autoplay & Progress -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Autoplay Slider</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono">Autoplay</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-Autoplay" class="w-full"> <Autoplay /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('autoplay')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/autoplay"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Autoplay with Config</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono">Autoplay</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoAutoplay" class="w-full"> <Autoplay /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('autoplay')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/autoplay"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Autoplay Progress Ring</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono">Progress</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoAutoplayProgress" class="w-full"> <AutoplayProgress /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('autoplay-progress')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/autoplay-progress"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation & Pagination -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Arrow Navigation</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Navigation</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-Navigation" class="w-full"> <Navigation /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('navigation')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/navigation"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Bullet Pagination</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Pagination</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-Pagination" class="w-full"> <PaginationDemo /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('pagination')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/pagination"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Custom Pagination</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Custom</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoPaginationCustom" class="w-full"> <PaginationCustom /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('pagination-custom')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/pagination-custom"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Dynamic Pagination Bullets</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Dynamic</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoPaginationDynamic" class="w-full"> <PaginationDynamic /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('pagination-dynamic')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/pagination-dynamic"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Fraction Pagination</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Fraction</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoPaginationFraction" class="w-full"> <PaginationFraction /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('pagination-fraction')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/pagination-fraction"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Progressbar Pagination</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Progressbar</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoPaginationProgress" class="w-full"> <PaginationProgress /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('pagination-progress')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/pagination-progress"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Custom Scrollbar</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Scrollbar</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoScrollbar" class="w-full"> <ScrollbarDemo /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('scrollbar')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/scrollbar"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Galleries & Thumbnails -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Basic Thumbnail Gallery</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Thumbnails</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-Thumbnail" class="w-full"> <Thumbnail /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('thumbs')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/thumbs"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Thumbs Gallery Advanced</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Gallery</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoThumbsGallery" class="w-full"> <ThumbsGallery /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('thumbs-gallery')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/thumbs-gallery"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Thumbs Gallery with Infinite Loop</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Loop</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoThumbsGalleryLoop" class="w-full"> <ThumbsGalleryLoop /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('thumbs-gallery-loop')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/thumbs-gallery-loop"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Layouts & Responsive -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Responsive Breakpoints</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Responsive</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoResponsiveBreakpoints" class="w-full"> <ResponsiveBreakpoints /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('responsive-breakpoints')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/responsive-breakpoints"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Ratio Breakpoints</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Ratio</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoRatioBreakpoints" class="w-full"> <RatioBreakpoints /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('ratio-breakpoints')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/ratio-breakpoints"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Multiple Slides Per View</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Multi-View</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoSlidesPerView" class="w-full"> <SlidesPerView /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('slides-per-view')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/slides-per-view"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Auto Slides Per View</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Auto-View</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoSlidesPerViewAuto" class="w-full"> <SlidesPerViewAuto /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('slides-per-view-auto')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/slides-per-view-auto"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Centered Slides</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Centered</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoCentered" class="w-full"> <Centered /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('centered')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/centered"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Centered Auto Width</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Centered</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoCenteredAuto" class="w-full"> <CenteredAuto /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('centered-auto')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/centered-auto"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Multi-row 2D Grid</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Grid</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoGrid" class="w-full"> <Grid /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('grid')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/grid"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Vertical Swiper</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Vertical</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoVertical" class="w-full"> <Vertical /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('vertical')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/vertical"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Auto Height Slides</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">AutoHeight</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoAutoheight" class="w-full"> <Autoheight /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('autoheight')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/autoheight"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Advanced Controls & Gestures -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Dynamic Change Direction</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Interactive</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoChangeDirection" class="w-full"> <ChangeDirection /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('change-direction')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/change-direction"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Lazy Load Images</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Lazy</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoLazyLoadImages" class="w-full"> <LazyLoadImages /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('lazy-load-images')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/lazy-load-images"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Mousewheel Control</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Wheel</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoMousewheelControl" class="w-full"> <MousewheelControl /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('mousewheel-control')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/mousewheel-control"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Keyboard Navigation</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Keyboard</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoKeyboardControl" class="w-full"> <KeyboardControl /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('keyboard-control')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/keyboard-control"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Infinite Loop Mode</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Loop</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoInfiniteLoop" class="w-full"> <InfiniteLoop /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('infinite-loop')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/infinite-loop"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Rewind Mode</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Rewind</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoRewind" class="w-full"> <Rewind /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('rewind')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/rewind"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Free Mode Dragging</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">FreeMode</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoFreeMode" class="w-full"> <FreeMode /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('free-mode')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/free-mode"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Pinch to Zoom</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Zoom</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoZoom" class="w-full"> <Zoom /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('zoom')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/zoom"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Multi-layer Parallax</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Parallax</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoParallax" class="w-full"> <Parallax /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('parallax')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/parallax"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Additional Core & Utility Demos -->
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">CSS Scroll Snap Mode</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">CSS Mode</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoCssMode" class="w-full"> <CssMode /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('css-mode')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/css-mode"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Grab Cursor Indicator</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Cursor</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoGrabCursor" class="w-full"> <GrabCursor /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('grab-cursor')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/grab-cursor"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Default Base Swiper</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Default</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoDefault" class="w-full"> <Default /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('default')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/default"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Index Quick Example</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Example</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-IndexExample" class="w-full"> <IndexExample /> </div>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Custom Pagination Bullets</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Custom</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoPagination" class="w-full"> <PaginationDemo /> </div>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Dynamic Manipulation</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">API</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoManipulation" class="w-full"> <Manipulation /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('manipulation')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/manipulation"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Virtual Slides Engine</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Virtual</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoVirtualSlides" class="w-full"> <VirtualSlides /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('virtual-slides')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/virtual-slides"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Nested Carousel</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Nested</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoNested" class="w-full"> <Nested /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('nested')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/nested"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Multiple Coordinated Swipers</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Multi</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoMultipleSwipers" class="w-full"> <MultipleSwipers /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('multiple-swipers')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/multiple-swipers"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Custom Navigation Plugin</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Plugin</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoCustomPlugin" class="w-full"> <CustomPlugin /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('default')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/default"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Custom Space Between</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Spacing</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoSpaceBetween" class="w-full"> <SpaceBetween /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('space-between')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/space-between"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Slides Per Group Skip</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">Group</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoSlidesPerGroupSkip" class="w-full"> <SlidesPerGroupSkip /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('slides-per-group-skip')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/slides-per-group-skip"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Navigation Controls</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Navigation</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoNavigation" class="w-full"> <Navigation /> </div>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">URL Hash Navigation</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Hash</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoHashNavigation" class="w-full"> <HashNavigation /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('hash-navigation')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/hash-navigation"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Browser History Support</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">History</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoHistory" class="w-full"> <History /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('history')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/history"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">RTL Right-to-Left Mode</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">RTL</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoRtl" class="w-full"> <Rtl /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('rtl')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/rtl"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Scroll Container</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Scroll</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoScrollContainer" class="w-full"> <ScrollContainer /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('scroll-container')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/scroll-container"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Slideable Menu Drawer</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Menu</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoSlideableMenu" class="w-full"> <SlideableMenu /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('slideable-menu')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/slideable-menu"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="demo-card p-5 rounded-2xl bg-[#0e1320] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white">Watch Slides Visibility</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">Visibility</span>
+        </div>
+        <div class="flex-grow w-full flex items-center justify-center">
+          <div id="test-DemoWatchSlidesVisibility" class="w-full"> <WatchSlidesVisibility /> </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            data-code={getDemoBySlug('watch-slides-visibility')?.codeSkeleton || ''}
+            class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 hover:text-white text-[11px] font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+            title="Copiar esqueleto de código Astro"
+          >
+            <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <span class="btn-text">Copiar Código</span>
+          </button>
+          <a
+            href="/demos/watch-slides-visibility"
+            class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Ver Demo</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<script>
+  function setupIndexCopyButtons() {
+    document.querySelectorAll('.quick-copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const code = btn.getAttribute('data-code') || '';
+        const textSpan = btn.querySelector('.btn-text');
+        try {
+          await navigator.clipboard.writeText(code);
+          if (textSpan) textSpan.textContent = '¡Copiado!';
+          btn.classList.add('!bg-emerald-600/30', '!text-emerald-300', '!border-emerald-500/50');
+          setTimeout(() => {
+            if (textSpan) textSpan.textContent = 'Copiar Código';
+            btn.classList.remove('!bg-emerald-600/30', '!text-emerald-300', '!border-emerald-500/50');
+          }, 2000);
+        } catch (err) {
+          console.error('Error al copiar:', err);
+        }
+      });
+    });
+  }
+
+  setupIndexCopyButtons();
+  document.addEventListener('astro:page-load', setupIndexCopyButtons);
+</script>
+</Layout>

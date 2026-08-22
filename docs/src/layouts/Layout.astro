@@ -1,0 +1,189 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import '../styles/global.css';
+import { SITE_CONFIG } from '../config/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = `Astro Swiper Zosei v${SITE_CONFIG.version} - Componente Swiper.js para Astro 7+ & 5+`,
+	description = 'El componente definitivo de Swiper.js para Astro con Tailwind CSS v4, Compound Component (<Sw.Slide>), Intersection Observer y configuración 100% declarativa.',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="es" class="dark scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="bg-[#080b11] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
+		<!-- Ambient background glow effects -->
+		<div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+			<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-indigo-500/15 via-purple-500/10 to-transparent blur-3xl rounded-full"></div>
+			<div class="absolute top-[30%] -left-60 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full"></div>
+			<div class="absolute top-[60%] -right-60 w-[600px] h-[600px] bg-indigo-500/10 blur-[140px] rounded-full"></div>
+		</div>
+
+		<!-- Sticky Glass Header -->
+		<header class="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#080b11]/80 border-b border-white/10 transition-all duration-300">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+				<!-- Brand Logo & Version -->
+				<a href={`${base}/`} class="flex items-center gap-3 group">
+					<img
+						src={`${base}/astro-swiper-logo.svg`}
+						alt="Astro Swiper Zosei"
+						class="w-10 h-10 rounded-xl shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform"
+					/>
+					<div>
+						<div class="flex items-center gap-2">
+							<span class="font-extrabold text-base tracking-tight text-white group-hover:text-indigo-300 transition-colors">astro-swiper</span>
+							<span class="text-xs px-2 py-0.5 rounded-full font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">zosei</span>
+							<span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">v{SITE_CONFIG.version}</span>
+						</div>
+						<p class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Tailwind {SITE_CONFIG.tailwindVersion} • Astro {SITE_CONFIG.astroVersion} • Swiper {SITE_CONFIG.swiperVersion}</p>
+					</div>
+				</a>
+
+				<!-- Navigation Actions -->
+				<nav class="flex items-center gap-3 sm:gap-6">
+					<a href={`${base}/demos`} data-i18n="nav.demos" class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition-colors">Demos</a>
+					<a href={`${base}/docs`} data-i18n="nav.docs" class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition-colors">Documentación</a>
+					<a href={`${base}/snippets`} data-i18n="nav.snippets" class="hidden sm:block text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition-colors">Snippets</a>
+
+					<!-- Language Selector (ES / EN) -->
+					<div class="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 text-xs font-semibold">
+						<button
+							type="button"
+							id="lang-btn-es"
+							class="px-2.5 py-1 rounded-lg transition-all cursor-pointer bg-indigo-600 text-white shadow-sm"
+							title="Cambiar a Español"
+						>
+							ES
+						</button>
+						<button
+							type="button"
+							id="lang-btn-en"
+							class="px-2.5 py-1 rounded-lg transition-all cursor-pointer text-slate-400 hover:text-white"
+							title="Switch to English"
+						>
+							EN
+						</button>
+					</div>
+
+					<a
+						href={SITE_CONFIG.githubUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 hover:border-white/20 transition-all shadow-sm"
+					>
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+							<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+						</svg>
+						<span class="hidden sm:inline">GitHub</span>
+					</a>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Main Content Slot -->
+		<main class="flex-grow w-full">
+			<slot />
+		</main>
+
+		<!-- Modern Footer with Synchronized Versions -->
+		<footer class="mt-24 border-t border-white/10 bg-[#06090e] py-12 text-slate-400 text-sm">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+				<div class="flex items-center gap-3">
+					<img src={`${base}/astro-swiper-logo.svg`} alt="Astro Swiper Logo" class="w-8 h-8 rounded-lg shadow-md" />
+					<div>
+						<p class="text-slate-200 font-semibold">{SITE_CONFIG.name} <span class="text-xs font-mono text-indigo-400">v{SITE_CONFIG.version}</span></p>
+						<p class="text-xs text-slate-500" data-i18n="footer.license">MIT License • Zosei Community</p>
+					</div>
+				</div>
+				<div class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400">
+					<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 font-mono">Astro {SITE_CONFIG.astroVersion}</span>
+					<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 font-mono">Tailwind {SITE_CONFIG.tailwindVersion}</span>
+					<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 font-mono">Swiper {SITE_CONFIG.swiperVersion}</span>
+					<a href={`${base}/demos`} data-i18n="nav.demos" class="hover:text-white transition-colors ml-2">Demos</a>
+					<a href={`${base}/docs`} data-i18n="nav.docs" class="hover:text-white transition-colors">Docs</a>
+					<a href={`${base}/snippets`} data-i18n="nav.snippets" class="hover:text-white transition-colors">Snippets</a>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			import { translations, type Language } from '../i18n/translations';
+
+			function setupLanguageSwitcher() {
+				const btnEs = document.getElementById('lang-btn-es');
+				const btnEn = document.getElementById('lang-btn-en');
+
+				let currentLang: Language = (localStorage.getItem('astro_swiper_lang') as Language) || 'es';
+
+				function applyLanguage(lang: Language) {
+					currentLang = lang;
+					localStorage.setItem('astro_swiper_lang', lang);
+					document.documentElement.lang = lang;
+
+					if (btnEs && btnEn) {
+						if (lang === 'es') {
+							btnEs.className = 'px-2.5 py-1 rounded-lg transition-all cursor-pointer bg-indigo-600 text-white shadow-sm';
+							btnEn.className = 'px-2.5 py-1 rounded-lg transition-all cursor-pointer text-slate-400 hover:text-white';
+						} else {
+							btnEn.className = 'px-2.5 py-1 rounded-lg transition-all cursor-pointer bg-indigo-600 text-white shadow-sm';
+							btnEs.className = 'px-2.5 py-1 rounded-lg transition-all cursor-pointer text-slate-400 hover:text-white';
+						}
+					}
+
+					// Update elements with data-i18n
+					document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+						const keyPath = el.getAttribute('data-i18n')?.split('.') || [];
+						let value: any = translations[lang];
+						for (const k of keyPath) {
+							if (value && typeof value === 'object') {
+								value = value[k];
+							} else {
+								value = null;
+								break;
+							}
+						}
+						if (value && typeof value === 'string') {
+							if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+								(el as HTMLInputElement).placeholder = value;
+							} else {
+								el.textContent = value;
+							}
+						}
+					});
+				}
+
+				btnEs?.addEventListener('click', () => applyLanguage('es'));
+				btnEn?.addEventListener('click', () => applyLanguage('en'));
+
+				// Initialize with stored or default language
+				applyLanguage(currentLang);
+			}
+
+			setupLanguageSwitcher();
+			document.addEventListener('astro:page-load', setupLanguageSwitcher);
+		</script>
+	</body>
+</html>

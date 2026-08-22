@@ -1,0 +1,61 @@
+name: Auto Update Swiper & Astro Dependencies
+
+on:
+  schedule:
+    # Run every Monday at 03:00 UTC
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check-and-update:
+    name: Check Latest Versions & Test Build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Update Target Dependencies
+        run: |
+          npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile packages/astro-swiper-zosei/package.json
+          npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile docs/package.json
+          pnpm install
+
+      - name: Verify Build with Latest Dependencies
+        id: test_build
+        run: |
+          pnpm run build
+
+      - name: Create Pull Request with Updates
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(deps): update swiper and astro to latest versions"
+          title: "🚀 Automated Swiper & Astro Version Update"
+          body: |
+            Automated dependency update for `swiper`, `astro`, and Tailwind v4.
+            
+            ✅ Compilation and type checks succeeded on Ubuntu latest with Node 22.
+          branch: "chore/automated-deps-update"
+          delete-branch: true
+
+      - name: Notify on Failure
+        if: failure()
+        run: |
+          echo "::error title=Dependency Update Failed::The latest versions of Swiper or Astro caused build errors. Please review breaking changes."

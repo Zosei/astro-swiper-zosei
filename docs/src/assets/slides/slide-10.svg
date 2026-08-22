@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#be185d" />
+      <stop offset="50%" stop-color="#831843" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <radialGradient id="r10" cx="60%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.65" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g10)" />
+  <rect width="1200" height="675" fill="url(#r10)" />
+  <circle cx="530" cy="270" r="110" fill="#f472b6" opacity="0.25" />
+  <circle cx="670" cy="290" r="90" fill="#fb7185" opacity="0.3" />
+  <path d="M0 530 Q300 450 600 510 T1200 470 L1200 675 L0 675 Z" fill="#4c0519" opacity="0.8" />
+  <text x="600" y="325" fill="#ffffff" font-size="52" font-weight="900" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="2">VELVET ECLIPSE</text>
+  <text x="600" y="375" fill="#fbcfe8" font-size="22" font-family="system-ui, sans-serif" text-anchor="middle">Rose Magenta Cosmic Vibe</text>
+</svg>

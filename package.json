@@ -1,0 +1,26 @@
+{
+  "name": "astro-swiper-zosei",
+  "scripts": {
+    "preversion": "exit 1",
+    "build": "pnpm run --filter docs build",
+    "dev": "pnpm run --filter docs dev",
+    "test": "pnpm run --filter docs test"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.6.5",
+    "pnpm": ">=7.1.0"
+  },
+  "packageManager": "pnpm@11.17.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zosei/astro-swiper-zosei.git"
+  },
+  "author": "Zosei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zosei/astro-swiper-zosei/issues"
+  },
+  "homepage": "https://zosei.github.io/astro-dev/packages/astro-swiper-zosei/",
+  "private": true
+}
