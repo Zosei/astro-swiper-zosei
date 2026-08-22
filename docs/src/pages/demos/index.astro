@@ -1,0 +1,431 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import Layout from '../../layouts/Layout.astro';
+import { demosRegistry, getAllCategories } from '../../data/demosRegistry';
+
+// Importar todos los componentes de demos para renderizado en vivo
+import Autoheight from '../../components/demos/Autoheight.astro';
+import Autoplay from '../../components/demos/Autoplay.astro';
+import AutoplayProgress from '../../components/demos/AutoplayProgress.astro';
+import Cards from '../../components/demos/Cards.astro';
+import Centered from '../../components/demos/Centered.astro';
+import CenteredAuto from '../../components/demos/CenteredAuto.astro';
+import ChangeDirection from '../../components/demos/ChangeDirection.astro';
+import CoverFlow from '../../components/demos/CoverFlow.astro';
+import Creative from '../../components/demos/Creative.astro';
+import CssMode from '../../components/demos/CssMode.astro';
+import Cube from '../../components/demos/Cube.astro';
+import CustomPlugin from '../../components/demos/CustomPlugin.astro';
+import Default from '../../components/demos/Default.astro';
+import Fade from '../../components/demos/Fade.astro';
+import Flip from '../../components/demos/Flip.astro';
+import FreeMode from '../../components/demos/FreeMode.astro';
+import GrabCursor from '../../components/demos/GrabCursor.astro';
+import Grid from '../../components/demos/Grid.astro';
+import HashNavigation from '../../components/demos/HashNavigation.astro';
+import History from '../../components/demos/History.astro';
+import IndexExample from '../../components/demos/IndexExample.astro';
+import InfiniteLoop from '../../components/demos/InfiniteLoop.astro';
+import KeyboardControl from '../../components/demos/KeyboardControl.astro';
+import LazyLoadImages from '../../components/demos/LazyLoadImages.astro';
+import Manipulation from '../../components/demos/Manipulation.astro';
+import MousewheelControl from '../../components/demos/MousewheelControl.astro';
+import MultipleSwipers from '../../components/demos/MultipleSwipers.astro';
+import Navigation from '../../components/demos/Navigation.astro';
+import Nested from '../../components/demos/Nested.astro';
+import Pagination from '../../components/demos/Pagination.astro';
+import PaginationCustom from '../../components/demos/PaginationCustom.astro';
+import PaginationDynamic from '../../components/demos/PaginationDynamic.astro';
+import PaginationFraction from '../../components/demos/PaginationFraction.astro';
+import PaginationProgress from '../../components/demos/PaginationProgress.astro';
+import Parallax from '../../components/demos/Parallax.astro';
+import RatioBreakpoints from '../../components/demos/RatioBreakpoints.astro';
+import ResponsiveBreakpoints from '../../components/demos/ResponsiveBreakpoints.astro';
+import Rewind from '../../components/demos/Rewind.astro';
+import Rtl from '../../components/demos/Rtl.astro';
+import Scrollbar from '../../components/demos/Scrollbar.astro';
+import ScrollContainer from '../../components/demos/ScrollContainer.astro';
+import SecondSlide from '../../components/demos/SecondSlide.astro';
+import SlideableMenu from '../../components/demos/SlideableMenu.astro';
+import SlidesPerGroupSkip from '../../components/demos/SlidesPerGroupSkip.astro';
+import SlidesPerView from '../../components/demos/SlidesPerView.astro';
+import SlidesPerViewAuto from '../../components/demos/SlidesPerViewAuto.astro';
+import SpaceBetween from '../../components/demos/SpaceBetween.astro';
+import Thumbnail from '../../components/demos/Thumbnail.astro';
+import ThumbsGallery from '../../components/demos/ThumbsGallery.astro';
+import ThumbsGalleryLoop from '../../components/demos/ThumbsGalleryLoop.astro';
+import Vertical from '../../components/demos/Vertical.astro';
+import VirtualSlides from '../../components/demos/VirtualSlides.astro';
+import WatchSlidesVisibility from '../../components/demos/WatchSlidesVisibility.astro';
+import Zoom from '../../components/demos/Zoom.astro';
+
+const componentMap: Record<string, any> = {
+  Autoheight,
+  Autoplay,
+  AutoplayProgress,
+  Cards,
+  Centered,
+  CenteredAuto,
+  ChangeDirection,
+  CoverFlow,
+  Creative,
+  CssMode,
+  Cube,
+  CustomPlugin,
+  Default,
+  Fade,
+  Flip,
+  FreeMode,
+  GrabCursor,
+  Grid,
+  HashNavigation,
+  History,
+  IndexExample,
+  InfiniteLoop,
+  KeyboardControl,
+  LazyLoadImages,
+  Manipulation,
+  MousewheelControl,
+  MultipleSwipers,
+  Navigation,
+  Nested,
+  Pagination,
+  PaginationCustom,
+  PaginationDynamic,
+  PaginationFraction,
+  PaginationProgress,
+  Parallax,
+  RatioBreakpoints,
+  ResponsiveBreakpoints,
+  Rewind,
+  Rtl,
+  Scrollbar,
+  ScrollContainer,
+  SecondSlide,
+  SlideableMenu,
+  SlidesPerGroupSkip,
+  SlidesPerView,
+  SlidesPerViewAuto,
+  SpaceBetween,
+  Thumbnail,
+  ThumbsGallery,
+  ThumbsGalleryLoop,
+  Vertical,
+  VirtualSlides,
+  WatchSlidesVisibility,
+  Zoom,
+};
+
+const categories = ['Todos', ...getAllCategories()];
+---
+
+<Layout title="Catálogo Unificado de Demos - astro-swiper-zosei">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 py-10">
+    <!-- Hero Header -->
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 text-indigo-300 text-xs font-bold border border-indigo-500/20 shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+        <span data-i18n="demos.badge">{demosRegistry.length} Demos Interactivas</span>
+      </div>
+      <h1 data-i18n="demos.title" class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+        Catálogo Completo de Demos
+      </h1>
+      <p data-i18n="demos.subtitle" class="text-slate-300 text-base sm:text-lg leading-relaxed">
+        Explora todos los ejemplos de Swiper optimizados con Tailwind CSS v4 y Astro. Puedes ver las vistas previas en vivo por defecto o alternar al modo compacto. Copia el esqueleto de código en 1 clic.
+      </p>
+    </div>
+
+    <!-- Barra de Herramientas: Buscador, Filtros y Switch de Vistas Previas -->
+    <div class="space-y-5 bg-slate-900/60 p-6 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-2xl">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 justify-between">
+        <!-- Input de Búsqueda -->
+        <div class="relative w-full lg:w-96">
+          <input
+            type="text"
+            id="demo-search"
+            data-i18n="demos.searchPlaceholder"
+            placeholder="Buscar por nombre, efecto, prop o tag..."
+            class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+          />
+          <svg
+            class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+
+        <!-- Switch de Vistas Previas en Vivo (Por Defecto Activado) -->
+        <div class="flex items-center gap-4 justify-between lg:justify-end">
+          <div class="flex items-center gap-3 bg-slate-800/60 p-1.5 rounded-2xl border border-slate-700/50">
+            <span class="text-xs font-semibold text-slate-300 pl-2 select-none flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span data-i18n="demos.livePreviews">Vistas Previas en Vivo</span>
+            </span>
+
+            <button
+              id="preview-toggle-btn"
+              type="button"
+              role="switch"
+              aria-checked="true"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-indigo-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <span
+                id="toggle-thumb"
+                class="pointer-events-none inline-block h-5 w-5 translate-x-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out"
+              ></span>
+            </button>
+          </div>
+
+          <div class="text-xs text-slate-400 font-mono hidden sm:block">
+            <span id="visible-count" class="text-indigo-400 font-bold">{demosRegistry.length}</span> / {demosRegistry.length} demos
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro por Categorías -->
+      <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-800" id="category-pills">
+        {categories.map((cat, i) => (
+          <button
+            type="button"
+            data-category={cat}
+            class={`category-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+              i === 0
+                ? 'active-cat bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
+                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Grid de Tarjetas de Demos con Vista Previa en Vivo y Copia Rápida -->
+    <div id="demos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {demosRegistry.map((demo) => {
+        const DemoComponent = componentMap[demo.componentName] || Default;
+        return (
+          <div
+            data-slug={demo.slug}
+            data-title={demo.title.toLowerCase()}
+            data-desc={demo.desc.toLowerCase()}
+            data-category={demo.category}
+            data-tag={demo.tag.toLowerCase()}
+            class="demo-card group p-5 rounded-3xl bg-slate-900/40 border border-slate-800/80 hover:border-indigo-500/40 hover:bg-slate-900/80 transition-all duration-300 shadow-xl flex flex-col justify-between"
+          >
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                  {demo.category}
+                </span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                  {demo.tag}
+                </span>
+              </div>
+
+              <div>
+                <a href={`/demos/${demo.slug}`} class="block">
+                  <h3 class="text-lg font-extrabold text-white group-hover:text-indigo-400 transition-colors flex items-center gap-2">
+                    {demo.title}
+                    <span class="text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                  </h3>
+                </a>
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed line-clamp-2">
+                  {demo.desc}
+                </p>
+              </div>
+
+              <!-- Vista Previa en Vivo (Por defecto visible y expandida) -->
+              <div class="demo-preview-container w-full flex items-center justify-center min-h-[220px] py-2 bg-slate-950/40 rounded-2xl border border-slate-800/50 overflow-hidden transition-all duration-300">
+                <div class="w-full">
+                  <DemoComponent />
+                </div>
+              </div>
+            </div>
+
+            <!-- Acciones de Tarjeta: Copiado Rápido y Ver Demo -->
+            <div class="mt-5 pt-3.5 border-t border-slate-800/80 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                data-code={demo.codeSkeleton}
+                class="quick-copy-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-500/30 transition-all active:scale-95 cursor-pointer shadow-sm"
+                title="Copiar esqueleto de código Astro"
+              >
+                <svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+                <span class="btn-text">Copiar Esqueleto</span>
+              </button>
+
+              <a
+                href={`/demos/${demo.slug}`}
+                class="inline-flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-indigo-400 transition-colors"
+              >
+                <span>Ver Demo</span>
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Estado Vacío si no hay resultados -->
+    <div id="empty-state" class="hidden text-center py-16 space-y-4">
+      <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-2xl">
+        🔍
+      </div>
+      <h3 class="text-xl font-bold text-white">No se encontraron demos</h3>
+      <p class="text-sm text-slate-400">Intenta con otra palabra clave o selecciona la categoría "Todos".</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  function setupDemosCatalog() {
+    const searchInput = document.getElementById('demo-search') as HTMLInputElement | null;
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const cards = document.querySelectorAll('.demo-card') as NodeListOf<HTMLElement>;
+    const visibleCountEl = document.getElementById('visible-count');
+    const emptyState = document.getElementById('empty-state');
+    const copyBtns = document.querySelectorAll('.quick-copy-btn');
+    const toggleBtn = document.getElementById('preview-toggle-btn');
+    const toggleThumb = document.getElementById('toggle-thumb');
+    const previewContainers = document.querySelectorAll('.demo-preview-container') as NodeListOf<HTMLElement>;
+
+    let currentCategory = 'Todos';
+    let currentSearch = '';
+    let showPreviews = true; // Por defecto mostrando vistas previas
+
+    function filterCards() {
+      let count = 0;
+      cards.forEach((card) => {
+        const title = card.dataset.title || '';
+        const desc = card.dataset.desc || '';
+        const tag = card.dataset.tag || '';
+        const category = card.dataset.category || '';
+
+        const matchesCat = currentCategory === 'Todos' || category === currentCategory;
+        const matchesSearch =
+          !currentSearch ||
+          title.includes(currentSearch) ||
+          desc.includes(currentSearch) ||
+          tag.includes(currentSearch) ||
+          category.toLowerCase().includes(currentSearch);
+
+        if (matchesCat && matchesSearch) {
+          card.style.display = 'flex';
+          count++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (visibleCountEl) visibleCountEl.textContent = count.toString();
+      if (emptyState) {
+        emptyState.style.display = count === 0 ? 'block' : 'none';
+      }
+    }
+
+    // Toggle de Vistas Previas en Vivo
+    toggleBtn?.addEventListener('click', () => {
+      showPreviews = !showPreviews;
+      toggleBtn.setAttribute('aria-checked', showPreviews ? 'true' : 'false');
+
+      if (showPreviews) {
+        toggleBtn.classList.remove('bg-slate-700');
+        toggleBtn.classList.add('bg-indigo-600');
+        toggleThumb?.classList.remove('translate-x-0');
+        toggleThumb?.classList.add('translate-x-5');
+        previewContainers.forEach((el) => {
+          el.style.display = 'flex';
+        });
+      } else {
+        toggleBtn.classList.remove('bg-indigo-600');
+        toggleBtn.classList.add('bg-slate-700');
+        toggleThumb?.classList.remove('translate-x-5');
+        toggleThumb?.classList.add('translate-x-0');
+        previewContainers.forEach((el) => {
+          el.style.display = 'none';
+        });
+      }
+    });
+
+    // Buscador
+    searchInput?.addEventListener('input', (e) => {
+      currentSearch = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      filterCards();
+    });
+
+    // Filtros de categoría
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach((b) => {
+          b.classList.remove('active-cat', 'bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+          b.classList.add('bg-slate-800/80', 'text-slate-300', 'border', 'border-slate-700/50');
+        });
+
+        btn.classList.add('active-cat', 'bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+        btn.classList.remove('bg-slate-800/80', 'text-slate-300', 'border', 'border-slate-700/50');
+
+        currentCategory = (btn as HTMLElement).dataset.category || 'Todos';
+        filterCards();
+      });
+    });
+
+    // Copiado rápido al portapapeles con fallback
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const code = btn.getAttribute('data-code') || '';
+        const textSpan = btn.querySelector('.btn-text');
+
+        let success = false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(code);
+            success = true;
+          }
+        } catch (_) {}
+
+        if (!success) {
+          const textArea = document.createElement('textarea');
+          textArea.value = code;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+            success = true;
+          } catch (_) {}
+          document.body.removeChild(textArea);
+        }
+
+        if (textSpan) textSpan.textContent = '¡Copiado!';
+        btn.classList.add('!bg-emerald-600/30', '!text-emerald-300', '!border-emerald-500/50');
+
+        setTimeout(() => {
+          if (textSpan) textSpan.textContent = 'Copiar Esqueleto';
+          btn.classList.remove('!bg-emerald-600/30', '!text-emerald-300', '!border-emerald-500/50');
+        }, 2000);
+      });
+    });
+  }
+
+  // Inicializar al cargar o navegar en Astro
+  setupDemosCatalog();
+  document.addEventListener('astro:page-load', setupDemosCatalog);
+</script>

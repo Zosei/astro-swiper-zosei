@@ -1,0 +1,48 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {
+  /** Variante de diseño moderna en Tailwind CSS v4 */
+  variant?: 'gradient' | 'minimal' | 'glow';
+  /** Color temático */
+  color?: 'indigo' | 'purple' | 'cyan' | 'emerald';
+  /** Añadir clase .swiper-scrollbar */
+  addDefaultClass?: boolean;
+}
+
+const {
+  variant = 'gradient',
+  color = 'indigo',
+  class: className = '',
+  addDefaultClass = true,
+  ...props
+} = Astro.props;
+
+const colorGradients = {
+  indigo: '[&_.swiper-scrollbar-drag]:bg-gradient-to-r [&_.swiper-scrollbar-drag]:from-indigo-500 [&_.swiper-scrollbar-drag]:to-cyan-400',
+  purple: '[&_.swiper-scrollbar-drag]:bg-gradient-to-r [&_.swiper-scrollbar-drag]:from-purple-500 [&_.swiper-scrollbar-drag]:to-pink-500',
+  cyan: '[&_.swiper-scrollbar-drag]:bg-gradient-to-r [&_.swiper-scrollbar-drag]:from-cyan-400 [&_.swiper-scrollbar-drag]:to-emerald-400',
+  emerald: '[&_.swiper-scrollbar-drag]:bg-gradient-to-r [&_.swiper-scrollbar-drag]:from-emerald-400 [&_.swiper-scrollbar-drag]:to-teal-500',
+}[color];
+
+const variantStyles = {
+  gradient: 'h-1.5 bg-white/10 rounded-full overflow-hidden [&_.swiper-scrollbar-drag]:rounded-full',
+  minimal: 'h-1 bg-white/5 rounded-full overflow-hidden [&_.swiper-scrollbar-drag]:bg-white/40 [&_.swiper-scrollbar-drag]:rounded-full',
+  glow: 'h-1.5 bg-white/10 rounded-full overflow-hidden [&_.swiper-scrollbar-drag]:rounded-full [&_.swiper-scrollbar-drag]:shadow-[0_0_12px_rgba(99,102,241,0.8)]',
+}[variant];
+---
+
+<div
+  class:list={[
+    addDefaultClass ? 'swiper-scrollbar' : null,
+    'relative z-10 transition-all',
+    variantStyles,
+    colorGradients,
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</div>

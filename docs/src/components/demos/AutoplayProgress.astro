@@ -1,0 +1,63 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(6);
+---
+
+<Swiper
+  id="autoplay-progress-swiper"
+  uniqueClass="swiper-autoplay-progress"
+  spaceBetween={20}
+  centeredSlides={true}
+  autoplay={{
+    delay: 2500,
+    disableOnInteraction: false,
+  }}
+  pagination={{ clickable: true }}
+  navigation={true}
+  class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl relative"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden group">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+  <Pagination variant="pills" color="indigo" />
+
+  <!-- Autoplay Progress Ring (Tailwind CSS puro) -->
+  <div class="autoplay-progress absolute right-4 bottom-4 z-10 w-12 h-12 flex items-center justify-center font-bold text-xs text-white bg-slate-900/80 backdrop-blur-md rounded-full border border-white/10 shadow-lg pointer-events-none">
+    <svg class="progress-circle absolute inset-0 w-full h-full -rotate-90 stroke-indigo-500 fill-none" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="20" stroke-width="4" stroke-dasharray="125.6" stroke-dashoffset="125.6"></circle>
+    </svg>
+    <span class="progress-content relative z-10 font-mono text-[11px] text-indigo-300"></span>
+  </div>
+</Swiper>
+
+<script>
+  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
+  import type { Swiper } from 'swiper';
+
+  window.addEventListener('load', () => {
+    const swiper = getSwiperFromUniqueSelector('.swiper-autoplay-progress');
+    const progressCircle = document.querySelector<SVGCircleElement>('.swiper-autoplay-progress .progress-circle circle');
+    const progressContent = document.querySelector<HTMLElement>('.swiper-autoplay-progress .progress-content');
+
+    if (swiper && progressCircle && progressContent) {
+      swiper.on('autoplayTimeLeft', (_swiper: Swiper, timeLeft: number, percentage: number) => {
+        const offset = 125.6 * percentage;
+        progressCircle.style.strokeDashoffset = `${offset}px`;
+        progressContent.textContent = `${Math.ceil(timeLeft / 1000)}s`;
+      });
+    }
+  });
+</script>

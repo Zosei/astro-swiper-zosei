@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g2)" />
+  <path d="M0 350 Q300 250 600 320 T1200 280 L1200 675 L0 675 Z" fill="#082f49" opacity="0.6" />
+  <path d="M0 450 Q350 380 700 440 T1200 400 L1200 675 L0 675 Z" fill="#0c4a6e" opacity="0.8" />
+  <path d="M0 540 Q400 490 800 530 T1200 500 L1200 675 L0 675 Z" fill="#031f33" />
+  <text x="600" y="240" fill="#ffffff" font-size="52" font-weight="900" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="2">OCEAN WAVE</text>
+  <text x="600" y="290" fill="#e0f2fe" font-size="22" font-family="system-ui, sans-serif" text-anchor="middle">Tailwind CSS v4 Native</text>
+</svg>

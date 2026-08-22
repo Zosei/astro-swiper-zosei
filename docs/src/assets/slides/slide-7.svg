@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="50%" stop-color="#0e7490" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <radialGradient id="r7" cx="70%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.5" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g7)" />
+  <rect width="1200" height="675" fill="url(#r7)" />
+  <polygon points="600,140 750,450 450,450" fill="#ffffff" opacity="0.12" />
+  <polygon points="600,190 710,430 490,430" fill="#ffffff" opacity="0.15" />
+  <circle cx="600" cy="330" r="70" fill="#2dd4bf" opacity="0.4" />
+  <path d="M0 520 Q300 460 600 500 T1200 480 L1200 675 L0 675 Z" fill="#042f2e" opacity="0.8" />
+  <text x="600" y="325" fill="#ffffff" font-size="52" font-weight="900" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="2">QUANTUM REALM</text>
+  <text x="600" y="375" fill="#99f6e4" font-size="22" font-family="system-ui, sans-serif" text-anchor="middle">Deep Blue &amp; Teal Gradient</text>
+</svg>

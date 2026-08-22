@@ -1,0 +1,42 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination } from 'astro-swiper-zosei';
+import { getSlides, slideImages } from '../../data/slides';
+
+const slides = getSlides(4);
+---
+
+<Swiper
+  speed={600}
+  parallax={true}
+  pagination={{ clickable: true }}
+  navigation={true}
+  class="w-full h-80 rounded-2xl overflow-hidden shadow-2xl relative"
+>
+  <div
+    class="absolute inset-y-0 -left-[15%] w-[130%] h-full bg-cover bg-center pointer-events-none"
+    style={`background-image: url('${slideImages[0].src}');`}
+    data-swiper-parallax="-23%"
+  ></div>
+
+  <Wrapper>
+    {slides.map((slide, i) => (
+      <Slide class="p-8 text-white flex flex-col justify-center h-full bg-black/40 backdrop-blur-[2px]">
+        <div class="text-3xl font-extrabold tracking-tight text-white" data-swiper-parallax="-300">
+          {slide.title} #{i + 1}
+        </div>
+        <div class="text-sm font-semibold text-indigo-300 mt-2 font-mono" data-swiper-parallax="-200">
+          {slide.subtitle}
+        </div>
+        <div class="text-xs text-slate-300 mt-3 max-w-md leading-relaxed" data-swiper-parallax="-100">
+          Transición con efecto Parallax multi-capa acelerado por GPU y estilizado en Tailwind CSS v4.
+        </div>
+      </Slide>
+    ))}
+  </Wrapper>
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+  <Pagination variant="pills" color="indigo" />
+</Swiper>

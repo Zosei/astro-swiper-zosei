@@ -1,0 +1,282 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+import 'swiper/css/bundle';
+import type { AstroSwiperType } from '../index';
+
+type Props = AstroSwiperType;
+
+const {
+  // Parámetros directos de Swiper (100% Declarativo por Props)
+  direction = 'horizontal',
+  slidesPerView = 1,
+  spaceBetween = 0,
+  loop = false,
+  rewind = false,
+  speed = 300,
+  effect = 'slide',
+  autoplay = false,
+  navigation = false,
+  pagination = false,
+  scrollbar = false,
+  breakpoints,
+  grabCursor = false,
+  centeredSlides = false,
+  autoHeight = false,
+  freeMode = false,
+  keyboard = false,
+  mousewheel = false,
+  zoom = false,
+  grid,
+  lazyInit = false,
+  pauseWhenHidden = false,
+  thumbs,
+
+  // Opciones avanzadas de Swiper (opcional)
+  options = {},
+
+  // Atributos de elemento
+  id = null,
+  class: className = null,
+  addDefaultClass = true,
+  uniqueClass: legacyUniqueClass = null,
+  linkToThumbUniqueClass: legacyThumbClass = null,
+  useCustomElement = true,
+  ...props
+} = Astro.props;
+
+// Identificador único para el selector Swiper
+const uniqueClass = legacyUniqueClass || `astro-swiper-zosei-${Math.random().toString(36).slice(2, 11)}`;
+
+// Construcción del objeto de configuración sin JS manual
+const swiperConfig: Record<string, any> = {
+  direction,
+  slidesPerView,
+  spaceBetween,
+  loop,
+  rewind,
+  speed,
+  effect,
+  grabCursor,
+  centeredSlides,
+  autoHeight,
+  ...(grid ? { grid } : {}),
+  ...(freeMode ? { freeMode: typeof freeMode === 'object' ? freeMode : true } : {}),
+  ...(keyboard ? { keyboard: typeof keyboard === 'object' ? keyboard : { enabled: true } } : {}),
+  ...(mousewheel ? { mousewheel: typeof mousewheel === 'object' ? mousewheel : true } : {}),
+  ...(zoom ? { zoom: typeof zoom === 'object' ? zoom : true } : {}),
+  ...(autoplay ? { autoplay: typeof autoplay === 'object' ? autoplay : { delay: 3000, disableOnInteraction: false } } : {}),
+  ...(navigation ? { navigation: typeof navigation === 'object' ? { nextEl: `.${uniqueClass} .swiper-button-next`, prevEl: `.${uniqueClass} .swiper-button-prev`, ...navigation } : { nextEl: `.${uniqueClass} .swiper-button-next`, prevEl: `.${uniqueClass} .swiper-button-prev` } } : {}),
+  ...(pagination ? { pagination: typeof pagination === 'object' ? { el: `.${uniqueClass} .swiper-pagination`, clickable: true, ...pagination } : { el: `.${uniqueClass} .swiper-pagination`, clickable: true } } : {}),
+  ...(scrollbar ? { scrollbar: typeof scrollbar === 'object' ? { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true, ...scrollbar } : { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true } } : {}),
+  ...(breakpoints ? { breakpoints } : {}),
+  ...options,
+};
+
+// Configuración de optimización con Intersection Observer
+if (!swiperConfig.astro) {
+  swiperConfig.astro = {};
+}
+
+if (lazyInit || pauseWhenHidden) {
+  swiperConfig.astro.intersectionObserver = {
+    initSwiper: lazyInit,
+    controlAutoplay: pauseWhenHidden || (typeof autoplay === 'object' && (autoplay as any).pauseWhenHidden),
+    disconnectOnInit: lazyInit && !pauseWhenHidden,
+    ...(options.astro?.intersectionObserver || {})
+  };
+}
+
+if (legacyThumbClass) {
+  swiperConfig.astro.thumbSwiperUniqueSelector = `.${legacyThumbClass}`;
+} else if (typeof thumbs === 'string') {
+  swiperConfig.astro.thumbSwiperUniqueSelector = thumbs;
+} else if (thumbs && typeof thumbs === 'object' && 'swiper' in thumbs && typeof thumbs.swiper === 'string') {
+  swiperConfig.astro.thumbSwiperUniqueSelector = thumbs.swiper;
+}
+
+if (useCustomElement === false || options.astro?.useCustomElement === false) {
+  swiperConfig.astro.useCustomElement = false;
+}
+---
+
+<!-- Swiper Container Principal -->
+{
+  swiperConfig.astro?.useCustomElement !== false ? (
+    <astro-swiper-zosei
+      id={id}
+      data-options={JSON.stringify(swiperConfig)}
+      data-uniqueclass={uniqueClass}
+      class:list={[addDefaultClass ? 'swiper' : null, uniqueClass, className]}
+      {...props}
+    >
+      <slot />
+    </astro-swiper-zosei>
+  ) : (
+    <div id={id} class:list={[addDefaultClass ? 'swiper' : null, uniqueClass, className]} {...props}>
+      <astro-swiper-zosei data-options={JSON.stringify(swiperConfig)} data-uniqueclass={uniqueClass} />
+      <slot />
+    </div>
+  )
+}
+
+<script>
+  import Swiper from 'swiper/bundle';
+  import { getSwiperFromUniqueSelector } from '../index';
+  import type { AstroSwiperOptions, selectorStringType } from '../index';
+
+  const getSwiperFromUniqueSelectorOptions = {
+    mayBeUndefined: true,
+  };
+
+  const _useOptions: { [uniqueSelector: string]: AstroSwiperOptions } = {};
+  const _useDelaySwiper: { [uniqueSelector: string]: string } = {};
+
+  function _initDelayedSwipers() {
+    Object.keys(_useDelaySwiper).forEach((delayedSelector: string) => {
+      const delayedThumbSelector: selectorStringType = _useDelaySwiper[delayedSelector] as selectorStringType;
+      const swiper = getSwiperFromUniqueSelector(
+        delayedThumbSelector,
+        getSwiperFromUniqueSelectorOptions,
+      );
+      if (swiper) {
+        delete _useDelaySwiper[delayedSelector];
+        const delayedOptions = _useOptions[delayedSelector];
+        delayedOptions.thumbs = {
+          swiper: swiper,
+          ...delayedOptions.thumbs,
+        };
+
+        _createSwiperAndObserver(
+          delayedSelector as selectorStringType,
+          delayedOptions,
+          document.querySelector(delayedSelector) as AstroSwiper,
+        );
+      }
+    });
+  }
+
+  function _initSwiper(
+    uniqueSelector: selectorStringType,
+    options: AstroSwiperOptions,
+    element: AstroSwiper,
+  ) {
+    if (element.astroSwiper) {
+      return element.astroSwiper;
+    }
+
+    let wrapper: HTMLElement | null = null;
+    if (options.astro?.useCustomElement !== false) {
+      wrapper = element.querySelector('.swiper-wrapper');
+    } else {
+      const parent = element.parentElement;
+      wrapper = parent ? parent.querySelector('.swiper-wrapper') : null;
+    }
+    if (!wrapper) {
+      console.warn(
+        `astro-swiper-zosei: <SwiperWrapper> not found in <Swiper class="${element.classList}">. <SwiperSlide> must be a child of <SwiperWrapper>.`,
+      );
+    }
+
+    const swiper = new Swiper(uniqueSelector, options);
+    element.astroSwiper = swiper;
+
+    if (options.astro?.intersectionObserver?.controlAutoplay && options.autoplay) {
+      if ((swiper as any).autoplay?.stop) {
+        (swiper as any).autoplay.stop();
+      }
+    }
+
+    _initDelayedSwipers();
+    return swiper;
+  }
+
+  function _createObserver(
+    uniqueSelector: selectorStringType,
+    options: AstroSwiperOptions,
+    element: AstroSwiper,
+  ) {
+    const observerOptions = options.astro?.intersectionObserver || {};
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        if (observerOptions?.initSwiper && !element.astroSwiper) {
+          _initSwiper(uniqueSelector, options, element);
+          if (observerOptions?.disconnectOnInit) {
+            observer.disconnect();
+          }
+        }
+      }
+
+      const swiper = element?.astroSwiper;
+      if (!swiper) return;
+
+      if (observerOptions?.controlAutoplay && options.autoplay && (swiper as any).autoplay) {
+        if (entries[0]?.isIntersecting) {
+          (swiper as any).autoplay.start();
+        } else {
+          (swiper as any).autoplay.stop();
+        }
+      }
+    }, observerOptions.options);
+
+    element._observer = observer;
+    observer.observe(element);
+    window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
+  }
+
+  function _createSwiperAndObserver(
+    uniqueSelector: selectorStringType,
+    options: AstroSwiperOptions,
+    element: AstroSwiper,
+  ) {
+    if (!options.astro?.intersectionObserver?.initSwiper) {
+      _initSwiper(uniqueSelector, options, element);
+    }
+
+    if (options.astro?.intersectionObserver) {
+      _createObserver(uniqueSelector, options, element);
+    }
+  }
+
+  class AstroSwiper extends HTMLElement {
+    astroSwiper: Swiper | undefined;
+    _observer?: IntersectionObserver;
+
+    connectedCallback() {
+      if (this.astroSwiper) return;
+      const options: AstroSwiperOptions = JSON.parse(this.dataset.options || '{}');
+      const uniqueSelector: selectorStringType = `.${this.dataset.uniqueclass}`;
+      const thumbSwiperUniqueSelector: selectorStringType = options.astro?.thumbSwiperUniqueSelector as selectorStringType;
+
+      if (
+        !thumbSwiperUniqueSelector ||
+        getSwiperFromUniqueSelector(thumbSwiperUniqueSelector, getSwiperFromUniqueSelectorOptions)
+      ) {
+        if (thumbSwiperUniqueSelector) {
+          options.thumbs = {
+            swiper: getSwiperFromUniqueSelector(
+              thumbSwiperUniqueSelector,
+              getSwiperFromUniqueSelectorOptions,
+            ),
+            ...options.thumbs,
+          };
+        }
+        _createSwiperAndObserver(uniqueSelector, options, this);
+      } else {
+        _useDelaySwiper[uniqueSelector] = thumbSwiperUniqueSelector;
+        _useOptions[uniqueSelector] = options;
+      }
+    }
+
+    disconnectedCallback() {
+      if (this._observer) {
+        this._observer.disconnect();
+      }
+      if (this.astroSwiper) {
+        this.astroSwiper.destroy(true, true);
+      }
+    }
+  }
+
+  customElements.get('astro-swiper-zosei') || customElements.define('astro-swiper-zosei', AstroSwiper);
+</script>

@@ -1,0 +1,248 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import Layout from '../../layouts/Layout.astro';
+import CodeBlock from '../../components/common/CodeBlock.astro';
+import { demosRegistry, type DemoItem } from '../../data/demosRegistry';
+
+import Autoheight from '../../components/demos/Autoheight.astro';
+import Autoplay from '../../components/demos/Autoplay.astro';
+import AutoplayProgress from '../../components/demos/AutoplayProgress.astro';
+import Cards from '../../components/demos/Cards.astro';
+import Centered from '../../components/demos/Centered.astro';
+import CenteredAuto from '../../components/demos/CenteredAuto.astro';
+import ChangeDirection from '../../components/demos/ChangeDirection.astro';
+import CoverFlow from '../../components/demos/CoverFlow.astro';
+import Creative from '../../components/demos/Creative.astro';
+import CssMode from '../../components/demos/CssMode.astro';
+import Cube from '../../components/demos/Cube.astro';
+import CustomPlugin from '../../components/demos/CustomPlugin.astro';
+import Default from '../../components/demos/Default.astro';
+import Fade from '../../components/demos/Fade.astro';
+import Flip from '../../components/demos/Flip.astro';
+import FreeMode from '../../components/demos/FreeMode.astro';
+import GrabCursor from '../../components/demos/GrabCursor.astro';
+import Grid from '../../components/demos/Grid.astro';
+import HashNavigation from '../../components/demos/HashNavigation.astro';
+import History from '../../components/demos/History.astro';
+import IndexExample from '../../components/demos/IndexExample.astro';
+import InfiniteLoop from '../../components/demos/InfiniteLoop.astro';
+import KeyboardControl from '../../components/demos/KeyboardControl.astro';
+import LazyLoadImages from '../../components/demos/LazyLoadImages.astro';
+import Manipulation from '../../components/demos/Manipulation.astro';
+import MousewheelControl from '../../components/demos/MousewheelControl.astro';
+import MultipleSwipers from '../../components/demos/MultipleSwipers.astro';
+import Navigation from '../../components/demos/Navigation.astro';
+import Nested from '../../components/demos/Nested.astro';
+import Pagination from '../../components/demos/Pagination.astro';
+import PaginationCustom from '../../components/demos/PaginationCustom.astro';
+import PaginationDynamic from '../../components/demos/PaginationDynamic.astro';
+import PaginationFraction from '../../components/demos/PaginationFraction.astro';
+import PaginationProgress from '../../components/demos/PaginationProgress.astro';
+import Parallax from '../../components/demos/Parallax.astro';
+import RatioBreakpoints from '../../components/demos/RatioBreakpoints.astro';
+import ResponsiveBreakpoints from '../../components/demos/ResponsiveBreakpoints.astro';
+import Rewind from '../../components/demos/Rewind.astro';
+import Rtl from '../../components/demos/Rtl.astro';
+import Scrollbar from '../../components/demos/Scrollbar.astro';
+import ScrollContainer from '../../components/demos/ScrollContainer.astro';
+import SecondSlide from '../../components/demos/SecondSlide.astro';
+import SlideableMenu from '../../components/demos/SlideableMenu.astro';
+import SlidesPerGroupSkip from '../../components/demos/SlidesPerGroupSkip.astro';
+import SlidesPerView from '../../components/demos/SlidesPerView.astro';
+import SlidesPerViewAuto from '../../components/demos/SlidesPerViewAuto.astro';
+import SpaceBetween from '../../components/demos/SpaceBetween.astro';
+import Thumbnail from '../../components/demos/Thumbnail.astro';
+import ThumbsGallery from '../../components/demos/ThumbsGallery.astro';
+import ThumbsGalleryLoop from '../../components/demos/ThumbsGalleryLoop.astro';
+import Vertical from '../../components/demos/Vertical.astro';
+import VirtualSlides from '../../components/demos/VirtualSlides.astro';
+import WatchSlidesVisibility from '../../components/demos/WatchSlidesVisibility.astro';
+import Zoom from '../../components/demos/Zoom.astro';
+
+const componentMap: Record<string, any> = {
+  Autoheight,
+  Autoplay,
+  AutoplayProgress,
+  Cards,
+  Centered,
+  CenteredAuto,
+  ChangeDirection,
+  CoverFlow,
+  Creative,
+  CssMode,
+  Cube,
+  CustomPlugin,
+  Default,
+  Fade,
+  Flip,
+  FreeMode,
+  GrabCursor,
+  Grid,
+  HashNavigation,
+  History,
+  IndexExample,
+  InfiniteLoop,
+  KeyboardControl,
+  LazyLoadImages,
+  Manipulation,
+  MousewheelControl,
+  MultipleSwipers,
+  Navigation,
+  Nested,
+  Pagination,
+  PaginationCustom,
+  PaginationDynamic,
+  PaginationFraction,
+  PaginationProgress,
+  Parallax,
+  RatioBreakpoints,
+  ResponsiveBreakpoints,
+  Rewind,
+  Rtl,
+  Scrollbar,
+  ScrollContainer,
+  SecondSlide,
+  SlideableMenu,
+  SlidesPerGroupSkip,
+  SlidesPerView,
+  SlidesPerViewAuto,
+  SpaceBetween,
+  Thumbnail,
+  ThumbsGallery,
+  ThumbsGalleryLoop,
+  Vertical,
+  VirtualSlides,
+  WatchSlidesVisibility,
+  Zoom,
+};
+
+export function getStaticPaths() {
+  return demosRegistry.map((demo, index) => {
+    const prev = index > 0 ? demosRegistry[index - 1] : null;
+    const next = index < demosRegistry.length - 1 ? demosRegistry[index + 1] : null;
+    return {
+      params: { slug: demo.slug },
+      props: { demo, prev, next },
+    };
+  });
+}
+
+interface Props {
+  demo: DemoItem;
+  prev: DemoItem | null;
+  next: DemoItem | null;
+}
+
+const { demo, prev, next } = Astro.props;
+const DemoComponent = componentMap[demo.componentName] || Default;
+---
+
+<Layout title={`${demo.title} - astro-swiper-zosei`}>
+  <div class="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Migas de pan y Cabecera -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <a
+          href="/demos"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors group"
+        >
+          <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Volver al Catálogo de Demos
+        </a>
+
+        <div class="flex items-center gap-2">
+          {prev && (
+            <a
+              href={`/demos/${prev.slug}`}
+              title={prev.title}
+              class="p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-all text-xs flex items-center gap-1.5"
+            >
+              <span>←</span>
+              <span class="hidden sm:inline">{prev.title}</span>
+            </a>
+          )}
+          {next && (
+            <a
+              href={`/demos/${next.slug}`}
+              title={next.title}
+              class="p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-all text-xs flex items-center gap-1.5"
+            >
+              <span class="hidden sm:inline">{next.title}</span>
+              <span>→</span>
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="px-3 py-1 text-xs font-bold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          {demo.category}
+        </span>
+        <span class="px-3 py-1 text-xs font-medium rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+          {demo.tag}
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        {demo.title}
+      </h1>
+      <p class="text-slate-300 text-base sm:text-lg max-w-3xl leading-relaxed">
+        {demo.desc}
+      </p>
+    </div>
+
+    <!-- Vista Previa en Vivo -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/40 p-6 sm:p-10 shadow-2xl backdrop-blur-xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Demostración en Vivo</h2>
+        </div>
+        <span class="text-xs text-slate-400 font-mono">100% Tailwind CSS v4</span>
+      </div>
+
+      <div class="w-full flex items-center justify-center min-h-[320px] py-4">
+        <DemoComponent />
+      </div>
+    </div>
+
+    <!-- Esqueleto de Código Completo con Copiado -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-white">Esqueleto del Componente Astro</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Listo para copiar y pegar en tu proyecto Astro</p>
+        </div>
+      </div>
+
+      <CodeBlock code={demo.codeSkeleton} filename={`${demo.slug}.astro`} lang="astro" />
+    </div>
+
+    <!-- Navegación Inferior -->
+    <div class="pt-6 border-t border-slate-800 flex items-center justify-between">
+      {prev ? (
+        <a
+          href={`/demos/${prev.slug}`}
+          class="group flex flex-col items-start p-4 rounded-2xl bg-slate-900/30 border border-slate-800 hover:border-indigo-500/40 hover:bg-slate-900/60 transition-all max-w-[45%]"
+        >
+          <span class="text-xs text-slate-400 group-hover:text-indigo-400 transition-colors">← Demo Anterior</span>
+          <span class="text-sm font-bold text-white truncate mt-1">{prev.title}</span>
+        </a>
+      ) : <div />}
+
+      {next ? (
+        <a
+          href={`/demos/${next.slug}`}
+          class="group flex flex-col items-end p-4 rounded-2xl bg-slate-900/30 border border-slate-800 hover:border-indigo-500/40 hover:bg-slate-900/60 transition-all max-w-[45%] text-right"
+        >
+          <span class="text-xs text-slate-400 group-hover:text-indigo-400 transition-colors">Siguiente Demo →</span>
+          <span class="text-sm font-bold text-white truncate mt-1">{next.title}</span>
+        </a>
+      ) : <div />}
+    </div>
+  </div>
+</Layout>

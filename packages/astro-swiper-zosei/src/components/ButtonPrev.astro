@@ -1,0 +1,91 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'button'> {
+  /** Variantes de diseño modernas en Tailwind CSS v4 */
+  variant?: 'glass' | 'solid' | 'glow' | 'minimal' | 'ghost';
+  /** Tamaño del botón */
+  size?: 'sm' | 'md' | 'lg';
+  /** Color temático */
+  color?: 'indigo' | 'purple' | 'cyan' | 'emerald' | 'rose' | 'white';
+  /** Redondeo del borde */
+  rounded?: 'full' | 'xl' | 'lg' | 'md' | 'none';
+  /** Añadir clase .swiper-button-prev de Swiper */
+  addDefaultClass?: boolean;
+}
+
+const {
+  variant = 'glass',
+  size = 'md',
+  color = 'indigo',
+  rounded = 'full',
+  class: className = '',
+  addDefaultClass = true,
+  ...props
+} = Astro.props;
+
+// Tamaños con Tailwind v4
+const sizeClasses = {
+  sm: 'w-8 h-8 text-xs',
+  md: 'w-11 h-11 text-sm',
+  lg: 'w-14 h-14 text-base',
+}[size];
+
+// Radios de borde
+const roundedClasses = {
+  full: 'rounded-full',
+  xl: 'rounded-2xl',
+  lg: 'rounded-xl',
+  md: 'rounded-lg',
+  none: 'rounded-none',
+}[rounded];
+
+// Variantes de diseño modernas con Tailwind v4
+const variantClasses = {
+  glass: 'bg-slate-900/60 backdrop-blur-xl border border-white/15 text-white shadow-xl hover:bg-slate-800/80 hover:border-white/30 hover:scale-110 active:scale-95',
+  solid: 'bg-white text-slate-900 shadow-xl hover:bg-slate-100 hover:scale-105 active:scale-95 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700',
+  glow: 'bg-indigo-600/90 text-white shadow-[0_0_20px_rgba(99,102,241,0.5)] border border-indigo-400/40 hover:bg-indigo-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.8)] hover:scale-110 active:scale-95',
+  minimal: 'bg-transparent text-white/80 hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95 border border-transparent',
+  ghost: 'bg-white/10 backdrop-blur-md text-white border border-white/10 hover:bg-white/20 hover:scale-105 active:scale-95',
+}[variant];
+
+// Paleta de colores temáticos si se usan estados de focus/hover
+const colorClasses = {
+  indigo: 'focus-visible:ring-indigo-500',
+  purple: 'focus-visible:ring-purple-500',
+  cyan: 'focus-visible:ring-cyan-500',
+  emerald: 'focus-visible:ring-emerald-500',
+  rose: 'focus-visible:ring-rose-500',
+  white: 'focus-visible:ring-white',
+}[color];
+---
+
+<button
+  type="button"
+  aria-label="Slide anterior"
+  class:list={[
+    addDefaultClass ? 'swiper-button-prev' : null,
+    'relative z-10 flex items-center justify-center cursor-pointer transition-all duration-300 select-none outline-none focus-visible:ring-2 disabled:opacity-30 disabled:pointer-events-none disabled:cursor-not-allowed after:hidden after:content-none',
+    sizeClasses,
+    roundedClasses,
+    variantClasses,
+    colorClasses,
+    className,
+  ]}
+  {...props}
+>
+  <slot>
+    <!-- Icono SVG Moderno y Nítido (reemplaza las flechas nativas de Swiper) -->
+    <svg
+      class="w-5 h-5 transition-transform group-hover:-translate-x-0.5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2.2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+  </slot>
+</button>

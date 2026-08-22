@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#141a29" />
+      <stop offset="60%" stop-color="#0a0e17" />
+      <stop offset="100%" stop-color="#04060a" />
+    </radialGradient>
+
+    <!-- Slide Gradients -->
+    <linearGradient id="slide-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5D01" />
+      <stop offset="100%" stop-color="#FF8A00" />
+    </linearGradient>
+
+    <linearGradient id="slide-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+
+    <linearGradient id="slide-grad-3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+
+    <!-- Aura Glow Filter -->
+    <filter id="super-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <linearGradient id="glass-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.3)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Container Surface -->
+  <rect width="512" height="512" rx="128" fill="url(#bg-grad)" stroke="url(#glass-stroke)" stroke-width="3" />
+
+  <!-- Ambient Internal Nebulae Glow -->
+  <circle cx="190" cy="200" r="120" fill="#FF5D01" opacity="0.18" filter="url(#super-glow)" />
+  <circle cx="330" cy="310" r="130" fill="#6366F1" opacity="0.22" filter="url(#super-glow)" />
+  <circle cx="256" cy="256" r="90" fill="#06B6D4" opacity="0.16" filter="url(#super-glow)" />
+
+  <!-- Dynamic Swiper Ribbon Stream / Infinity Waves in 3D Perspective -->
+  <g filter="url(#soft-glow)">
+    <!-- Back Slide (Cyan Horizon) -->
+    <path
+      d="M 130 190 C 130 150 180 140 230 165 L 340 220 C 380 240 390 270 380 300 C 370 330 330 330 300 315 L 180 255 C 145 235 130 215 130 190 Z"
+      fill="url(#slide-grad-3)"
+      opacity="0.65"
+      transform="rotate(-15 256 256)"
+    />
+
+    <!-- Middle Slide (Cosmic Indigo / Violet Flow) -->
+    <path
+      d="M 140 260 C 120 220 160 180 210 190 L 330 220 C 370 230 390 270 370 310 C 350 350 300 360 260 340 L 170 295 C 145 285 140 275 140 260 Z"
+      fill="url(#slide-grad-2)"
+      opacity="0.85"
+      transform="rotate(-5 256 256)"
+    />
+
+    <!-- Front Hero Slide (Astro Flame / Vivid Orange Gradient with Glass Shimmer) -->
+    <rect
+      x="160"
+      y="150"
+      width="192"
+      height="212"
+      rx="38"
+      fill="url(#slide-grad-1)"
+      stroke="rgba(255, 255, 255, 0.4)"
+      stroke-width="2.5"
+      transform="rotate(18 256 256)"
+      opacity="0.95"
+    />
+  </g>
+
+  <!-- Front Slide Inner Content: Stylized Dynamic 'Sw' & Cosmic Constellation Star (命星) -->
+  <g transform="rotate(18 256 256)">
+    <!-- Inner Glass Sheen -->
+    <path
+      d="M 170 160 L 340 160 C 348 160 352 166 350 174 L 325 240 L 170 160 Z"
+      fill="white"
+      opacity="0.25"
+    />
+
+    <!-- Carousel Wave Bars on Hero Card -->
+    <rect x="185" y="300" width="40" height="8" rx="4" fill="white" opacity="0.9" />
+    <rect x="235" y="300" width="65" height="8" rx="4" fill="white" opacity="0.45" />
+    <circle cx="320" cy="304" r="4" fill="white" opacity="0.9" />
+  </g>
+
+  <!-- Luminous 4-Point Constellation Star (Zosei 命星 / Bright Star Accent) -->
+  <g transform="translate(350, 140)" filter="url(#super-glow)">
+    <!-- Star Glow -->
+    <circle cx="0" cy="0" r="28" fill="#ffffff" opacity="0.35" />
+    <!-- 4-point Diamond Starburst -->
+    <path d="M 0 -36 Q 0 0 36 0 Q 0 0 0 36 Q 0 0 -36 0 Q 0 0 0 -36 Z" fill="#ffffff" />
+    <circle cx="0" cy="0" r="6" fill="#FF8A00" />
+  </g>
+
+  <!-- Micro Orbit Particle Dot Accents -->
+  <circle cx="120" cy="340" r="6" fill="#06B6D4" filter="url(#soft-glow)" opacity="0.8" />
+  <circle cx="395" cy="360" r="5" fill="#8B5CF6" filter="url(#soft-glow)" opacity="0.8" />
+  <circle cx="150" cy="130" r="4" fill="#FF5D01" filter="url(#soft-glow)" opacity="0.7" />
+</svg>

@@ -1,0 +1,41 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, Scrollbar } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(6);
+---
+
+<Swiper
+  direction="vertical"
+  slidesPerView="auto"
+  freeMode={true}
+  scrollbar={{
+    draggable: true,
+  }}
+  mousewheel={true}
+  autoHeight={true}
+  class="w-full h-80 rounded-2xl overflow-hidden shadow-xl"
+>
+  <Wrapper>
+    {slides.map((slide, i) => (
+      <Slide class="p-4 rounded-xl">
+        {i === 2 ? (
+          <div class="p-5 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 text-slate-300 text-xs leading-relaxed space-y-2">
+            <h4 class="font-bold text-white text-sm">Contenido Extenso Scrolleable</h4>
+            <p>Este contenedor vertical permite scroll continuo con inercia y control por ratón/touchpad.</p>
+            <p>Construido 100% con clases nativas de Tailwind CSS v4.</p>
+          </div>
+        ) : (
+          <div class="h-32 rounded-2xl overflow-hidden">
+            <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+          </div>
+        )}
+      </Slide>
+    ))}
+  </Wrapper>
+  <Scrollbar />
+</Swiper>

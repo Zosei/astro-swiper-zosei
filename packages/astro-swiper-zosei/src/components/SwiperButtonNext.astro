@@ -1,0 +1,14 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import ButtonNext from './ButtonNext.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  addDefaultClass?: boolean;
+}
+---
+
+<ButtonNext {...Astro.props}>
+  <slot />
+</ButtonNext>

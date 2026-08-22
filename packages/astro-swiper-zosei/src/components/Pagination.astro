@@ -1,0 +1,52 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {
+  /** Estilo de variantes en Tailwind CSS v4 */
+  variant?: 'bullets' | 'glow' | 'fraction' | 'progressbar' | 'pills';
+  /** Color de acento de la paginación */
+  color?: 'indigo' | 'purple' | 'cyan' | 'emerald' | 'rose' | 'white';
+  /** Añadir clase .swiper-pagination */
+  addDefaultClass?: boolean;
+}
+
+const {
+  variant = 'bullets',
+  color = 'indigo',
+  class: className = '',
+  addDefaultClass = true,
+  ...props
+} = Astro.props;
+
+const colorThemes = {
+  indigo: '[--swiper-theme-color:#6366f1] [--swiper-pagination-color:#6366f1]',
+  purple: '[--swiper-theme-color:#a855f7] [--swiper-pagination-color:#a855f7]',
+  cyan: '[--swiper-theme-color:#06b6d4] [--swiper-pagination-color:#06b6d4]',
+  emerald: '[--swiper-theme-color:#10b981] [--swiper-pagination-color:#10b981]',
+  rose: '[--swiper-theme-color:#f43f5e] [--swiper-pagination-color:#f43f5e]',
+  white: '[--swiper-theme-color:#ffffff] [--swiper-pagination-color:#ffffff]',
+}[color];
+
+const variantStyles = {
+  bullets: '[&_.swiper-pagination-bullet]:w-2.5 [&_.swiper-pagination-bullet]:h-2.5 [&_.swiper-pagination-bullet]:bg-white/40 [&_.swiper-pagination-bullet-active]:!bg-current [&_.swiper-pagination-bullet-active]:scale-125 [&_.swiper-pagination-bullet]:transition-all',
+  glow: '[&_.swiper-pagination-bullet]:w-2.5 [&_.swiper-pagination-bullet]:h-2.5 [&_.swiper-pagination-bullet]:bg-white/30 [&_.swiper-pagination-bullet-active]:!bg-current [&_.swiper-pagination-bullet-active]:scale-125 [&_.swiper-pagination-bullet-active]:shadow-[0_0_12px_currentColor] [&_.swiper-pagination-bullet]:transition-all',
+  pills: '[&_.swiper-pagination-bullet]:w-6 [&_.swiper-pagination-bullet]:h-1.5 [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-white/30 [&_.swiper-pagination-bullet-active]:!bg-current [&_.swiper-pagination-bullet-active]:w-10 [&_.swiper-pagination-bullet]:transition-all',
+  fraction: 'bg-slate-900/80 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-mono text-white/90 border border-white/10 w-fit mx-auto',
+  progressbar: 'h-1 bg-white/10 rounded-full overflow-hidden [&_.swiper-pagination-progressbar-fill]:bg-current',
+}[variant];
+---
+
+<div
+  class:list={[
+    addDefaultClass ? 'swiper-pagination' : null,
+    '!absolute !bottom-3 !left-0 !right-0 !z-20 flex items-center justify-center gap-1.5 transition-all',
+    colorThemes,
+    variantStyles,
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</div>

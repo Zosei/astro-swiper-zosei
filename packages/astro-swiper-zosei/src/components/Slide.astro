@@ -1,0 +1,59 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+
+export interface Props extends HTMLAttributes<'div'> {
+  /** Añade la clase nativa .swiper-slide, true por defecto */
+  addDefaultClass?: boolean;
+  /** Configuración opcional para renderizar imagen optimizada de Astro automáticamente */
+  image?: {
+    src: any;
+    alt: string;
+    width?: number;
+    height?: number;
+    class?: string;
+    loading?: 'eager' | 'lazy';
+  };
+}
+
+const {
+  class: className = '',
+  addDefaultClass = true,
+  image,
+  ...props
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    addDefaultClass ? 'swiper-slide' : null,
+    'relative overflow-hidden shrink-0 select-none flex items-center justify-center',
+    className,
+  ]}
+  {...props}
+>
+  {image ? (
+    typeof image.src === 'string' && (image.src.startsWith('http') || image.src.startsWith('/')) ? (
+      <img
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        loading={image.loading || 'lazy'}
+        class={`w-full h-full object-cover ${image.class || ''}`}
+      />
+    ) : (
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={image.width || 800}
+        height={image.height || 600}
+        loading={image.loading || 'lazy'}
+        class={`w-full h-full object-cover ${image.class || ''}`}
+      />
+    )
+  ) : null}
+  <slot />
+</div>

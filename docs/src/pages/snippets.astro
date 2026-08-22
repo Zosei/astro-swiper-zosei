@@ -1,0 +1,132 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import Layout from '../layouts/Layout.astro';
+import CodeBlock from '../components/common/CodeBlock.astro';
+
+const snippets = [
+  {
+    prefix: "swiper-basic",
+    titleKey: "snippets.basicTitle",
+    descKey: "snippets.basicDesc",
+    defaultTitle: "Carrusel Básico (<Sw>)",
+    defaultDesc: "Inserta un carrusel responsivo con navegación y paginación listo para usar.",
+    code: `---
+import { Sw } from 'astro-swiper-zosei';
+---
+
+<Sw slidesPerView={3} spaceBetween={20} navigation pagination loop>
+  <Sw.Wrap>
+    <Sw.Slide class="h-64 rounded-2xl bg-zinc-800 text-white flex items-center justify-center">Slide 1</Sw.Slide>
+    <Sw.Slide class="h-64 rounded-2xl bg-zinc-800 text-white flex items-center justify-center">Slide 2</Sw.Slide>
+    <Sw.Slide class="h-64 rounded-2xl bg-zinc-800 text-white flex items-center justify-center">Slide 3</Sw.Slide>
+  </Sw.Wrap>
+  <Sw.Prev />
+  <Sw.Next />
+  <Sw.Pag />
+</Sw>`
+  },
+  {
+    prefix: "swiper-autoplay",
+    titleKey: "snippets.autoplayTitle",
+    descKey: "snippets.autoplayDesc",
+    defaultTitle: "Autoplay con Observer (<Sw>)",
+    defaultDesc: "Carrusel con pausa inteligente en hover y suspensión fuera de pantalla.",
+    code: `---
+import { Sw } from 'astro-swiper-zosei';
+---
+
+<Sw autoplay={{ delay: 3000, pauseOnMouseEnter: true }} pauseWhenHidden loop navigation pagination>
+  <Sw.Wrap>
+    <Sw.Slide class="h-80 bg-indigo-600 text-white flex items-center justify-center font-bold">Slide 1</Sw.Slide>
+    <Sw.Slide class="h-80 bg-purple-600 text-white flex items-center justify-center font-bold">Slide 2</Sw.Slide>
+  </Sw.Wrap>
+  <Sw.Pag />
+</Sw>`
+  },
+  {
+    prefix: "swiper-cards",
+    titleKey: "snippets.cardsTitle",
+    descKey: "snippets.cardsDesc",
+    defaultTitle: "Efecto 3D Cards (<Sw>)",
+    defaultDesc: "Pila de tarjetas tridimensional interactiva con cursor de agarre.",
+    code: `---
+import { Sw } from 'astro-swiper-zosei';
+---
+
+<Sw effect="cards" grabCursor={true} class="w-72 h-96 mx-auto my-6">
+  <Sw.Wrap>
+    <Sw.Slide class="rounded-3xl bg-indigo-600 text-white p-6 shadow-2xl">Tarjeta 1</Sw.Slide>
+    <Sw.Slide class="rounded-3xl bg-purple-600 text-white p-6 shadow-2xl">Tarjeta 2</Sw.Slide>
+    <Sw.Slide class="rounded-3xl bg-pink-600 text-white p-6 shadow-2xl">Tarjeta 3</Sw.Slide>
+  </Sw.Wrap>
+</Sw>`
+  },
+  {
+    prefix: "swiper-thumbs",
+    titleKey: "snippets.thumbsTitle",
+    descKey: "snippets.thumbsDesc",
+    defaultTitle: "Galería de Miniaturas (<Sw>)",
+    defaultDesc: "Carrusel principal sincronizado automáticamente con carrusel inferior.",
+    code: `---
+import { Sw } from 'astro-swiper-zosei';
+---
+
+<!-- Carrusel Principal -->
+<Sw thumbs="#thumbs-track" navigation loop class="mb-4">
+  <Sw.Wrap>
+    <Sw.Slide class="h-80 rounded-2xl bg-zinc-800 text-white flex items-center justify-center">Foto 1</Sw.Slide>
+    <Sw.Slide class="h-80 rounded-2xl bg-zinc-800 text-white flex items-center justify-center">Foto 2</Sw.Slide>
+  </Sw.Wrap>
+  <Sw.Prev />
+  <Sw.Next />
+</Sw>
+
+<!-- Pista de Miniaturas -->
+<Sw id="thumbs-track" slidesPerView={4} spaceBetween={12} freeMode watchSlidesProgress>
+  <Sw.Wrap>
+    <Sw.Slide class="h-20 rounded-xl bg-zinc-700 text-white flex items-center justify-center text-xs">Mini 1</Sw.Slide>
+    <Sw.Slide class="h-20 rounded-xl bg-zinc-700 text-white flex items-center justify-center text-xs">Mini 2</Sw.Slide>
+  </Sw.Wrap>
+</Sw>`
+  }
+];
+---
+
+<Layout title="Snippets de VS Code - Astro Swiper">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 py-12">
+    <!-- Header -->
+    <div class="text-center space-y-4 max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 text-indigo-300 text-xs font-bold border border-indigo-500/20 shadow-inner">
+        <span data-i18n="snippets.badge">⚡ Productividad en VS Code</span>
+      </div>
+      <h1 data-i18n="snippets.title" class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+        Snippets de Autocompletado
+      </h1>
+      <p data-i18n="snippets.subtitle" class="text-slate-300 text-base sm:text-lg leading-relaxed">
+        Escribe estos prefijos dentro de cualquier archivo <code class="text-indigo-400 font-mono font-bold bg-indigo-500/10 px-2 py-0.5 rounded">.astro</code> para generar la estructura completa del carrusel en segundos con la sintaxis corta <code class="text-purple-300 font-mono font-bold bg-purple-500/10 px-2 py-0.5 rounded">Sw</code>:
+      </p>
+    </div>
+
+    <!-- Snippets Grid -->
+    <div class="space-y-8">
+      {snippets.map((snip) => (
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-2xl backdrop-blur-xl space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-mono font-bold text-xs border border-indigo-500/30">
+                  {snip.prefix}
+                </span>
+                <span class="text-xs text-slate-500 font-mono">VS Code Trigger</span>
+              </div>
+              <h3 data-i18n={snip.titleKey} class="text-xl font-bold text-white mt-2">{snip.defaultTitle}</h3>
+            </div>
+          </div>
+          <p data-i18n={snip.descKey} class="text-xs sm:text-sm text-slate-300 leading-relaxed">{snip.defaultDesc}</p>
+          <CodeBlock lang="astro" code={snip.code} title={snip.defaultTitle} badge={snip.prefix} />
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

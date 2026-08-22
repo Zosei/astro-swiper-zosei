@@ -1,0 +1,86 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(3);
+---
+
+<Swiper
+  id="swiper-manipulation"
+  spaceBetween={20}
+  pagination={{ type: 'fraction' }}
+  navigation={true}
+  class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+  <Pagination />
+</Swiper>
+
+<div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+  <button class="prepend-2-slides px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Prepend 2 Slides
+  </button>
+  <button class="prepend-slide px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Prepend Slide
+  </button>
+  <button class="append-slide px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Append Slide
+  </button>
+  <button class="append-2-slides px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Append 2 Slides
+  </button>
+</div>
+
+<script>
+  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
+
+  window.addEventListener('load', () => {
+    const swiper = getSwiperFromUniqueSelector('#swiper-manipulation');
+    if (!swiper) return;
+
+    let appendNumber = 4;
+    let prependNumber = 1;
+
+    document.querySelector('.prepend-2-slides')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.prependSlide([
+        `<div class="swiper-slide rounded-2xl bg-indigo-900/60 border border-indigo-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${--prependNumber}</div>`,
+        `<div class="swiper-slide rounded-2xl bg-purple-900/60 border border-purple-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${--prependNumber}</div>`,
+      ]);
+    });
+
+    document.querySelector('.prepend-slide')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.prependSlide(
+        `<div class="swiper-slide rounded-2xl bg-cyan-900/60 border border-cyan-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${--prependNumber}</div>`
+      );
+    });
+
+    document.querySelector('.append-slide')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.appendSlide(
+        `<div class="swiper-slide rounded-2xl bg-emerald-900/60 border border-emerald-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${++appendNumber}</div>`
+      );
+    });
+
+    document.querySelector('.append-2-slides')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.appendSlide([
+        `<div class="swiper-slide rounded-2xl bg-rose-900/60 border border-rose-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${++appendNumber}</div>`,
+        `<div class="swiper-slide rounded-2xl bg-amber-900/60 border border-amber-500/30 flex items-center justify-center text-white font-bold h-full aspect-video">Slide ${++appendNumber}</div>`,
+      ]);
+    });
+  });
+</script>

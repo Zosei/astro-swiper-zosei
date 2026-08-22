@@ -1,0 +1,74 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(3);
+---
+
+<Swiper
+  id="swiper-virtual"
+  slidesPerView={3}
+  centeredSlides={true}
+  spaceBetween={20}
+  pagination={{ type: 'fraction' }}
+  navigation={true}
+  virtual={{
+    slides: (function () {
+      const s = [];
+      for (let i = 0; i < 500; i += 1) {
+        s.push('Slide ' + (i + 1));
+      }
+      return s;
+    })(),
+  }}
+  class="w-full h-64 rounded-2xl overflow-hidden shadow-xl"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+  <Pagination />
+</Swiper>
+
+<div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+  <button class="slide-1 px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Slide 1
+  </button>
+  <button class="slide-250 px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Slide 250
+  </button>
+  <button class="slide-500 px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer">
+    Slide 500
+  </button>
+</div>
+
+<script>
+  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
+
+  window.addEventListener('load', () => {
+    const swiper = getSwiperFromUniqueSelector('#swiper-virtual');
+    if (!swiper) return;
+
+    document.querySelector('.slide-1')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.slideTo(0, 0);
+    });
+    document.querySelector('.slide-250')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.slideTo(249, 0);
+    });
+    document.querySelector('.slide-500')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      swiper.slideTo(499, 0);
+    });
+  });
+</script>

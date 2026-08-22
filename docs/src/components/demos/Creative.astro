@@ -1,0 +1,36 @@
+---
+// Copyright (c) Pascal Brand & Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, Pagination } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(5);
+---
+
+<Swiper
+  grabCursor={true}
+  effect="creative"
+  creativeEffect={{
+    prev: {
+      shadow: true,
+      translate: ['-120%', 0, -500],
+    },
+    next: {
+      shadow: true,
+      translate: ['120%', 0, -500],
+    },
+  }}
+  pagination={{ clickable: true }}
+  class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden shadow-2xl">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+  <Pagination variant="pills" color="cyan" />
+</Swiper>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#db2777" />
+    </linearGradient>
+    <radialGradient id="r1" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.6" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g1)" />
+  <rect width="1200" height="675" fill="url(#r1)" />
+  <circle cx="600" cy="280" r="180" fill="#ffffff" opacity="0.12" />
+  <circle cx="600" cy="280" r="120" fill="#ffffff" opacity="0.18" />
+  <path d="M0 500 Q300 420 600 480 T1200 450 L1200 675 L0 675 Z" fill="#0f172a" opacity="0.9" />
+  <path d="M0 560 Q350 510 700 550 T1200 530 L1200 675 L0 675 Z" fill="#020617" />
+  <text x="600" y="300" fill="#ffffff" font-size="52" font-weight="900" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="2">AURORA COSMOS</text>
+  <text x="600" y="350" fill="#cbd5e1" font-size="22" font-family="system-ui, sans-serif" text-anchor="middle">Astro 5+ &amp; Swiper v14</text>
+</svg>

@@ -1,0 +1,45 @@
+---
+// Copyright (c) Zosei
+// MIT License
+
+import { Swiper, Wrapper, Slide, ButtonPrev, ButtonNext } from 'astro-swiper-zosei';
+import { Image } from 'astro:assets';
+import { getSlides } from '../../data/slides';
+
+const slides = getSlides(6);
+---
+
+<Swiper
+  id="change-direction-swiper"
+  navigation={true}
+  autoHeight={true}
+  options={{ init: false }}
+  class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl"
+>
+  <Wrapper>
+    {slides.map((slide) => (
+      <Slide class="rounded-2xl overflow-hidden group">
+        <Image src={slide.img} alt={slide.title} class="w-full h-full object-cover" />
+      </Slide>
+    ))}
+  </Wrapper>
+  <ButtonPrev variant="glass" />
+  <ButtonNext variant="glass" />
+</Swiper>
+
+<script>
+  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
+
+  function getDirection(): 'horizontal' | 'vertical' {
+    return window.innerWidth <= 760 ? 'vertical' : 'horizontal';
+  }
+
+  window.addEventListener('load', () => {
+    const swiper = getSwiperFromUniqueSelector('#change-direction-swiper');
+    if (!swiper) return;
+
+    swiper.params.direction = getDirection();
+    swiper.on('resize', (s) => s.changeDirection(getDirection()));
+    swiper.init();
+  });
+</script>
