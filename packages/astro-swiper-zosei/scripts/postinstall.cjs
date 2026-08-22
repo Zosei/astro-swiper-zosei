@@ -1,42 +1,33 @@
-// Copyright (c) Zosei
-// MIT License
+#!/usr/bin/env node
 
 const fs = require('fs');
 const path = require('path');
 
 try {
-  // Find consuming project root (where node_modules is installed)
-  const packageDir = path.resolve(__dirname, '..');
-  const sourceAgentGuide = path.join(packageDir, 'AGENTS', 'README.md');
+  const targetRoot = process.env.INIT_CWD || process.cwd();
 
-  if (!fs.existsSync(sourceAgentGuide)) {
+  const isInternalDev =
+    fs.existsSync(path.join(targetRoot, 'pnpm-workspace.yaml')) ||
+    (fs.existsSync(path.join(targetRoot, 'packages', 'astro-swiper-zosei')) &&
+     fs.existsSync(path.join(targetRoot, 'docs')));
+
+  const isInsideNodeModules = targetRoot.includes('node_modules');
+
+  if (isInternalDev || isInsideNodeModules) {
     process.exit(0);
   }
 
-  // Determine root project directory when installed as dependency
-  let projectRoot = process.env.INIT_CWD || process.cwd();
-
-  // Don't auto-create inside development monorepo itself
-  if (
-    projectRoot === packageDir ||
-    fs.existsSync(path.join(projectRoot, 'pnpm-workspace.yaml')) ||
-    fs.existsSync(path.join(projectRoot, 'packages', 'astro-swiper-zosei')) ||
-    projectRoot.endsWith('astro-swiper-zosei')
-  ) {
-    process.exit(0);
+  const agentsDir = path.join(targetRoot, 'AGENTS');
+  if (!fs.existsSync(agentsDir)) {
+    fs.mkdirSync(agentsDir, { recursive: true });
   }
 
-  const targetAgentDir = path.join(projectRoot, 'AGENTS');
-  const targetAgentGuide = path.join(targetAgentDir, 'astro-swiper-zosei.md');
+  const sourceDoc = path.join(__dirname, '..', 'AGENTS', 'README.md');
+  const targetDoc = path.join(agentsDir, 'astro-swiper-zosei.md');
 
-  if (!fs.existsSync(targetAgentDir)) {
-    fs.mkdirSync(targetAgentDir, { recursive: true });
+  if (fs.existsSync(sourceDoc)) {
+    fs.copyFileSync(sourceDoc, targetDoc);
   }
-
-  if (!fs.existsSync(targetAgentGuide)) {
-    fs.copyFileSync(sourceAgentGuide, targetAgentGuide);
-    console.log('\x1b[32m%s\x1b[0m', '✔ [astro-swiper-zosei]: Created AGENTS/astro-swiper-zosei.md for AI assistants (Cursor, Windsurf, Copilot).');
-  }
-} catch (err) {
-  // Non-blocking: never fail npm install if filesystem permissions are restricted
+} catch (e) {
+  process.exit(0);
 }

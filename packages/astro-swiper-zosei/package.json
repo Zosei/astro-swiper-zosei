@@ -1,6 +1,6 @@
 {
   "name": "astro-swiper-zosei",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "description": "Astro component for swiper, dedicated to slider / carousel / photo swiper / slide, including thumbnails",
   "type": "module",
   "main": "index.js",
