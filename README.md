@@ -12,6 +12,8 @@
 [![Swiper](https://img.shields.io/badge/Swiper-v14%2B-6332F6.svg?logo=swiper&logoColor=white)](https://swiperjs.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+**[🌐 Web Oficial y 50+ Demos](https://zosei.github.io/astro-swiper-zosei/)** • **[✨ Interactive Playground](https://zosei.github.io/astro-swiper-zosei/playground/)** • **[📜 Changelog](https://zosei.github.io/astro-swiper-zosei/changelog/)** • **[📦 npm package](https://www.npmjs.com/package/astro-swiper-zosei)**
+
 ---
 
 ## 🌐 Idiomas / Languages
