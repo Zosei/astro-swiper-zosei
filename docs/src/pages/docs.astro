@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import CodeBlock from '../components/common/CodeBlock.astro';
 
 const swiperProps = [
+  { name: 'preset', type: "'hero' | 'cards' | 'marquee' | 'testimonials' | 'gallery'", default: 'undefined', desc: '⚡ Preset predeterminado de 1 sola línea optimizado para producción.' },
   { name: 'direction', type: "'horizontal' | 'vertical'", default: "'horizontal'", desc: 'Dirección del desplazamiento de los slides.' },
   { name: 'slidesPerView', type: "number | 'auto'", default: '1', desc: 'Cantidad de diapositivas visibles simultáneamente en el viewport.' },
   { name: 'spaceBetween', type: 'number', default: '0', desc: 'Espacio en píxeles de separación (gap) entre cada diapositiva.' },
@@ -35,140 +36,195 @@ const swiperProps = [
 
 const subcomponents = [
   {
-    name: 'Swiper / Swiper.Container',
-    desc: 'Contenedor principal con gestión de ciclo de vida, Intersection Observer y configuración declarativa.',
-    props: 'direction, slidesPerView, spaceBetween, loop, effect, autoplay, navigation, pagination, scrollbar, ...',
+    name: 'Sw / Sw.Container / Swiper',
+    alias: '<Sw>',
+    desc: 'Contenedor principal con gestión de ciclo de vida, soporte de Presets, View Transitions y configuración declarativa.',
+    props: 'preset, direction, slidesPerView, spaceBetween, loop, effect, autoplay, navigation, pagination, scrollbar, ...',
   },
   {
-    name: 'Swiper.Wrapper / Wrapper',
-    desc: 'Contenedor flex/grid obligatorio de los slides. Envuelve directamente los elementos Slide.',
+    name: 'Sw.Wrap / Sw.Wrapper / Wrapper',
+    alias: '<Sw.Wrap>',
+    desc: 'Contenedor flex obligatorio de los slides con soporte de fallback Zero-JS con CSS Scroll-Snap.',
     props: 'class, id, ...HTMLAttributes<"div">',
   },
   {
-    name: 'Swiper.Slide / Slide',
+    name: 'Sw.Slide / Sw.S / Slide',
+    alias: '<Sw.Slide>',
     desc: 'Diapositiva individual para alojar imágenes, tarjetas, contenido HTML o componentes Astro.',
     props: 'class, lazy, ...HTMLAttributes<"div">',
   },
   {
-    name: 'Swiper.ButtonPrev / Swiper.ButtonNext',
+    name: 'Sw.Prev / Sw.Next',
+    alias: '<Sw.Prev /> / <Sw.Next />',
     desc: 'Botones modernos de navegación con iconos SVG nítidos y variantes de Tailwind v4.',
-    props: 'variant ("glass" | "solid" | "glow" | "minimal" | "ghost"), size ("sm" | "md" | "lg"), color ("indigo" | "purple" | "cyan" | "emerald" | "rose" | "white"), rounded',
+    props: 'variant ("glass" | "solid" | "minimal" | "floating"), size ("sm" | "md" | "lg"), color, rounded',
   },
   {
-    name: 'Swiper.Pagination / Pagination',
+    name: 'Sw.Pag / Sw.Pagination',
+    alias: '<Sw.Pag />',
     desc: 'Indicador de paginación por bullets, números de fracción o barra de progreso.',
-    props: 'variant ("pills" | "glow" | "dots"), color ("indigo" | "purple" | "cyan" | "emerald" | "rose" | "white")',
+    props: 'variant ("pills" | "dots" | "dynamic" | "fraction" | "progressbar"), color ("indigo" | "purple" | "cyan" | "white")',
   },
   {
-    name: 'Swiper.Scrollbar / Scrollbar',
-    desc: 'Barra de desplazamiento arrastrable personalizada con soporte de arrastre gestual.',
-    props: 'color ("indigo" | "purple" | "cyan" | "emerald" | "white"), class',
+    name: 'Sw.Scroll / Sw.Scrollbar',
+    alias: '<Sw.Scroll />',
+    desc: 'Barra de desplazamiento arrastrable personalizada con soporte gestual.',
+    props: 'color, class',
   },
   {
-    name: 'Swiper.LazyPreloader / LazyPreloader',
-    desc: 'Spinner SVG animado para carga diferida (lazy load) de imágenes y assets pesados.',
-    props: 'color, class ("swiper-lazy-preloader")',
+    name: 'Sw.Toggle / Sw.AutoplayToggle',
+    alias: '<Sw.Toggle />',
+    desc: 'Control interactivo de Play / Pausa con estado animado SVG para carruseles con autoplay.',
+    props: 'variant, size, position ("top-right" | "bottom-right" | "top-left" | "bottom-left" | "none")',
+  },
+  {
+    name: 'Sw.Count / Sw.Counter',
+    alias: '<Sw.Count />',
+    desc: 'Badge numérico en tiempo real del slide activo ("01 / 08").',
+    props: 'padZero (true/false), separator (" / "), variant, size, position',
+  },
+  {
+    name: 'Sw.Full / Sw.Fullscreen',
+    alias: '<Sw.Full />',
+    desc: 'Botón nativo para expandir el carrusel a pantalla completa.',
+    props: 'variant, size, position',
+  },
+  {
+    name: 'Sw.Lazy / Sw.LazyPreloader',
+    alias: '<Sw.Lazy />',
+    desc: 'Spinner SVG animado para carga diferida (lazy load) de imágenes.',
+    props: 'color, class',
   },
 ];
 ---
 
-<Layout title="Documentación de Props y API - Astro Swiper">
+<Layout title="Documentación de Props, Presets y API — Astro Swiper Zosei v0.15.0">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 py-12">
     <!-- Header -->
     <div class="space-y-4 text-center max-w-3xl mx-auto">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 text-indigo-300 text-xs font-bold border border-indigo-500/20 shadow-inner">
-        <span data-i18n="docs.badge">📖 Referencia de TypeScript & Props</span>
+        <span data-i18n="docs.badge">📖 Referencia de TypeScript, Presets & API v0.15.0</span>
       </div>
       <h1 data-i18n="docs.title" class="text-4xl sm:text-5xl font-black text-white tracking-tight">
         Documentación de Parámetros y API
       </h1>
       <p data-i18n="docs.subtitle" class="text-slate-300 text-base sm:text-lg leading-relaxed">
-        Configura carruseles completos en Astro pasando props directamente a <code class="text-indigo-400 font-mono font-bold bg-indigo-500/10 px-2 py-0.5 rounded">&lt;Swiper /&gt;</code> o usando el patrón de importación única <code class="text-purple-400 font-mono font-bold bg-purple-500/10 px-2 py-0.5 rounded">&lt;Swiper.Slide /&gt;</code>.
+        Configura carruseles completos en Astro pasando props directamente a <code class="text-indigo-400 font-mono font-bold bg-indigo-500/10 px-2 py-0.5 rounded">&lt;Sw /&gt;</code>, usando <code class="text-purple-400 font-mono font-bold bg-purple-500/10 px-2 py-0.5 rounded">preset="..."</code> o probándolos en el <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/playground`} class="text-cyan-400 underline font-semibold hover:text-cyan-300">Playground interactivo</a>.
       </p>
+    </div>
+
+    <!-- Playground Promo Banner -->
+    <div class="rounded-3xl border border-indigo-500/30 bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center sm:text-left">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">✨ Novedad v0.15.0</span>
+        <h3 class="text-2xl font-black text-white">¿Prefieres construirlo visualmente?</h3>
+        <p class="text-slate-300 text-sm max-w-xl">Usa nuestro constructor interactivo para ajustar efectos, velocidades, colores y generar código Astro en 1 clic.</p>
+      </div>
+      <a
+        href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/playground`}
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all shadow-xl hover:scale-105 active:scale-95 flex-shrink-0"
+      >
+        <span>Abrir Playground</span>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
     </div>
 
     <!-- Instalación y Patrones de Importación -->
     <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
       <h2 data-i18n="docs.quickInstall" class="text-xl font-bold text-white flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
-        Instalación en tu Proyecto Astro (Astro 5+ & 7+ Ready)
+        Instalación Oficial (Astro 5+ & 7+ Ready)
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="space-y-2">
-          <span class="text-xs text-slate-400 font-mono">1. Instala con pnpm:</span>
+          <span class="text-xs text-slate-400 font-mono">1. Integración automática con Astro CLI:</span>
           <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-indigo-300 flex items-center justify-between">
-            <span>pnpm add astro-swiper-zosei swiper</span>
+            <code>npx astro add astro-swiper-zosei</code>
           </div>
         </div>
+
         <div class="space-y-2">
-          <span class="text-xs text-slate-400 font-mono">2. O con npm:</span>
-          <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-indigo-300 flex items-center justify-between">
-            <span>npm install astro-swiper-zosei swiper</span>
+          <span class="text-xs text-slate-400 font-mono">2. O con tu gestor de paquetes favorito:</span>
+          <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-purple-300 flex items-center justify-between">
+            <code>pnpm add astro-swiper-zosei swiper</code>
           </div>
         </div>
-      </div>
-
-      <!-- Patrón 1: Importación Única con Dot Notation (Compound Component) -->
-      <div class="pt-4 border-t border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 data-i18n="docs.singleImportTitle" class="text-sm font-bold text-indigo-300 flex items-center gap-2">
-            <span>✨ Patrón de Importación Única (Compound Component):</span>
-          </h3>
-          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Recomendado</span>
-        </div>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Importa únicamente <code class="text-indigo-400 font-mono">Swiper</code> y accede a todos sus subcomponentes (<code class="text-indigo-300 font-mono">Swiper.Wrapper</code>, <code class="text-indigo-300 font-mono">Swiper.Slide</code>, <code class="text-indigo-300 font-mono">Swiper.ButtonNext</code>, <code class="text-indigo-300 font-mono">Swiper.Pagination</code>) para un código más limpio y modular:
-        </p>
-        <CodeBlock
-          lang="astro"
-          code={`---
-import Swiper from 'astro-swiper-zosei';
----
-
-<Swiper slidesPerView={3} spaceBetween={20} loop navigation pagination class="py-6">
-  <Swiper.Wrapper>
-    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 1</Swiper.Slide>
-    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 2</Swiper.Slide>
-    <Swiper.Slide class="h-64 rounded-2xl bg-slate-800 text-white flex items-center justify-center">Slide 3</Swiper.Slide>
-  </Swiper.Wrapper>
-  <Swiper.ButtonPrev />
-  <Swiper.ButtonNext />
-  <Swiper.Pagination />
-</Swiper>`}
-        />
       </div>
     </div>
 
-    <!-- Tabla de Props de <Swiper /> -->
-    <div class="space-y-6">
+    <!-- Tabla de Presets Listos -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
       <div class="flex items-center justify-between">
         <div>
-          <h2 data-i18n="docs.propsTableTitle" class="text-2xl font-black text-white">Parámetros del Componente &lt;Swiper /&gt;</h2>
-          <p data-i18n="docs.propsTableSubtitle" class="text-sm text-slate-400 mt-1">Todas las propiedades son tipadas e inferidas automáticamente por TypeScript.</p>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+            Sistema de Presets Listos para Producción (<code class="text-cyan-300 font-mono">preset="..."</code>)
+          </h2>
+          <p class="text-slate-400 text-sm mt-1">Configuraciones de 1 línea optimizadas para casos de uso comunes.</p>
         </div>
-        <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-bold">
-          {swiperProps.length} <span data-i18n="docs.propsCount">Props Soportadas</span>
-        </span>
       </div>
 
-      <div class="overflow-x-auto rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl backdrop-blur-xl">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800">
+          <span class="text-xs font-mono font-bold text-indigo-400 uppercase">preset="hero"</span>
+          <h4 class="text-white font-bold mt-1">Hero Banner</h4>
+          <p class="text-slate-400 text-xs mt-2">Fade suave, autoplay con pausa al hover, loop infinito y controles glass.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800">
+          <span class="text-xs font-mono font-bold text-purple-400 uppercase">preset="cards"</span>
+          <h4 class="text-white font-bold mt-1">3D Cards</h4>
+          <p class="text-slate-400 text-xs mt-2">Efecto de tarjetas tridimensionales apiladas con sombras y rotación suave.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800">
+          <span class="text-xs font-mono font-bold text-cyan-400 uppercase">preset="marquee"</span>
+          <h4 class="text-white font-bold mt-1">Logo Marquee</h4>
+          <p class="text-slate-400 text-xs mt-2">Desplazamiento infinito continuo sin pausas para marcas y patrocinadores.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800">
+          <span class="text-xs font-mono font-bold text-emerald-400 uppercase">preset="testimonials"</span>
+          <h4 class="text-white font-bold mt-1">Testimonials</h4>
+          <p class="text-slate-400 text-xs mt-2">Slides centrados y responsivos (1 a 3 columnas) con paginación dinámica.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800">
+          <span class="text-xs font-mono font-bold text-rose-400 uppercase">preset="gallery"</span>
+          <h4 class="text-white font-bold mt-1">Gallery Zoom</h4>
+          <p class="text-slate-400 text-xs mt-2">Galería interactiva con soporte de zoom gestual y paginación por fracción.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de Props -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+      <div>
+        <h2 data-i18n="docs.propsTableTitle" class="text-xl font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          Parámetros del Componente &lt;Sw /&gt;
+        </h2>
+        <p data-i18n="docs.propsTableSubtitle" class="text-slate-400 text-sm mt-1">
+          Todas las propiedades son tipadas e inferidas automáticamente por TypeScript.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
         <table class="w-full text-left text-xs sm:text-sm">
-          <thead class="bg-slate-950/80 text-slate-200 border-b border-slate-800 font-mono text-xs uppercase tracking-wider">
-            <tr>
-              <th data-i18n="docs.colProp" class="px-6 py-4 font-bold text-indigo-400">Propiedad</th>
-              <th data-i18n="docs.colType" class="px-6 py-4 font-bold text-purple-400">Tipo TypeScript</th>
-              <th data-i18n="docs.colDefault" class="px-6 py-4 font-bold text-cyan-400">Por Defecto</th>
-              <th data-i18n="docs.colDesc" class="px-6 py-4 font-bold text-slate-300">Descripción & Comportamiento</th>
+          <thead>
+            <tr class="border-b border-slate-800 text-slate-400 font-mono uppercase text-[11px]">
+              <th class="py-3 px-4">Propiedad</th>
+              <th class="py-3 px-4">Tipo TypeScript</th>
+              <th class="py-3 px-4">Por Defecto</th>
+              <th class="py-3 px-4">Descripción</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-800/80 text-slate-300">
-            {swiperProps.map((p) => (
-              <tr class="hover:bg-indigo-500/[0.04] transition-colors">
-                <td class="px-6 py-4 font-mono font-bold text-indigo-300 whitespace-nowrap">{p.name}</td>
-                <td class="px-6 py-4 font-mono text-purple-300 text-xs whitespace-nowrap">{p.type}</td>
-                <td class="px-6 py-4 font-mono text-cyan-300 text-xs whitespace-nowrap">{p.default}</td>
-                <td class="px-6 py-4 text-slate-300 leading-relaxed">{p.desc}</td>
+          <tbody class="divide-y divide-slate-800/60 text-slate-300">
+            {swiperProps.map((prop) => (
+              <tr class="hover:bg-slate-800/30 transition-colors">
+                <td class="py-3.5 px-4 font-mono font-bold text-indigo-300">{prop.name}</td>
+                <td class="py-3.5 px-4 font-mono text-purple-300 text-xs">{prop.type}</td>
+                <td class="py-3.5 px-4 font-mono text-slate-400 text-xs">{prop.default}</td>
+                <td class="py-3.5 px-4 leading-relaxed">{prop.desc}</td>
               </tr>
             ))}
           </tbody>
@@ -176,58 +232,31 @@ import Swiper from 'astro-swiper-zosei';
       </div>
     </div>
 
-    <!-- Subcomponentes Exportados -->
-    <div class="space-y-6">
+    <!-- Subcomponentes y Micro-controles -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
       <div>
-        <h2 data-i18n="docs.subcomponentsTitle" class="text-2xl font-black text-white">Componentes Auxiliares y Variantes</h2>
-        <p data-i18n="docs.subcomponentsSubtitle" class="text-sm text-slate-400 mt-1">Componentes modulares estilizados con Tailwind CSS v4 para navegación, paginación y miniaturas.</p>
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+          Subcomponentes & Micro-Controles v0.15.0
+        </h2>
+        <p class="text-slate-400 text-sm mt-1">
+          Componentes modulares estilizados con Tailwind CSS v4 para navegación, paginación, contadores y controles interactivos.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {subcomponents.map((c) => (
-          <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-xl space-y-3">
-            <h3 class="text-base font-extrabold text-indigo-300 font-mono">{c.name}</h3>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{c.desc}</p>
-            <div class="pt-2 border-t border-slate-800/80">
-              <span class="text-[11px] font-mono text-slate-400 block font-semibold mb-1">Props y Opciones:</span>
-              <span class="text-[11px] font-mono text-purple-300 leading-relaxed bg-slate-950/60 p-2 rounded-xl block border border-slate-800">
-                {c.props}
-              </span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {subcomponents.map((sub) => (
+          <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-white text-sm">{sub.name}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">{sub.alias}</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">{sub.desc}</p>
+            <div class="text-[11px] font-mono text-slate-400 bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <span class="text-slate-500 font-semibold">Props: </span>{sub.props}
             </div>
           </div>
         ))}
-      </div>
-    </div>
-
-    <!-- API y Funciones Utilitarias -->
-    <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
-      <div>
-        <h2 data-i18n="docs.clientApiTitle" class="text-2xl font-black text-white">Funciones Utilitarias en el Cliente</h2>
-        <p data-i18n="docs.clientApiSubtitle" class="text-sm text-slate-400 mt-1">Para acceder a la instancia programática de Swiper cuando sea necesario.</p>
-      </div>
-
-      <div class="space-y-4">
-        <h3 class="text-base font-bold text-indigo-300 font-mono">getSwiperFromUniqueSelector(selector, options?)</h3>
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-          Permite recuperar la instancia viva de Swiper asociada a un selector (ID o clase) en scripts de cliente para llamar a métodos como <code class="font-mono text-indigo-300">swiper.slideNext()</code>, <code class="font-mono text-indigo-300">swiper.slideTo(index)</code> o eventos <code class="font-mono text-indigo-300">swiper.on(...)</code>.
-        </p>
-
-        <CodeBlock
-          lang="astro"
-          code={`<script>
-  import { getSwiperFromUniqueSelector } from 'astro-swiper-zosei';
-
-  window.addEventListener('load', () => {
-    const swiper = getSwiperFromUniqueSelector('#my-swiper-id');
-    if (swiper) {
-      console.log('Slide activo:', swiper.activeIndex);
-      swiper.on('slideChange', () => {
-        console.log('Nuevo índice:', swiper.activeIndex);
-      });
-    }
-  });
-</script>`}
-        />
       </div>
     </div>
   </div>

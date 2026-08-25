@@ -1,0 +1,116 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {
+  /** Rellenar con ceros a la izquierda (ej: 01 en vez de 1) */
+  padZero?: boolean;
+  /** Separador entre el slide actual y el total */
+  separator?: string;
+  /** Variante visual */
+  variant?: 'glass' | 'solid' | 'minimal' | 'pill';
+  /** Tamaño del texto */
+  size?: 'sm' | 'md' | 'lg';
+  /** Posición predeterminada */
+  position?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left' | 'none';
+}
+
+const {
+  padZero = true,
+  separator = ' / ',
+  variant = 'glass',
+  size = 'md',
+  position = 'none',
+  class: className = '',
+  ...props
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'text-xs px-2.5 py-1',
+  md: 'text-sm px-3 py-1.5',
+  lg: 'text-base px-4 py-2',
+}[size];
+
+const variantClasses = {
+  glass: 'bg-slate-900/60 backdrop-blur-md border border-white/10 text-white shadow-lg',
+  solid: 'bg-indigo-600 text-white shadow-md',
+  minimal: 'bg-transparent text-slate-300',
+  pill: 'bg-white/10 text-white backdrop-blur-md border border-white/15',
+}[variant];
+
+const positionClasses = {
+  'none': '',
+  'top-right': 'absolute top-4 right-4 z-20',
+  'bottom-right': 'absolute bottom-4 right-4 z-20',
+  'top-left': 'absolute top-4 left-4 z-20',
+  'bottom-left': 'absolute bottom-4 left-4 z-20',
+}[position];
+---
+
+<div
+  class:list={[
+    'astro-swiper-counter inline-flex items-center justify-center font-mono font-semibold rounded-full select-none tracking-wider',
+    sizeClasses,
+    variantClasses,
+    positionClasses,
+    className,
+  ]}
+  data-pad-zero={padZero ? 'true' : 'false'}
+  data-separator={separator}
+  {...props}
+>
+  <span class="current-slide">01</span>
+  <span class="separator opacity-60 mx-1">{separator}</span>
+  <span class="total-slides">01</span>
+</div>
+
+<script>
+  function initCounters() {
+    const counters = document.querySelectorAll('.astro-swiper-counter');
+    counters.forEach((counter) => {
+      if ((counter as any)._initialized) return;
+      (counter as any)._initialized = true;
+
+      const padZero = counter.getAttribute('data-pad-zero') === 'true';
+      const container = counter.closest('.swiper') || counter.closest('astro-swiper-zosei')?.querySelector('.swiper');
+      if (!container) return;
+
+      const formatNum = (n: number) => (padZero && n < 10 ? `0${n}` : `${n}`);
+
+      const updateCounter = (swiper: any) => {
+        if (!swiper) return;
+        const currentEl = counter.querySelector('.current-slide');
+        const totalEl = counter.querySelector('.total-slides');
+
+        const realIndex = (swiper.realIndex ?? swiper.activeIndex ?? 0) + 1;
+        const total = swiper.slides ? (swiper.slides.length - (swiper.loopedSlides ? swiper.loopedSlides * 2 : 0)) : (swiper.snapGrid?.length || 1);
+        const actualTotal = Math.max(total, 1);
+
+        if (currentEl) currentEl.textContent = formatNum(Math.min(realIndex, actualTotal));
+        if (totalEl) totalEl.textContent = formatNum(actualTotal);
+      };
+
+      const swiper = (container as any).swiper || (counter.closest('astro-swiper-zosei') as any)?.astroSwiper;
+      if (swiper) {
+        updateCounter(swiper);
+        swiper.on('slideChange', () => updateCounter(swiper));
+        swiper.on('init', () => updateCounter(swiper));
+      } else {
+        // Observar cuando se inicialice Swiper
+        const observer = new MutationObserver(() => {
+          const s = (container as any).swiper || (counter.closest('astro-swiper-zosei') as any)?.astroSwiper;
+          if (s) {
+            updateCounter(s);
+            s.on('slideChange', () => updateCounter(s));
+            observer.disconnect();
+          }
+        });
+        observer.observe(container, { attributes: true });
+      }
+    });
+  }
+
+  initCounters();
+  document.addEventListener('astro:page-load', initCounters);
+</script>

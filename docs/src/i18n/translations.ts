@@ -8,6 +8,8 @@ export const translations = {
     nav: {
       demos: 'Demos',
       docs: 'Documentación',
+      playground: 'Playground',
+      changelog: 'Changelog',
       snippets: 'Snippets VS Code',
       github: 'GitHub',
       edition: 'Tailwind v4 • Astro 5+ / 7+ • Modern Edition',
@@ -78,6 +80,8 @@ export const translations = {
     nav: {
       demos: 'Demos',
       docs: 'Documentation',
+      playground: 'Playground',
+      changelog: 'Changelog',
       snippets: 'VS Code Snippets',
       github: 'GitHub',
       edition: 'Tailwind v4 • Astro 5+ / 7+ • Modern Edition',

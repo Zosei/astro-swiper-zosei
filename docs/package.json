@@ -14,10 +14,10 @@
     "install-swipers": "cp ../../../astro-dev/src/content/docs/packages/astro-swiper-zosei/*.{astro,css} src/swiper-components"
   },
   "dependencies": {
-    "astro": "^7.2.4",
+    "astro": "^7.2.6",
     "astro-swiper-zosei": "workspace:*",
-    "tailwindcss": "^4.1.18",
-    "@tailwindcss/vite": "^4.1.18"
+    "tailwindcss": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

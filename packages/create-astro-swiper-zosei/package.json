@@ -1,6 +1,6 @@
 {
   "name": "create-astro-swiper-zosei",
-  "version": "0.14.7",
+  "version": "0.15.0",
   "description": "Interactive CLI for Astro Swiper Zosei - Scaffold AI Agent docs & carousels",
   "type": "module",
   "bin": {

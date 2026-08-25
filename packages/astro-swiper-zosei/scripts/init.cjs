@@ -2,7 +2,7 @@
 
 /**
  * CLI Interactivo estilo Astro para astro-swiper-zosei
- * Inspirado en @clack/prompts con cajas unicode, colores y selección interactiva.
+ * Inspirado en @clack/prompts con cajas unicode, colores y generador de componentes.
  */
 
 const fs = require('fs');
@@ -52,15 +52,139 @@ function createAgentDoc(root) {
   if (fs.existsSync(sourceFile)) {
     fs.copyFileSync(sourceFile, targetFile);
   } else {
-    // Fallback completo y exhaustivo
-    const fallbackContent = fs.readFileSync(path.join(__dirname, '../../docs/AGENTS/astro-swiper-zosei.md'), 'utf8');
-    fs.writeFileSync(targetFile, fallbackContent, 'utf8');
+    const fallbackPath = path.join(__dirname, '../../docs/AGENTS/astro-swiper-zosei.md');
+    if (fs.existsSync(fallbackPath)) {
+      fs.copyFileSync(fallbackPath, targetFile);
+    }
   }
 
   return targetFile;
 }
 
+const TEMPLATES = {
+  hero: `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw preset="hero" class="w-full h-[550px] rounded-3xl overflow-hidden shadow-2xl relative">
+  <Sw.Wrap>
+    <Sw.Slide class="w-full h-full bg-gradient-to-br from-indigo-900 via-slate-900 to-black flex items-center justify-center p-8">
+      <div class="text-center max-w-xl">
+        <h2 class="text-4xl font-extrabold text-white mb-3">Slide 1: Experiencia Increíble</h2>
+        <p class="text-slate-300 text-lg">Construido con Astro 7+ y Tailwind CSS v4.</p>
+      </div>
+    </Sw.Slide>
+    <Sw.Slide class="w-full h-full bg-gradient-to-br from-purple-900 via-slate-900 to-black flex items-center justify-center p-8">
+      <div class="text-center max-w-xl">
+        <h2 class="text-4xl font-extrabold text-white mb-3">Slide 2: Efecto Fade Fluido</h2>
+        <p class="text-slate-300 text-lg">Optimizado con Intersection Observer.</p>
+      </div>
+    </Sw.Slide>
+  </Sw.Wrap>
+
+  <!-- Controles interactivos -->
+  <Sw.Prev variant="glass" />
+  <Sw.Next variant="glass" />
+  <Sw.Pag variant="pills" color="indigo" />
+  <Sw.Toggle position="top-right" />
+  <Sw.Count position="top-left" />
+  <Sw.Full position="bottom-right" />
+</Sw>
+`,
+  cards: `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw preset="cards" class="w-72 sm:w-80 h-96 mx-auto py-8">
+  <Sw.Wrap>
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-600 to-purple-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+      Tarjeta 1
+    </Sw.Slide>
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+      Tarjeta 2
+    </Sw.Slide>
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-rose-600 to-orange-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+      Tarjeta 3
+    </Sw.Slide>
+  </Sw.Wrap>
+</Sw>
+`,
+  marquee: `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw preset="marquee" class="w-full py-6 bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/10">
+  <Sw.Wrap>
+    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Alfa</Sw.Slide>
+    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Beta</Sw.Slide>
+    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Gamma</Sw.Slide>
+    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Delta</Sw.Slide>
+    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Epsilon</Sw.Slide>
+  </Sw.Wrap>
+</Sw>
+`,
+  testimonials: `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw preset="testimonials" class="w-full max-w-6xl mx-auto py-10">
+  <Sw.Wrap>
+    <Sw.Slide class="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl flex flex-col justify-between">
+      <p class="text-slate-300 text-base mb-6 leading-relaxed">"La mejor librería de carruseles para Astro. Cero configuración compleja y rendimiento impecable."</p>
+      <div>
+        <h4 class="font-bold text-white">Carlos Dev</h4>
+        <span class="text-xs text-indigo-400">Frontend Architect</span>
+      </div>
+    </Sw.Slide>
+    <Sw.Slide class="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl flex flex-col justify-between">
+      <p class="text-slate-300 text-base mb-6 leading-relaxed">"Los presets y la sintaxis corta &lt;Sw&gt; nos ahorraron horas de desarrollo."</p>
+      <div>
+        <h4 class="font-bold text-white">María Luna</h4>
+        <span class="text-xs text-indigo-400">Tech Lead</span>
+      </div>
+    </Sw.Slide>
+  </Sw.Wrap>
+  <Sw.Pag variant="dynamic" color="purple" class="mt-8" />
+</Sw>
+`,
+};
+
+function addTemplate(templateName) {
+  const root = getProjectRoot();
+  const validNames = Object.keys(TEMPLATES);
+  const targetName = templateName ? templateName.toLowerCase() : 'hero';
+
+  if (!validNames.includes(targetName)) {
+    console.log(`\n${c.yellow}⚠️ Plantilla "${templateName}" no encontrada.${c.reset}`);
+    console.log(`Plantillas disponibles: ${c.cyan}${validNames.join(', ')}${c.reset}\n`);
+    process.exit(1);
+  }
+
+  const componentsDir = path.join(root, 'src', 'components');
+  if (!fs.existsSync(componentsDir)) {
+    fs.mkdirSync(componentsDir, { recursive: true });
+  }
+
+  const fileName = `${targetName.charAt(0).toUpperCase() + targetName.slice(1)}Carousel.astro`;
+  const targetPath = path.join(componentsDir, fileName);
+
+  fs.writeFileSync(targetPath, TEMPLATES[targetName], 'utf8');
+
+  console.log(`\n${c.magenta}┌${c.reset}  ${c.bold}${c.cyan}🌌 Astro Swiper Zosei${c.reset} ${c.dim}— Component Generator${c.reset}`);
+  console.log(`${c.magenta}│${c.reset}`);
+  console.log(`${c.magenta}├${c.reset}  ${c.green}✔${c.reset}  Componente creado en: ${c.cyan}./src/components/${fileName}${c.reset}`);
+  console.log(`${c.magenta}│${c.reset}     ${c.dim}Plantilla: preset="${targetName}" con Tailwind CSS v4.${c.reset}`);
+  console.log(`${c.magenta}│${c.reset}`);
+  console.log(`${c.magenta}└${c.reset}  ${c.green}🚀 ¡Úsalo en tus páginas con: import ${fileName.replace('.astro', '')} from '../components/${fileName}';${c.reset}\n`);
+}
+
 async function runCli() {
+  const args = process.argv.slice(2);
+  if (args[0] === 'add') {
+    addTemplate(args[1] || 'hero');
+    return;
+  }
+
   const root = getProjectRoot();
 
   // Omitir en desarrollo interno del monorepo
@@ -73,7 +197,7 @@ async function runCli() {
     process.exit(0);
   }
 
-  console.log(`\n${c.magenta}┌${c.reset}  ${c.bold}${c.cyan}🌌 Astro Swiper Zosei${c.reset} ${c.dim}— Asistente de Configuración para IA${c.reset}`);
+  console.log(`\n${c.magenta}┌${c.reset}  ${c.bold}${c.cyan}🌌 Astro Swiper Zosei${c.reset} ${c.dim}v0.15.0 — Asistente de Configuración para IA${c.reset}`);
   console.log(`${c.magenta}│${c.reset}`);
 
   const rl = readline.createInterface({

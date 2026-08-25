@@ -1,0 +1,184 @@
+---
+// Copyright (c) Zosei
+// MIT License
+
+import Layout from '../layouts/Layout.astro';
+import { SITE_CONFIG } from '../config/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const releases = [
+  {
+    version: '0.15.0',
+    date: '25 de Agosto, 2026',
+    tag: 'Latest Release',
+    badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+    title: '🚀 Integración Oficial con Astro, Presets de Producción, View Transitions y Playground',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'Astro Integration',
+        text: 'Soporte oficial para el comando `npx astro add astro-swiper-zosei` y configuración automática en `astro.config.mjs` con `import astroSwiper from "astro-swiper-zosei/integration"`.',
+      },
+      {
+        type: 'feature',
+        badge: 'Astro View Transitions',
+        text: 'Compatibilidad completa con `<ClientRouter />` y ciclo de vida de Astro (`astro:page-load` y `astro:before-swap`) para destruir y recrear instancias sin memory leaks al navegar entre páginas.',
+      },
+      {
+        type: 'feature',
+        badge: 'Presets Listos',
+        text: 'Nuevo atributo `preset="hero" | "cards" | "marquee" | "testimonials" | "gallery"` para configurar carruseles modernos en una sola línea de código.',
+      },
+      {
+        type: 'feature',
+        badge: 'Micro-Controles',
+        text: 'Nuevos subcomponentes auxiliares: `<Sw.Toggle />` (Play/Pause con SVG animado), `<Sw.Count />` (Contador de slides en tiempo real) y `<Sw.Full />` (Pantalla completa nativa).',
+      },
+      {
+        type: 'feature',
+        badge: 'Zero-JS Fallback',
+        text: 'Carrusel nativo fluido con `scroll-snap-type: x mandatory` de Tailwind v4 antes de que inicialice JavaScript (CLS = 0).',
+      },
+      {
+        type: 'feature',
+        badge: 'Interactive Playground',
+        text: 'Constructor visual interactivo en la web oficial (`/playground`) con vista previa en vivo y generador de código Astro en 1 clic.',
+      },
+      {
+        type: 'feature',
+        badge: 'CLI Component Generator',
+        text: 'Generación de componentes de carrusel en tu proyecto con `npx astro-swiper-zosei add hero|cards|marquee|testimonials`.',
+      },
+    ],
+  },
+  {
+    version: '0.14.7',
+    date: '22 de Agosto, 2026',
+    tag: 'SEO & Docs',
+    badgeColor: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+    title: '✨ Documentación Master para Agentes IA y Suite Completa de SEO',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'Master AI Agent Docs',
+        text: 'Guía técnica profunda en `./AGENTS/astro-swiper-zosei.md` con 7 ejemplos completos de código y soporte para Cursor, Windsurf, Claude, Copilot y ChatGPT.',
+      },
+      {
+        type: 'feature',
+        badge: 'Pase 100% de Props',
+        text: 'Desbloqueo de todos los parámetros originales de Swiper.js (`coverflowEffect`, `cardsEffect`, etc.) como props directas en `<Sw />`.',
+      },
+      {
+        type: 'feature',
+        badge: 'Suite de SEO',
+        text: 'Banner Open Graph oficial de 1200x630px, metadatos enriquecidos, Twitter Cards y datos estructurados Schema.org JSON-LD.',
+      },
+    ],
+  },
+  {
+    version: '0.14.6',
+    date: '22 de Agosto, 2026',
+    tag: 'CLI Package',
+    badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+    title: '📦 Publicación de `create-astro-swiper-zosei` y CLI Estilo Astro',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'create package',
+        text: 'Publicación de `create-astro-swiper-zosei` para permitir `npm create astro-swiper-zosei` y `pnpm create astro-swiper-zosei`.',
+      },
+      {
+        type: 'feature',
+        badge: 'Estilo @clack/prompts',
+        text: 'Asistente de consola interactivo con colores y cajas unicode estilo Astro CLI.',
+      },
+    ],
+  },
+  {
+    version: '0.14.0',
+    date: '20 de Agosto, 2026',
+    tag: 'Major Rewrite',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+    title: '🌌 Reinicio Moderno: Sintaxis Concisa <Sw> y Tailwind CSS v4',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'Compound Component',
+        text: 'Introducción del patrón de importación única `import Sw from "astro-swiper-zosei"` con `<Sw.Wrap>`, `<Sw.Slide>`, `<Sw.Prev>`, `<Sw.Next>`, `<Sw.Pag>`.',
+      },
+      {
+        type: 'feature',
+        badge: 'Tailwind CSS v4',
+        text: 'Diseño visual renovado con tokens nativos de Tailwind v4 y modo oscuro de alto contraste.',
+      },
+      {
+        type: 'feature',
+        badge: '50+ Demos Catalog',
+        text: 'Catálogo de más de 50 demostraciones en vivo con páginas dedicadas `/demos/[slug]`.',
+      },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Historial de Versiones & Changelog — Astro Swiper Zosei"
+  description="Consulta todas las novedades, mejoras de rendimiento, nuevos componentes y cambios importantes organizados cronológicamente por versión."
+>
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1">
+    <!-- Header -->
+    <div class="mb-12 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm">
+        <span>📜 Historial de Lanzamientos</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Changelog & <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">Versiones</span>
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+        Registro detallado de todas las actualizaciones, nuevas características y mejoras introducidas en cada versión de <code class="text-indigo-300 font-mono">astro-swiper-zosei</code>.
+      </p>
+    </div>
+
+    <!-- Timeline of Releases -->
+    <div class="space-y-12 relative before:absolute before:inset-0 before:left-4 sm:before:left-8 before:w-0.5 before:bg-gradient-to-b before:from-indigo-500 before:via-purple-500/50 before:to-slate-800">
+      {releases.map((release) => (
+        <div class="relative pl-10 sm:pl-16 group">
+          <!-- Timeline Node Point -->
+          <div class="absolute left-2 sm:left-6 top-1.5 -translate-x-1/2 w-4 h-4 rounded-full bg-[#080b11] border-2 border-indigo-500 group-hover:scale-125 group-hover:border-cyan-400 transition-all duration-300 shadow-lg shadow-indigo-500/50"></div>
+
+          <!-- Card Body -->
+          <div class="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl hover:border-indigo-500/40 transition-all duration-300">
+            <!-- Header of Release -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-800/80 pb-4">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl sm:text-3xl font-extrabold text-white font-mono">v{release.version}</span>
+                <span class:list={['text-xs px-2.5 py-0.5 rounded-full font-bold border', release.badgeColor]}>
+                  {release.tag}
+                </span>
+              </div>
+              <span class="text-xs text-slate-400 font-medium">{release.date}</span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="text-lg sm:text-xl font-bold text-slate-100 mb-6 leading-snug">
+              {release.title}
+            </h3>
+
+            <!-- Highlights List -->
+            <div class="space-y-3">
+              {release.highlights.map((item) => (
+                <div class="flex items-start gap-3 text-sm text-slate-300 leading-relaxed">
+                  <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-semibold font-mono flex-shrink-0 mt-0.5">
+                    {item.badge}
+                  </span>
+                  <span>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>

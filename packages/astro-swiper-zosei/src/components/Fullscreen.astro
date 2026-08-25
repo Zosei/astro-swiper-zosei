@@ -1,0 +1,126 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'button'> {
+  /** Estilo visual */
+  variant?: 'glass' | 'solid' | 'minimal' | 'floating';
+  /** Tamaño del botón */
+  size?: 'sm' | 'md' | 'lg';
+  /** Posición predeterminada */
+  position?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left' | 'none';
+  /** Etiqueta de accesibilidad */
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'glass',
+  size = 'md',
+  position = 'none',
+  ariaLabel = 'Alternar pantalla completa',
+  class: className = '',
+  ...props
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-8 h-8 p-1.5 text-xs',
+  md: 'w-10 h-10 p-2 text-sm',
+  lg: 'w-12 h-12 p-2.5 text-base',
+}[size];
+
+const variantClasses = {
+  glass: 'bg-slate-900/60 backdrop-blur-md border border-white/10 text-white hover:bg-slate-800/80 shadow-lg hover:scale-105 active:scale-95',
+  solid: 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md hover:scale-105 active:scale-95',
+  minimal: 'bg-transparent text-slate-300 hover:text-white hover:bg-white/10',
+  floating: 'bg-white/90 text-slate-900 hover:bg-white shadow-xl hover:scale-105 active:scale-95',
+}[variant];
+
+const positionClasses = {
+  'none': '',
+  'top-right': 'absolute top-4 right-4 z-20',
+  'bottom-right': 'absolute bottom-4 right-4 z-20',
+  'top-left': 'absolute top-4 left-4 z-20',
+  'bottom-left': 'absolute bottom-4 left-4 z-20',
+}[position];
+---
+
+<button
+  type="button"
+  class:list={[
+    'astro-swiper-fullscreen-toggle inline-flex items-center justify-center rounded-full transition-all duration-200 cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50',
+    sizeClasses,
+    variantClasses,
+    positionClasses,
+    className,
+  ]}
+  aria-label={ariaLabel}
+  data-state="normal"
+  {...props}
+>
+  <!-- Icono Expandir -->
+  <svg class="icon-expand w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+  </svg>
+  <!-- Icono Comprimir -->
+  <svg class="icon-compress w-full h-full hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+  </svg>
+</button>
+
+<script>
+  function initFullscreenToggles() {
+    const buttons = document.querySelectorAll('.astro-swiper-fullscreen-toggle');
+    buttons.forEach((btn) => {
+      if ((btn as any)._initialized) return;
+      (btn as any)._initialized = true;
+
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = btn.closest('.swiper') || btn.closest('astro-swiper-zosei') || btn.parentElement;
+        if (!target) return;
+
+        const expandIcon = btn.querySelector('.icon-expand');
+        const compressIcon = btn.querySelector('.icon-compress');
+
+        try {
+          if (!document.fullscreenElement) {
+            await target.requestFullscreen();
+            btn.setAttribute('data-state', 'fullscreen');
+            expandIcon?.classList.add('hidden');
+            compressIcon?.classList.remove('hidden');
+          } else {
+            await document.exitFullscreen();
+            btn.setAttribute('data-state', 'normal');
+            compressIcon?.classList.add('hidden');
+            expandIcon?.classList.remove('hidden');
+          }
+        } catch (err) {
+          console.warn('Fullscreen not supported or blocked:', err);
+        }
+      });
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFull = !!document.fullscreenElement;
+      document.querySelectorAll('.astro-swiper-fullscreen-toggle').forEach((btn) => {
+        const expandIcon = btn.querySelector('.icon-expand');
+        const compressIcon = btn.querySelector('.icon-compress');
+        if (isFull) {
+          btn.setAttribute('data-state', 'fullscreen');
+          expandIcon?.classList.add('hidden');
+          compressIcon?.classList.remove('hidden');
+        } else {
+          btn.setAttribute('data-state', 'normal');
+          compressIcon?.classList.add('hidden');
+          expandIcon?.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  initFullscreenToggles();
+  document.addEventListener('astro:page-load', initFullscreenToggles);
+</script>

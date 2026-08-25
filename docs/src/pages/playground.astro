@@ -1,0 +1,433 @@
+---
+// Copyright (c) Zosei
+// MIT License
+
+import Layout from '../layouts/Layout.astro';
+import { Sw, Swiper, Wrapper, Slide, ButtonPrev, ButtonNext, Pagination, Scrollbar, AutoplayToggle, Counter, Fullscreen } from 'astro-swiper-zosei';
+import { demoSlides } from '../data/slides';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Interactive Playground — Astro Swiper Zosei"
+  description="Construye y personaliza tu carrusel en vivo con controles visuales interactivos y genera código Astro listo para copiar y pegar."
+>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1">
+    <!-- Header Section -->
+    <div class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm">
+        <span>✨ Constructor Visual en Vivo</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Interactive <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">Playground</span>
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+        Ajusta parámetros, efectos y controles en tiempo real. Obtén el código Astro exacto con sintaxis concisa <code class="text-indigo-300 font-mono">&lt;Sw&gt;</code> listo para tu proyecto.
+      </p>
+    </div>
+
+    <!-- Playground Workspace Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Interactive Controls Form (5 cols) -->
+      <div class="lg:col-span-5 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            Configuración de Swiper
+          </h2>
+          <button id="btn-reset" type="button" class="text-xs font-medium text-slate-400 hover:text-indigo-400 transition-colors">
+            Restablecer
+          </button>
+        </div>
+
+        <!-- Presets Rápidos -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Preset Rápido (Opcional)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 hover:bg-indigo-600/50 transition-all" data-preset="custom">Manual</button>
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all" data-preset="hero">Hero</button>
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all" data-preset="cards">3D Cards</button>
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all" data-preset="marquee">Marquee</button>
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all" data-preset="testimonials">Testimonials</button>
+            <button type="button" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all" data-preset="gallery">Gallery</button>
+          </div>
+        </div>
+
+        <!-- Efecto de Transición -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Efecto Visual</label>
+          <select id="ctrl-effect" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <option value="slide">Slide (Estándar)</option>
+            <option value="fade">Fade (Desvanecimiento)</option>
+            <option value="cards">Cards (Tarjetas 3D)</option>
+            <option value="coverflow">Coverflow (3D Flujo)</option>
+            <option value="cube">Cube (Cubo 3D)</option>
+            <option value="flip">Flip (Giro 3D)</option>
+            <option value="creative">Creative (Personalizado)</option>
+          </select>
+        </div>
+
+        <!-- Sliders Per View & Space Between -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Slides Visibles: <span id="val-spv" class="text-indigo-400">1</span></label>
+            <input id="ctrl-spv" type="range" min="1" max="4" step="1" value="1" class="w-full accent-indigo-500 cursor-pointer" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Espacio (px): <span id="val-space" class="text-indigo-400">20</span></label>
+            <input id="ctrl-space" type="range" min="0" max="60" step="5" value="20" class="w-full accent-indigo-500 cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Velocidad de Transición -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Velocidad (ms): <span id="val-speed" class="text-indigo-400">400</span></label>
+          <input id="ctrl-speed" type="range" min="200" max="2000" step="100" value="400" class="w-full accent-indigo-500 cursor-pointer" />
+        </div>
+
+        <!-- Switches booleanos -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-loop" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Loop Infinito
+          </label>
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-autoplay" type="checkbox" class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Autoplay
+          </label>
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-nav" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Flechas Prev/Next
+          </label>
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-pag" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Paginación Bullets
+          </label>
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-centered" type="checkbox" class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Slides Centrados
+          </label>
+          <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <input id="ctrl-grab" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500" />
+            Grab Cursor
+          </label>
+        </div>
+
+        <!-- Micro-controles v0.15.0 -->
+        <div class="border-t border-slate-800 pt-4">
+          <label class="block text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2">Micro-Controles v0.15.0</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+              <input id="ctrl-toggle" type="checkbox" class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-950 border-slate-700" />
+              &lt;Sw.Toggle /&gt;
+            </label>
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+              <input id="ctrl-counter" type="checkbox" checked class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-950 border-slate-700" />
+              &lt;Sw.Count /&gt;
+            </label>
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+              <input id="ctrl-full" type="checkbox" class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-950 border-slate-700" />
+              &lt;Sw.Full /&gt;
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Interactive Preview & Generated Code (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Live Preview Stage -->
+        <div class="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-bold text-slate-400 ml-2">Vista Previa Interactiva</span>
+            </div>
+            <span id="preview-preset-badge" class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Modo: Custom
+            </span>
+          </div>
+
+          <!-- Dynamic Playground Swiper Container -->
+          <div id="playground-stage" class="min-h-[360px] flex items-center justify-center py-4">
+            <Sw
+              id="live-playground-swiper"
+              slidesPerView={1}
+              spaceBetween={20}
+              loop={true}
+              navigation={true}
+              pagination={{ clickable: true }}
+              class="w-full max-w-xl h-80 rounded-2xl overflow-hidden shadow-xl"
+            >
+              <Sw.Wrap>
+                <Sw.Slide class="bg-gradient-to-br from-indigo-600 to-purple-800 text-white flex flex-col items-center justify-center p-6 text-center">
+                  <h3 class="text-2xl font-bold mb-2">Slide 1</h3>
+                  <p class="text-sm opacity-80">Astro 7+ & Swiper v14</p>
+                </Sw.Slide>
+                <Sw.Slide class="bg-gradient-to-br from-cyan-600 to-blue-800 text-white flex flex-col items-center justify-center p-6 text-center">
+                  <h3 class="text-2xl font-bold mb-2">Slide 2</h3>
+                  <p class="text-sm opacity-80">Tailwind CSS v4 Nativo</p>
+                </Sw.Slide>
+                <Sw.Slide class="bg-gradient-to-br from-rose-600 to-orange-800 text-white flex flex-col items-center justify-center p-6 text-center">
+                  <h3 class="text-2xl font-bold mb-2">Slide 3</h3>
+                  <p class="text-sm opacity-80">Compound Component &lt;Sw&gt;</p>
+                </Sw.Slide>
+                <Sw.Slide class="bg-gradient-to-br from-emerald-600 to-teal-800 text-white flex flex-col items-center justify-center p-6 text-center">
+                  <h3 class="text-2xl font-bold mb-2">Slide 4</h3>
+                  <p class="text-sm opacity-80">Zero-JS Fallback con CSS Scroll-Snap</p>
+                </Sw.Slide>
+              </Sw.Wrap>
+
+              <Sw.Prev variant="glass" />
+              <Sw.Next variant="glass" />
+              <Sw.Pag variant="pills" color="indigo" />
+              <Sw.Count position="top-right" />
+              <Sw.Toggle position="top-left" />
+              <Sw.Full position="bottom-right" />
+            </Sw>
+          </div>
+        </div>
+
+        <!-- Generated Astro Code Snippet -->
+        <div class="bg-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl relative">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
+            <span class="text-xs font-mono font-bold text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Código Astro Generado
+            </span>
+            <button
+              id="btn-copy-code"
+              type="button"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all shadow-md active:scale-95 cursor-pointer"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+              <span>Copiar Código</span>
+            </button>
+          </div>
+
+          <pre class="overflow-x-auto text-xs font-mono text-slate-300 leading-relaxed max-h-72 p-2"><code id="code-output">{`---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw
+  slidesPerView={1}
+  spaceBetween={20}
+  loop={true}
+  navigation={true}
+  pagination={{ clickable: true }}
+  class="w-full max-w-xl h-80 rounded-2xl overflow-hidden shadow-xl"
+>
+  <Sw.Wrap>
+    <Sw.Slide>Slide 1</Sw.Slide>
+    <Sw.Slide>Slide 2</Sw.Slide>
+    <Sw.Slide>Slide 3</Sw.Slide>
+  </Sw.Wrap>
+  <Sw.Prev variant="glass" />
+  <Sw.Next variant="glass" />
+  <Sw.Pag variant="pills" color="indigo" />
+  <Sw.Count position="top-right" />
+</Sw>`}</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function setupPlayground() {
+    const ctrlEffect = document.getElementById('ctrl-effect') as HTMLSelectElement;
+    const ctrlSpv = document.getElementById('ctrl-spv') as HTMLInputElement;
+    const ctrlSpace = document.getElementById('ctrl-space') as HTMLInputElement;
+    const ctrlSpeed = document.getElementById('ctrl-speed') as HTMLInputElement;
+    const ctrlLoop = document.getElementById('ctrl-loop') as HTMLInputElement;
+    const ctrlAutoplay = document.getElementById('ctrl-autoplay') as HTMLInputElement;
+    const ctrlNav = document.getElementById('ctrl-nav') as HTMLInputElement;
+    const ctrlPag = document.getElementById('ctrl-pag') as HTMLInputElement;
+    const ctrlCentered = document.getElementById('ctrl-centered') as HTMLInputElement;
+    const ctrlGrab = document.getElementById('ctrl-grab') as HTMLInputElement;
+    const ctrlToggle = document.getElementById('ctrl-toggle') as HTMLInputElement;
+    const ctrlCounter = document.getElementById('ctrl-counter') as HTMLInputElement;
+    const ctrlFull = document.getElementById('ctrl-full') as HTMLInputElement;
+
+    const valSpv = document.getElementById('val-spv');
+    const valSpace = document.getElementById('val-space');
+    const valSpeed = document.getElementById('val-speed');
+    const codeOutput = document.getElementById('code-output');
+    const btnCopy = document.getElementById('btn-copy-code');
+    const presetBadge = document.getElementById('preview-preset-badge');
+
+    let currentPreset = 'custom';
+
+    function generateCode() {
+      const effect = ctrlEffect?.value || 'slide';
+      const spv = ctrlSpv?.value || '1';
+      const space = ctrlSpace?.value || '20';
+      const speed = ctrlSpeed?.value || '400';
+      const loop = ctrlLoop?.checked;
+      const autoplay = ctrlAutoplay?.checked;
+      const nav = ctrlNav?.checked;
+      const pag = ctrlPag?.checked;
+      const centered = ctrlCentered?.checked;
+      const grab = ctrlGrab?.checked;
+      const toggle = ctrlToggle?.checked;
+      const counter = ctrlCounter?.checked;
+      const full = ctrlFull?.checked;
+
+      if (currentPreset !== 'custom') {
+        let code = `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw preset="${currentPreset}" class="w-full max-w-2xl h-80 rounded-2xl overflow-hidden shadow-xl">
+  <Sw.Wrap>
+    <Sw.Slide class="bg-indigo-600 text-white flex items-center justify-center">Slide 1</Sw.Slide>
+    <Sw.Slide class="bg-purple-600 text-white flex items-center justify-center">Slide 2</Sw.Slide>
+    <Sw.Slide class="bg-cyan-600 text-white flex items-center justify-center">Slide 3</Sw.Slide>
+  </Sw.Wrap>
+`;
+        if (nav) code += `  <Sw.Prev variant="glass" />\n  <Sw.Next variant="glass" />\n`;
+        if (pag) code += `  <Sw.Pag variant="pills" color="indigo" />\n`;
+        if (counter) code += `  <Sw.Count position="top-right" />\n`;
+        if (toggle) code += `  <Sw.Toggle position="top-left" />\n`;
+        if (full) code += `  <Sw.Full position="bottom-right" />\n`;
+        code += `</Sw>`;
+
+        if (codeOutput) codeOutput.textContent = code;
+        return;
+      }
+
+      let propsList: string[] = [];
+      if (effect !== 'slide') propsList.push(`  effect="${effect}"`);
+      if (spv !== '1') propsList.push(`  slidesPerView={${spv}}`);
+      if (space !== '0') propsList.push(`  spaceBetween={${space}}`);
+      if (speed !== '300') propsList.push(`  speed={${speed}}`);
+      if (loop) propsList.push(`  loop={true}`);
+      if (centered) propsList.push(`  centeredSlides={true}`);
+      if (grab) propsList.push(`  grabCursor={true}`);
+      if (autoplay) propsList.push(`  autoplay={{ delay: 3000, disableOnInteraction: false }}`);
+      if (nav) propsList.push(`  navigation={true}`);
+      if (pag) propsList.push(`  pagination={{ clickable: true }}`);
+
+      propsList.push(`  class="w-full max-w-2xl h-80 rounded-2xl overflow-hidden shadow-xl"`);
+
+      let code = `---
+import Sw from 'astro-swiper-zosei';
+---
+
+<Sw
+${propsList.join('\n')}
+>
+  <Sw.Wrap>
+    <Sw.Slide class="bg-indigo-600 text-white flex items-center justify-center">Slide 1</Sw.Slide>
+    <Sw.Slide class="bg-purple-600 text-white flex items-center justify-center">Slide 2</Sw.Slide>
+    <Sw.Slide class="bg-cyan-600 text-white flex items-center justify-center">Slide 3</Sw.Slide>
+  </Sw.Wrap>
+`;
+      if (nav) code += `  <Sw.Prev variant="glass" />\n  <Sw.Next variant="glass" />\n`;
+      if (pag) code += `  <Sw.Pag variant="pills" color="indigo" />\n`;
+      if (counter) code += `  <Sw.Count position="top-right" />\n`;
+      if (toggle) code += `  <Sw.Toggle position="top-left" />\n`;
+      if (full) code += `  <Sw.Full position="bottom-right" />\n`;
+      code += `</Sw>`;
+
+      if (codeOutput) codeOutput.textContent = code;
+    }
+
+    function updateLabels() {
+      if (valSpv && ctrlSpv) valSpv.textContent = ctrlSpv.value;
+      if (valSpace && ctrlSpace) valSpace.textContent = ctrlSpace.value;
+      if (valSpeed && ctrlSpeed) valSpeed.textContent = ctrlSpeed.value;
+    }
+
+    function applyControls() {
+      updateLabels();
+      generateCode();
+
+      // Actualizar instancia del carrusel en vivo si existe
+      const swiperEl = document.querySelector('#live-playground-swiper') as any;
+      const swiper = swiperEl?.astroSwiper || (swiperEl?.querySelector('.swiper') as any)?.swiper;
+      if (swiper) {
+        swiper.params.slidesPerView = Number(ctrlSpv.value);
+        swiper.params.spaceBetween = Number(ctrlSpace.value);
+        swiper.params.speed = Number(ctrlSpeed.value);
+        swiper.update();
+      }
+    }
+
+    [ctrlEffect, ctrlSpv, ctrlSpace, ctrlSpeed, ctrlLoop, ctrlAutoplay, ctrlNav, ctrlPag, ctrlCentered, ctrlGrab, ctrlToggle, ctrlCounter, ctrlFull].forEach((el) => {
+      el?.addEventListener('input', () => {
+        currentPreset = 'custom';
+        if (presetBadge) presetBadge.textContent = 'Modo: Custom';
+        applyControls();
+      });
+    });
+
+    // Manejo de botones de preset
+    document.querySelectorAll('.preset-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const preset = btn.getAttribute('data-preset') || 'custom';
+        currentPreset = preset;
+        if (presetBadge) presetBadge.textContent = `Preset: ${preset.toUpperCase()}`;
+
+        document.querySelectorAll('.preset-btn').forEach((b) => {
+          b.classList.remove('bg-indigo-600/30', 'text-indigo-300', 'border-indigo-500/50');
+          b.classList.add('bg-slate-800', 'text-slate-400', 'border-slate-700');
+        });
+        btn.classList.add('bg-indigo-600/30', 'text-indigo-300', 'border-indigo-500/50');
+        btn.classList.remove('bg-slate-800', 'text-slate-400', 'border-slate-700');
+
+        if (preset === 'hero') {
+          ctrlEffect.value = 'fade';
+          ctrlSpv.value = '1';
+          ctrlAutoplay.checked = true;
+          ctrlLoop.checked = true;
+        } else if (preset === 'cards') {
+          ctrlEffect.value = 'cards';
+          ctrlSpv.value = '1';
+          ctrlCentered.checked = true;
+        } else if (preset === 'marquee') {
+          ctrlEffect.value = 'slide';
+          ctrlSpv.value = '3';
+          ctrlAutoplay.checked = true;
+          ctrlLoop.checked = true;
+        } else if (preset === 'testimonials') {
+          ctrlEffect.value = 'slide';
+          ctrlSpv.value = '2';
+          ctrlLoop.checked = true;
+          ctrlCentered.checked = true;
+        } else if (preset === 'gallery') {
+          ctrlEffect.value = 'slide';
+          ctrlSpv.value = '1';
+          ctrlNav.checked = true;
+          ctrlPag.checked = true;
+        }
+
+        applyControls();
+      });
+    });
+
+    btnCopy?.addEventListener('click', async () => {
+      if (!codeOutput?.textContent) return;
+      await navigator.clipboard.writeText(codeOutput.textContent);
+      const span = btnCopy.querySelector('span');
+      if (span) {
+        const orig = span.textContent;
+        span.textContent = '¡Copiado!';
+        setTimeout(() => {
+          span.textContent = orig;
+        }, 2000);
+      }
+    });
+
+    generateCode();
+  }
+
+  setupPlayground();
+  document.addEventListener('astro:page-load', setupPlayground);
+</script>

@@ -1,9 +1,9 @@
 {
   "name": "astro-swiper-zosei",
-  "version": "0.14.7",
+  "version": "0.15.0",
   "description": "Astro component for swiper, dedicated to slider / carousel / photo swiper / slide, including thumbnails",
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "bin": {
     "astro-swiper-zosei": "./scripts/init.cjs"
   },
@@ -26,11 +26,15 @@
   "bugs": {
     "url": "https://github.com/zosei/astro-swiper-zosei/issues"
   },
-  "homepage": "https://zosei.github.io/astro-dev/packages/astro-swiper-zosei/",
+  "homepage": "https://zosei.github.io/astro-swiper-zosei/",
   "exports": {
     ".": {
       "types": "./index.ts",
       "default": "./index.ts"
+    },
+    "./integration": {
+      "types": "./src/integration.ts",
+      "default": "./src/integration.ts"
     },
     "./swiper": "./swiper.ts"
   },
@@ -48,11 +52,11 @@
     "npm": ">=9.6.5",
     "pnpm": ">=7.1.0"
   },
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@11.17.0",
   "devDependencies": {
     "@biomejs/biome": "^2.5.10",
-    "@types/node": "^26.2.0",
-    "astro": "^7.2.4",
+    "@types/node": "^26.3.0",
+    "astro": "^7.2.6",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^7.0.2"

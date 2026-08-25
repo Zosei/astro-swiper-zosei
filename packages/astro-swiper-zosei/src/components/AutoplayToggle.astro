@@ -1,0 +1,115 @@
+---
+// Copyright (c) Zosei
+// MIT License
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'button'> {
+  /** Estilo visual */
+  variant?: 'glass' | 'solid' | 'minimal' | 'floating';
+  /** Color principal */
+  color?: 'white' | 'indigo' | 'cyan' | 'purple' | 'emerald';
+  /** Tamaño del botón */
+  size?: 'sm' | 'md' | 'lg';
+  /** Posición predeterminada */
+  position?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left' | 'none';
+  /** Etiqueta de accesibilidad */
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'glass',
+  color = 'white',
+  size = 'md',
+  position = 'none',
+  ariaLabel = 'Pausar o reanudar reproducción automática',
+  class: className = '',
+  ...props
+} = Astro.props;
+
+// Tamaños
+const sizeClasses = {
+  sm: 'w-8 h-8 p-1.5 text-xs',
+  md: 'w-10 h-10 p-2 text-sm',
+  lg: 'w-12 h-12 p-2.5 text-base',
+}[size];
+
+// Variantes visuales con Tailwind v4
+const variantClasses = {
+  glass: 'bg-slate-900/60 backdrop-blur-md border border-white/10 text-white hover:bg-slate-800/80 shadow-lg hover:scale-105 active:scale-95',
+  solid: 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md hover:scale-105 active:scale-95',
+  minimal: 'bg-transparent text-slate-300 hover:text-white hover:bg-white/10',
+  floating: 'bg-white/90 text-slate-900 hover:bg-white shadow-xl hover:scale-105 active:scale-95',
+}[variant];
+
+// Posicionamiento absoluto opcional
+const positionClasses = {
+  'none': '',
+  'top-right': 'absolute top-4 right-4 z-20',
+  'bottom-right': 'absolute bottom-4 right-4 z-20',
+  'top-left': 'absolute top-4 left-4 z-20',
+  'bottom-left': 'absolute bottom-4 left-4 z-20',
+}[position];
+---
+
+<button
+  type="button"
+  class:list={[
+    'astro-swiper-autoplay-toggle inline-flex items-center justify-center rounded-full transition-all duration-200 cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50',
+    sizeClasses,
+    variantClasses,
+    positionClasses,
+    className,
+  ]}
+  aria-label={ariaLabel}
+  data-state="playing"
+  {...props}
+>
+  <!-- Icono de Pausa (visible mientras reproduce) -->
+  <svg class="icon-pause w-full h-full" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+  </svg>
+  <!-- Icono de Play (visible cuando está pausado) -->
+  <svg class="icon-play w-full h-full hidden" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M8 5v14l11-7z" />
+  </svg>
+</button>
+
+<script>
+  function initAutoplayToggles() {
+    const buttons = document.querySelectorAll('.astro-swiper-autoplay-toggle');
+    buttons.forEach((btn) => {
+      if ((btn as any)._initialized) return;
+      (btn as any)._initialized = true;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const container = btn.closest('.swiper') || btn.closest('astro-swiper-zosei')?.querySelector('.swiper');
+        if (!container) return;
+
+        const swiper = (container as any).swiper || (btn.closest('astro-swiper-zosei') as any)?.astroSwiper;
+        if (!swiper || !swiper.autoplay) return;
+
+        const pauseIcon = btn.querySelector('.icon-pause');
+        const playIcon = btn.querySelector('.icon-play');
+
+        if (swiper.autoplay.running) {
+          swiper.autoplay.stop();
+          btn.setAttribute('data-state', 'paused');
+          pauseIcon?.classList.add('hidden');
+          playIcon?.classList.remove('hidden');
+        } else {
+          swiper.autoplay.start();
+          btn.setAttribute('data-state', 'playing');
+          playIcon?.classList.add('hidden');
+          pauseIcon?.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  // Inicializar en carga y en navegaciones de Astro View Transitions
+  initAutoplayToggles();
+  document.addEventListener('astro:page-load', initAutoplayToggles);
+</script>

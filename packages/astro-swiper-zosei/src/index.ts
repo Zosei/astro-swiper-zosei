@@ -12,9 +12,18 @@ import ButtonPrevComponent from './components/ButtonPrev.astro';
 import PaginationComponent from './components/Pagination.astro';
 import ScrollbarComponent from './components/Scrollbar.astro';
 import LazyPreloaderComponent from './components/LazyPreloader.astro';
+import AutoplayToggleComponent from './components/AutoplayToggle.astro';
+import CounterComponent from './components/Counter.astro';
+import FullscreenComponent from './components/Fullscreen.astro';
+
+export { default as astroSwiper } from './integration';
+export type { AstroSwiperIntegrationOptions } from './integration';
 
 // Selector types for IDs (#id) or classes (.class)
 export type selectorStringType = `.${string}` | `#${string}`;
+
+/** Presets listos para producción */
+export type AstroSwiperPreset = 'hero' | 'cards' | 'marquee' | 'testimonials' | 'gallery';
 
 /** Opciones extendidas de Swiper con soporte para Astro */
 export interface AstroSwiperOptions extends Omit<SwiperOptions, 'modules'> {
@@ -32,6 +41,9 @@ export interface AstroSwiperOptions extends Omit<SwiperOptions, 'modules'> {
 
 /** Props tipadas del componente <Swiper> / <Container> / <Sw> */
 export interface AstroSwiperType extends HTMLAttributes<'div'> {
+  /** Preset listo para producción con configuraciones de 1 línea */
+  preset?: AstroSwiperPreset;
+
   /** Dirección del carrusel: 'horizontal' | 'vertical' */
   direction?: 'horizontal' | 'vertical';
 
@@ -181,8 +193,8 @@ export interface AstroSwiperType extends HTMLAttributes<'div'> {
 /**
  * Compound Component Root con Abreviaciones Técnicas Elegantes:
  * - `<Sw>` o `<Swiper>`
- * - Subcomponentes estándar: `.Container`, `.Wrapper`, `.Slide`, `.ButtonPrev`, `.ButtonNext`, `.Pagination`, `.Scrollbar`, `.LazyPreloader`
- * - Abreviaciones técnicas ágiles: `.Wrap`, `.Slide`, `.Prev`, `.Next`, `.Pag`, `.Scroll`, `.Lazy`, `.W`, `.S`, `.P`, `.N`
+ * - Subcomponentes estándar: `.Container`, `.Wrapper`, `.Slide`, `.ButtonPrev`, `.ButtonNext`, `.Pagination`, `.Scrollbar`, `.LazyPreloader`, `.AutoplayToggle`, `.Counter`, `.Fullscreen`
+ * - Abreviaciones técnicas ágiles: `.Wrap`, `.Slide`, `.Prev`, `.Next`, `.Pag`, `.Scroll`, `.Lazy`, `.Toggle`, `.Count`, `.Full`
  */
 export const Sw = Object.assign(ContainerComponent, {
   // Canónicos
@@ -194,6 +206,9 @@ export const Sw = Object.assign(ContainerComponent, {
   Pagination: PaginationComponent,
   Scrollbar: ScrollbarComponent,
   LazyPreloader: LazyPreloaderComponent,
+  AutoplayToggle: AutoplayToggleComponent,
+  Counter: CounterComponent,
+  Fullscreen: FullscreenComponent,
 
   // Abreviaciones técnicas estándar (Sleek & Friendly)
   Wrap: WrapperComponent,
@@ -202,12 +217,18 @@ export const Sw = Object.assign(ContainerComponent, {
   Pag: PaginationComponent,
   Scroll: ScrollbarComponent,
   Lazy: LazyPreloaderComponent,
+  Toggle: AutoplayToggleComponent,
+  Count: CounterComponent,
+  Full: FullscreenComponent,
 
   // Abreviaciones ultra-compactas
   W: WrapperComponent,
   S: SlideComponent,
   P: ButtonPrevComponent,
   N: ButtonNextComponent,
+  T: AutoplayToggleComponent,
+  C: CounterComponent,
+  F: FullscreenComponent,
 });
 
 export const Swiper = Sw;
@@ -222,6 +243,9 @@ export { ButtonNextComponent as ButtonNext };
 export { PaginationComponent as Pagination };
 export { ScrollbarComponent as Scrollbar };
 export { LazyPreloaderComponent as LazyPreloader };
+export { AutoplayToggleComponent as AutoplayToggle };
+export { CounterComponent as Counter };
+export { FullscreenComponent as Fullscreen };
 
 // Exportaciones individuales abreviadas
 export { WrapperComponent as SwWrap };
@@ -231,6 +255,9 @@ export { ButtonNextComponent as SwNext };
 export { PaginationComponent as SwPag };
 export { ScrollbarComponent as SwScroll };
 export { LazyPreloaderComponent as SwLazy };
+export { AutoplayToggleComponent as SwToggle };
+export { CounterComponent as SwCount };
+export { FullscreenComponent as SwFull };
 
 // Exportaciones con prefijo Swiper*
 export { WrapperComponent as SwiperWrapper };
@@ -240,12 +267,18 @@ export { ButtonNextComponent as SwiperButtonNext };
 export { PaginationComponent as SwiperPagination };
 export { ScrollbarComponent as SwiperScrollbar };
 export { LazyPreloaderComponent as SwiperLazyPreloader };
+export { AutoplayToggleComponent as SwiperAutoplayToggle };
+export { CounterComponent as SwiperCounter };
+export { FullscreenComponent as SwiperFullscreen };
 
 // Tipos de Props para componentes secundarios
 export type { Props as ButtonProps } from './components/ButtonNext.astro';
 export type { Props as PaginationProps } from './components/Pagination.astro';
 export type { Props as ScrollbarProps } from './components/Scrollbar.astro';
 export type { Props as SlideProps } from './components/Slide.astro';
+export type { Props as AutoplayToggleProps } from './components/AutoplayToggle.astro';
+export type { Props as CounterProps } from './components/Counter.astro';
+export type { Props as FullscreenProps } from './components/Fullscreen.astro';
 
 declare class AstroSwiperElement extends HTMLElement {
   astroSwiper: SwiperInstance | undefined;

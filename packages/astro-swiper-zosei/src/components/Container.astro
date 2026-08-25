@@ -2,11 +2,14 @@
 // Copyright (c) Pascal Brand & Zosei
 // MIT License
 import 'swiper/css/bundle';
-import type { AstroSwiperType } from '../index';
+import type { AstroSwiperType, AstroSwiperPreset } from '../index';
 
 type Props = AstroSwiperType;
 
 const {
+  // Preset rápido para producción
+  preset,
+
   // Parámetros directos de Swiper (100% Declarativo por Props)
   direction = 'horizontal',
   slidesPerView = 1,
@@ -45,11 +48,69 @@ const {
   ...props
 } = Astro.props;
 
+// Configuraciones predeterminadas según el preset elegido
+const getPresetDefaults = (p?: AstroSwiperPreset): Record<string, any> => {
+  switch (p) {
+    case 'hero':
+      return {
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        speed: 800,
+        loop: true,
+        autoplay: { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
+        navigation: true,
+        pagination: { clickable: true },
+      };
+    case 'cards':
+      return {
+        effect: 'cards',
+        grabCursor: true,
+        centeredSlides: true,
+        cardsEffect: { perSlideOffset: 8, perSlideRotate: 2, rotate: true, slideShadows: true },
+      };
+    case 'marquee':
+      return {
+        slidesPerView: 'auto',
+        spaceBetween: 32,
+        loop: true,
+        speed: 6000,
+        autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
+        freeMode: { enabled: true, momentum: false },
+        allowTouchMove: true,
+      };
+    case 'testimonials':
+      return {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        centeredSlides: true,
+        autoplay: { delay: 4500, pauseOnMouseEnter: true },
+        pagination: { clickable: true },
+        breakpoints: {
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 3, spaceBetween: 30 },
+        },
+      };
+    case 'gallery':
+      return {
+        spaceBetween: 12,
+        loop: true,
+        navigation: true,
+        pagination: { type: 'fraction' },
+        zoom: true,
+      };
+    default:
+      return {};
+  }
+};
+
+const presetConfig = getPresetDefaults(preset);
+
 // Identificador único para el selector Swiper
 const uniqueClass = legacyUniqueClass || `astro-swiper-zosei-${Math.random().toString(36).slice(2, 11)}`;
 
 // Construcción del objeto de configuración sin JS manual
-const swiperConfig: Record<string, any> = {
+const baseConfig: Record<string, any> = {
   direction,
   slidesPerView,
   spaceBetween,
@@ -70,6 +131,11 @@ const swiperConfig: Record<string, any> = {
   ...(pagination ? { pagination: typeof pagination === 'object' ? { el: `.${uniqueClass} .swiper-pagination`, clickable: true, ...pagination } : { el: `.${uniqueClass} .swiper-pagination`, clickable: true } } : {}),
   ...(scrollbar ? { scrollbar: typeof scrollbar === 'object' ? { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true, ...scrollbar } : { el: `.${uniqueClass} .swiper-scrollbar`, draggable: true } } : {}),
   ...(breakpoints ? { breakpoints } : {}),
+};
+
+const swiperConfig: Record<string, any> = {
+  ...presetConfig,
+  ...baseConfig,
   ...props,
   ...options,
 };
@@ -101,20 +167,36 @@ if (useCustomElement === false || options.astro?.useCustomElement === false) {
 }
 ---
 
-<!-- Swiper Container Principal -->
+<!-- Swiper Container Principal con Fallback Zero-JS CSS Scroll Snap -->
 {
   swiperConfig.astro?.useCustomElement !== false ? (
     <astro-swiper-zosei
       id={id}
       data-options={JSON.stringify(swiperConfig)}
       data-uniqueclass={uniqueClass}
-      class:list={[addDefaultClass ? 'swiper' : null, uniqueClass, className]}
+      class:list={[
+        addDefaultClass ? 'swiper' : null,
+        uniqueClass,
+        'relative overflow-hidden',
+        '[&:not(.swiper-initialized)_.swiper-wrapper]:flex [&:not(.swiper-initialized)_.swiper-wrapper]:overflow-x-auto [&:not(.swiper-initialized)_.swiper-wrapper]:snap-x [&:not(.swiper-initialized)_.swiper-wrapper]:snap-mandatory [&:not(.swiper-initialized)_.swiper-wrapper]:scrollbar-none [&:not(.swiper-initialized)_.swiper-slide]:snap-center [&:not(.swiper-initialized)_.swiper-slide]:flex-shrink-0',
+        className
+      ]}
       {...props}
     >
       <slot />
     </astro-swiper-zosei>
   ) : (
-    <div id={id} class:list={[addDefaultClass ? 'swiper' : null, uniqueClass, className]} {...props}>
+    <div
+      id={id}
+      class:list={[
+        addDefaultClass ? 'swiper' : null,
+        uniqueClass,
+        'relative overflow-hidden',
+        '[&:not(.swiper-initialized)_.swiper-wrapper]:flex [&:not(.swiper-initialized)_.swiper-wrapper]:overflow-x-auto [&:not(.swiper-initialized)_.swiper-wrapper]:snap-x [&:not(.swiper-initialized)_.swiper-wrapper]:snap-mandatory [&:not(.swiper-initialized)_.swiper-wrapper]:scrollbar-none [&:not(.swiper-initialized)_.swiper-slide]:snap-center [&:not(.swiper-initialized)_.swiper-slide]:flex-shrink-0',
+        className
+      ]}
+      {...props}
+    >
       <astro-swiper-zosei data-options={JSON.stringify(swiperConfig)} data-uniqueclass={uniqueClass} />
       <slot />
     </div>
@@ -275,9 +357,21 @@ if (useCustomElement === false || options.astro?.useCustomElement === false) {
       }
       if (this.astroSwiper) {
         this.astroSwiper.destroy(true, true);
+        this.astroSwiper = undefined;
       }
     }
   }
 
   customElements.get('astro-swiper-zosei') || customElements.define('astro-swiper-zosei', AstroSwiper);
+
+  // Soporte para Astro View Transitions (<ClientRouter />)
+  document.addEventListener('astro:before-swap', () => {
+    document.querySelectorAll('astro-swiper-zosei').forEach((el) => {
+      const swiperEl = el as AstroSwiper;
+      if (swiperEl.astroSwiper) {
+        swiperEl.astroSwiper.destroy(true, true);
+        swiperEl.astroSwiper = undefined;
+      }
+    });
+  });
 </script>
