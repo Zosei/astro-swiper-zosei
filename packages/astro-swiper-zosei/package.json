@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zosei/astro-swiper-zosei.git",
-    "directory": "astro-swiper-zosei"
+    "directory": "packages/astro-swiper-zosei"
   },
   "author": "Zosei",
   "license": "MIT",
