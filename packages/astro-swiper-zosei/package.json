@@ -77,7 +77,7 @@
     "thumbnail"
   ],
   "dependencies": {
-    "swiper": "^14.1.0"
+    "swiper": "^14.2.0"
   },
   "peerDependencies": {
     "astro": ">=5.0.0",
