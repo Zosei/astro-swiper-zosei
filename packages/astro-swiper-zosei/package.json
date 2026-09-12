@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.ts",
   "bin": {
-    "astro-swiper-zosei": "./scripts/init.cjs"
+    "astro-swiper-zosei": "scripts/init.cjs"
   },
   "scripts": {
     "postinstall": "node ./scripts/init.cjs",

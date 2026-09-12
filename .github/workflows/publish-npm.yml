@@ -34,7 +34,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -43,8 +42,6 @@ jobs:
       - name: Publish to npm (Trusted Publishing OIDC)
         working-directory: packages/astro-swiper-zosei
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Notify on Publish Failure
         if: failure()
