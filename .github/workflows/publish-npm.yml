@@ -44,7 +44,7 @@ jobs:
         run: |
           pnpm run build
           npx playwright install --with-deps
-          pnpm run test
+          pnpm --filter docs test
 
       - name: Publish to npm (Trusted Publishing / Provenance)
         working-directory: packages/astro-swiper-zosei

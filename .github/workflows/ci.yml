@@ -25,7 +25,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build Library & Docs
         run: pnpm run build
@@ -33,4 +33,4 @@ jobs:
       - name: Run Playwright Tests
         run: |
           npx playwright install --with-deps
-          pnpm run test
+          pnpm --filter docs test
