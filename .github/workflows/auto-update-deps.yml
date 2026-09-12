@@ -32,7 +32,7 @@ jobs:
         run: |
           npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile packages/astro-swiper-zosei/package.json
           npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile docs/package.json
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: Verify Build with Latest Dependencies
         id: test_build
@@ -43,7 +43,9 @@ jobs:
         if: success()
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AUTO_UPDATE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           commit-message: "chore(deps): update swiper and astro to latest versions"
           title: "🚀 Automated Swiper & Astro Version Update"
           body: |

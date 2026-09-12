@@ -66,15 +66,15 @@ const TEMPLATES = {
 import Sw from 'astro-swiper-zosei';
 ---
 
-<Sw preset="hero" class="w-full h-[550px] rounded-3xl overflow-hidden shadow-2xl relative">
+<Sw preset="hero" class="w-full h-137.5 rounded-3xl overflow-hidden shadow-2xl relative">
   <Sw.Wrap>
-    <Sw.Slide class="w-full h-full bg-gradient-to-br from-indigo-900 via-slate-900 to-black flex items-center justify-center p-8">
+    <Sw.Slide class="w-full h-full bg-linear-to-br from-indigo-900 via-slate-900 to-black flex items-center justify-center p-8">
       <div class="text-center max-w-xl">
         <h2 class="text-4xl font-extrabold text-white mb-3">Slide 1: Experiencia Increíble</h2>
         <p class="text-slate-300 text-lg">Construido con Astro 7+ y Tailwind CSS v4.</p>
       </div>
     </Sw.Slide>
-    <Sw.Slide class="w-full h-full bg-gradient-to-br from-purple-900 via-slate-900 to-black flex items-center justify-center p-8">
+    <Sw.Slide class="w-full h-full bg-linear-to-br from-purple-900 via-slate-900 to-black flex items-center justify-center p-8">
       <div class="text-center max-w-xl">
         <h2 class="text-4xl font-extrabold text-white mb-3">Slide 2: Efecto Fade Fluido</h2>
         <p class="text-slate-300 text-lg">Optimizado con Intersection Observer.</p>
@@ -97,13 +97,13 @@ import Sw from 'astro-swiper-zosei';
 
 <Sw preset="cards" class="w-72 sm:w-80 h-96 mx-auto py-8">
   <Sw.Wrap>
-    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-600 to-purple-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-linear-to-br from-indigo-600 to-purple-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
       Tarjeta 1
     </Sw.Slide>
-    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-linear-to-br from-cyan-600 to-blue-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
       Tarjeta 2
     </Sw.Slide>
-    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-rose-600 to-orange-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
+    <Sw.Slide class="rounded-3xl overflow-hidden shadow-2xl bg-linear-to-br from-rose-600 to-orange-800 flex items-center justify-center p-6 text-white text-2xl font-bold">
       Tarjeta 3
     </Sw.Slide>
   </Sw.Wrap>
@@ -115,11 +115,11 @@ import Sw from 'astro-swiper-zosei';
 
 <Sw preset="marquee" class="w-full py-6 bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/10">
   <Sw.Wrap>
-    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Alfa</Sw.Slide>
-    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Beta</Sw.Slide>
-    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Gamma</Sw.Slide>
-    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Delta</Sw.Slide>
-    <Sw.Slide class="!w-40 flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Epsilon</Sw.Slide>
+    <Sw.Slide class="w-40! flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Alfa</Sw.Slide>
+    <Sw.Slide class="w-40! flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Beta</Sw.Slide>
+    <Sw.Slide class="w-40! flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Gamma</Sw.Slide>
+    <Sw.Slide class="w-40! flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Delta</Sw.Slide>
+    <Sw.Slide class="w-40! flex items-center justify-center p-4 font-bold text-slate-300 text-lg">Marca Epsilon</Sw.Slide>
   </Sw.Wrap>
 </Sw>
 `,
@@ -197,7 +197,13 @@ async function runCli() {
     process.exit(0);
   }
 
-  console.log(`\n${c.magenta}┌${c.reset}  ${c.bold}${c.cyan}🌌 Astro Swiper Zosei${c.reset} ${c.dim}v0.15.0 — Asistente de Configuración para IA${c.reset}`);
+  let pkgVersion = 'latest';
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8'));
+    if (pkg && pkg.version) pkgVersion = `v${pkg.version}`;
+  } catch {}
+
+  console.log(`\n${c.magenta}┌${c.reset}  ${c.bold}${c.cyan}🌌 Astro Swiper Zosei${c.reset} ${c.dim}${pkgVersion} — Asistente de Configuración para IA${c.reset}`);
   console.log(`${c.magenta}│${c.reset}`);
 
   const rl = readline.createInterface({
