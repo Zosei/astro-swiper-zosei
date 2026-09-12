@@ -29,11 +29,11 @@ export default defineConfig({
   ],
   timeout: 30000,
   webServer: {
-    command: "npx sirv-cli dist --port 4321",
+    command: "pnpm exec sirv dist --port 4321",
     url: "http://localhost:4321/",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
-    stdout: "ignore",
+    stdout: "pipe",
     stderr: "pipe",
   },
 });
