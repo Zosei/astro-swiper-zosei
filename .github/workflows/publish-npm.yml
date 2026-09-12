@@ -35,12 +35,15 @@ jobs:
         with:
           node-version: 24
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
         run: pnpm install --no-frozen-lockfile
 
       - name: Publish to npm (Trusted Publishing OIDC)
         working-directory: packages/astro-swiper-zosei
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public --provenance
 
       - name: Notify on Publish Failure
