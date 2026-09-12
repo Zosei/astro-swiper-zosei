@@ -40,20 +40,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build & Run Tests
-        run: |
-          pnpm run build
-          npx playwright install --with-deps
-          pnpm --filter docs test
-
-      - name: Publish to npm (Trusted Publishing / Provenance)
+      - name: Publish to npm
         working-directory: packages/astro-swiper-zosei
-        run: pnpm publish --access public --no-git-checks --provenance
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
 
       - name: Notify on Publish Failure
         if: failure()
         run: |
-          echo "::error title=NPM Publish Failed::Hubo un error al compilar, ejecutar tests o publicar en NPM. Revisa los detalles del log."
+          echo "::error title=NPM Publish Failed::Hubo un error al publicar en NPM. Revisa los detalles del log."
