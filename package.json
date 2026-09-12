@@ -14,12 +14,12 @@
   "packageManager": "pnpm@11.17.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zosei/astro-swiper-zosei.git"
+    "url": "git+https://github.com/Zosei/astro-swiper-zosei.git"
   },
   "author": "Zosei",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zosei/astro-swiper-zosei/issues"
+    "url": "https://github.com/Zosei/astro-swiper-zosei/issues"
   },
   "homepage": "https://zosei.github.io/astro-swiper-zosei/",
   "private": true
