@@ -17,7 +17,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
     "astro-swiper-zosei": "workspace:*",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
