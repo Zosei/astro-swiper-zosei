@@ -1,6 +1,9 @@
 name: Publish Package to npm
 
 on:
+  push:
+    tags:
+      - 'v*'
   release:
     types: [published]
   workflow_dispatch:
@@ -15,6 +18,10 @@ on:
           - patch
           - minor
           - major
+
+concurrency:
+  group: publish-npm-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -40,20 +47,6 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Bump Version on Manual Dispatch
-        if: github.event_name == 'workflow_dispatch' && inputs.version_bump != 'none'
-        working-directory: packages/astro-swiper-zosei
-        run: |
-          NEW_VERSION=$(npm version "${{ inputs.version_bump }}" --no-git-tag-version)
-          echo "Bumped version to $NEW_VERSION"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json
-          git commit -m "chore(release): $NEW_VERSION"
-          git tag "$NEW_VERSION"
-          git push origin HEAD:main
-          git push origin "$NEW_VERSION"
-
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
@@ -68,21 +61,91 @@ jobs:
           pnpm --filter docs exec playwright install --with-deps chromium firefox
           pnpm --filter docs test
 
-      - name: Check npm Version Not Already Published
+      - name: Bump Version on Manual Dispatch
+        if: github.event_name == 'workflow_dispatch' && inputs.version_bump != 'none'
+        working-directory: packages/astro-swiper-zosei
+        run: |
+          NEW_VERSION=$(npm version "${{ inputs.version_bump }}" --no-git-tag-version)
+          echo "Bumped version to $NEW_VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore(release): $NEW_VERSION"
+          git tag -a "$NEW_VERSION" -m "$NEW_VERSION"
+          git push origin HEAD:main
+          git push origin "$NEW_VERSION"
+
+      - name: Resolve Version & Check npm Status
+        id: npm_check
         working-directory: packages/astro-swiper-zosei
         run: |
           PKG_NAME=$(node -p "require('./package.json').name")
           PKG_VERSION=$(node -p "require('./package.json').version")
-          if npm view "${PKG_NAME}@${PKG_VERSION}" version >/dev/null 2>&1; then
-            echo "::error::${PKG_NAME}@${PKG_VERSION} is already published on npm. Bump version first or use version_bump input."
+          TAG="v${PKG_VERSION}"
+          echo "name=${PKG_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" != "${TAG}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match package.json version ${TAG}."
             exit 1
           fi
 
+          if npm view "${PKG_NAME}@${PKG_VERSION}" version >/dev/null 2>&1; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::${PKG_NAME}@${PKG_VERSION} is already published on npm; skipping npm publish."
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish to npm (Trusted Publishing OIDC)
+        if: steps.npm_check.outputs.already_published != 'true'
         working-directory: packages/astro-swiper-zosei
         run: npm publish --access public --provenance
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PKG_VERSION: ${{ steps.npm_check.outputs.version }}
+          TAG: ${{ steps.npm_check.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::notice::GitHub Release ${TAG} already exists; skipping."
+            exit 0
+          fi
+
+          rm -f /tmp/release-notes.md
+          node -e '
+            const fs = require("node:fs");
+            const version = process.env.PKG_VERSION;
+            const lines = fs.readFileSync("CHANGELOG.md", "utf8").split(/\r?\n/);
+            const headerPrefix = `## [${version}]`;
+            let capturing = false;
+            const out = [];
+            for (const line of lines) {
+              if (line.startsWith(headerPrefix)) {
+                capturing = true;
+                continue;
+              }
+              if (capturing && line.startsWith("## [")) break;
+              if (capturing) out.push(line);
+            }
+            const notes = out.join("\n").trim();
+            if (notes) fs.writeFileSync("/tmp/release-notes.md", notes + "\n", "utf8");
+          '
+
+          TARGET_FLAG=""
+          if ! git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            TARGET_FLAG="--target main"
+          fi
+
+          if [ -s /tmp/release-notes.md ]; then
+            gh release create "$TAG" $TARGET_FLAG --title "$TAG" --notes-file /tmp/release-notes.md --latest
+          else
+            gh release create "$TAG" $TARGET_FLAG --title "$TAG" --generate-notes --latest
+          fi
 
       - name: Notify on Publish Failure
         if: failure()
         run: |
-          echo "::error title=NPM Publish Failed::Hubo un error al compilar, probar o publicar en NPM. Revisa los detalles del log."
+          echo "::error title=NPM Publish Failed::Hubo un error al compilar, probar, publicar en NPM o crear el Release en GitHub. Revisa los detalles del log."
