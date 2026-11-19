@@ -33,7 +33,35 @@ test.describe('Páginas Dedicadas de Demos (/demos/[slug])', () => {
     // 2. Verificar Swiper y controles de navegación
     const swiper = page.locator('.swiper').first();
     await expect(swiper).toBeVisible();
-    await expect(swiper.locator('.swiper-button-next')).toBeVisible();
-    await expect(swiper.locator('.swiper-button-prev')).toBeVisible();
+    const prevBtn = swiper.locator('.swiper-button-prev');
+    const nextBtn = swiper.locator('.swiper-button-next');
+    await expect(prevBtn).toBeVisible();
+    await expect(nextBtn).toBeVisible();
+
+    // 3. Verificar que ambos botones reutilizan el nuevo ArrowIcon SVG en direcciones opuestas y con tamaño nítido
+    const prevSvg = prevBtn.locator('svg.swiper-navigation-icon');
+    const nextSvg = nextBtn.locator('svg.swiper-navigation-icon');
+    await expect(prevSvg).toBeVisible();
+    await expect(nextSvg).toBeVisible();
+    await expect(prevSvg).toHaveAttribute('viewBox', '0 0 289.6 375.2');
+    await expect(nextSvg).toHaveAttribute('viewBox', '0 0 289.6 375.2');
+
+    const prevTransform = await prevSvg.evaluate((el) => getComputedStyle(el).transform);
+    const nextTransform = await nextSvg.evaluate((el) => getComputedStyle(el).transform);
+    expect(prevTransform).toMatch(/^matrix\(-1,\s*[-0-9.e]+,\s*[-0-9.e]+,\s*-1,\s*0,\s*0\)$/);
+    expect(nextTransform === 'none' || nextTransform === 'matrix(1, 0, 0, 1, 0, 0)').toBeTruthy();
+
+    const prevBox = await prevSvg.boundingBox();
+    const nextBox = await nextSvg.boundingBox();
+    expect(prevBox).not.toBeNull();
+    expect(nextBox).not.toBeNull();
+    expect(prevBox!.width).toBeGreaterThan(10);
+    expect(prevBox!.width).toBeLessThan(28);
+    expect(prevBox!.height).toBeGreaterThan(10);
+    expect(prevBox!.height).toBeLessThan(28);
+    expect(nextBox!.width).toBeGreaterThan(10);
+    expect(nextBox!.width).toBeLessThan(28);
+    expect(nextBox!.height).toBeGreaterThan(10);
+    expect(nextBox!.height).toBeLessThan(28);
   });
 });

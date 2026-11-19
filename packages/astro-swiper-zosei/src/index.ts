@@ -9,6 +9,7 @@ import SlideComponent from './components/Slide.astro';
 import WrapperComponent from './components/Wrapper.astro';
 import ButtonNextComponent from './components/ButtonNext.astro';
 import ButtonPrevComponent from './components/ButtonPrev.astro';
+import ArrowIconComponent from './components/ArrowIcon.astro';
 import PaginationComponent from './components/Pagination.astro';
 import ScrollbarComponent from './components/Scrollbar.astro';
 import LazyPreloaderComponent from './components/LazyPreloader.astro';
@@ -203,6 +204,7 @@ export const Sw = Object.assign(ContainerComponent, {
   Slide: SlideComponent,
   ButtonPrev: ButtonPrevComponent,
   ButtonNext: ButtonNextComponent,
+  ArrowIcon: ArrowIconComponent,
   Pagination: PaginationComponent,
   Scrollbar: ScrollbarComponent,
   LazyPreloader: LazyPreloaderComponent,
@@ -214,6 +216,7 @@ export const Sw = Object.assign(ContainerComponent, {
   Wrap: WrapperComponent,
   Prev: ButtonPrevComponent,
   Next: ButtonNextComponent,
+  Arrow: ArrowIconComponent,
   Pag: PaginationComponent,
   Scroll: ScrollbarComponent,
   Lazy: LazyPreloaderComponent,
@@ -240,6 +243,7 @@ export { WrapperComponent as Wrapper };
 export { SlideComponent as Slide };
 export { ButtonPrevComponent as ButtonPrev };
 export { ButtonNextComponent as ButtonNext };
+export { ArrowIconComponent as ArrowIcon };
 export { PaginationComponent as Pagination };
 export { ScrollbarComponent as Scrollbar };
 export { LazyPreloaderComponent as LazyPreloader };
@@ -252,6 +256,7 @@ export { WrapperComponent as SwWrap };
 export { SlideComponent as SwSlide };
 export { ButtonPrevComponent as SwPrev };
 export { ButtonNextComponent as SwNext };
+export { ArrowIconComponent as SwArrow };
 export { PaginationComponent as SwPag };
 export { ScrollbarComponent as SwScroll };
 export { LazyPreloaderComponent as SwLazy };
@@ -272,6 +277,7 @@ export { CounterComponent as SwiperCounter };
 export { FullscreenComponent as SwiperFullscreen };
 
 // Tipos de Props para componentes secundarios
+export type { Props as ArrowIconProps } from './components/ArrowIcon.astro';
 export type { Props as ButtonProps } from './components/ButtonNext.astro';
 export type { Props as PaginationProps } from './components/Pagination.astro';
 export type { Props as ScrollbarProps } from './components/Scrollbar.astro';

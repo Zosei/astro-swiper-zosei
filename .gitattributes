@@ -1,37 +1,40 @@
 # Copyright (c) Zosei
 # MIT License
 #
-# from https://docs.github.com/fr/get-started/git-basics/configuring-git-to-handle-line-endings?platform=linux
-# Ensure consistent line endings for text files
-#
-# check line endings using
-#    git ls-files --eol
-# check file that have the wrong line endings using
-#    git ls-files --eol | grep crlf
-#
-# normalize all line endings following the rules in this file using
-#    git add --renormalize .
+# Ensure consistent LF line endings across all platforms.
+# Check line endings:
+#   git ls-files --eol | grep crlf
+# Normalize line endings:
+#   git add --renormalize .
 
-text=lf
+* text=auto eol=lf
 
-# Declare files that will always have LF line endings on checkout.
-*.astro text text
-*.css text text
-*.md text text
-*.js text text
-*.jsx text text
-*.json text text
-*.jsonc text text
-*.html text text
-*.mjs text text
-*.ts text text
-*.tsx text text
-*.sh text text
-*.svg text text
-*.txt text text
-*.xml text text
-*.yml text text
-*.yaml text text
-*.tsconfig text text
-*.env text text
-*.env.* text text
+# Explicit text files always normalized to LF
+*.astro text eol=lf
+*.cjs text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+*.jsx text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+*.sh text eol=lf
+*.svg text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+.gitignore text eol=lf
+.prettierignore text eol=lf
+
+# Binary assets
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.woff2 binary

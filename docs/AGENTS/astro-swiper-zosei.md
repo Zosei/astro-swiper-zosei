@@ -1,4 +1,4 @@
-# 🤖 ASTRO SWIPER ZOSEI — MASTER AI AGENT SYSTEM GUIDE (v0.15.0)
+# 🤖 ASTRO SWIPER ZOSEI — MASTER AI AGENT SYSTEM GUIDE (v0.17.0)
 
 > **Critical Instruction for AI Coding Assistants (Cursor, Windsurf, Claude, Copilot, Antigravity, ChatGPT, Gemini, v0)**:
 > This document is the definitive technical manual for generating responsive, accessible, high-performance sliders and carousels in **Astro 5+ & 7+** using **`astro-swiper-zosei`** and **Tailwind CSS v4**.
@@ -8,19 +8,19 @@
 ## ⚡ 1. The Golden Rules for AI Agents
 
 1. **Always Use the Concise Compound Component (`Sw`)**:
-   \`\`\`astro
+   ```astro
    ---
    import Sw from 'astro-swiper-zosei';
    import { Image } from 'astro:assets';
    ---
-   \`\`\`
+   ```
 
 2. **Use Presets for Instant 1-Line Setup**:
-   - \`preset="hero"\`: Smooth fade, continuous loop, autoplay with pause-on-hover, glass buttons, pills pagination.
-   - \`preset="cards"\`: 3D stacked cards effect with shadows and smooth drag.
-   - \`preset="marquee"\`: Seamless non-stop brand logo scroller.
-   - \`preset="testimonials"\`: Centered multi-slide responsive reviews with dynamic pagination.
-   - \`preset="gallery"\`: Dual-synchronized image zoom gallery with fraction pagination.
+   - `preset="hero"`: Smooth fade, continuous loop, autoplay with pause-on-hover, glass buttons, pills pagination.
+   - `preset="cards"`: 3D stacked cards effect with shadows and smooth drag.
+   - `preset="marquee"`: Seamless non-stop brand logo scroller.
+   - `preset="testimonials"`: Centered multi-slide responsive reviews with dynamic pagination.
+   - `preset="gallery"`: Dual-synchronized image zoom gallery with fraction pagination.
 
 3. **Subcomponent Hierarchy**:
 
@@ -31,6 +31,7 @@
 | `<Sw.Slide>` | `<Sw.S>` | Individual slide element (`.swiper-slide`) |
 | `<Sw.Prev />` | `<Sw.P />` | Accessible Previous slide button |
 | `<Sw.Next />` | `<Sw.N />` | Accessible Next slide button |
+| `<Sw.Arrow />` | `<Sw.ArrowIcon />` | Reusable directional navigation arrow SVG (`direction="prev" \| "next"`, `size="sm" \| "md" \| "lg"`) |
 | `<Sw.Pag />` | `<SwiperPagination />` | Pagination (bullets / dynamic / progressbar / fraction) |
 | `<Sw.Scroll />` | `<SwiperScrollbar />` | Interactive draggable scrollbar |
 | `<Sw.Toggle />` | `<Sw.AutoplayToggle />` | Play/Pause toggle button with animated SVG state |

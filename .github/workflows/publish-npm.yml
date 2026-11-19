@@ -6,11 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       version_bump:
-        description: 'Tipo de versión (patch, minor, major)'
+        description: 'Tipo de versión (none, patch, minor, major)'
         required: true
-        default: 'patch'
+        default: 'none'
         type: choice
         options:
+          - none
           - patch
           - minor
           - major
@@ -25,20 +26,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Bump Version on Manual Dispatch
+        if: github.event_name == 'workflow_dispatch' && inputs.version_bump != 'none'
+        working-directory: packages/astro-swiper-zosei
+        run: |
+          NEW_VERSION=$(npm version "${{ inputs.version_bump }}" --no-git-tag-version)
+          echo "Bumped version to $NEW_VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore(release): $NEW_VERSION"
+          git tag "$NEW_VERSION"
+          git push origin HEAD:main
+          git push origin "$NEW_VERSION"
+
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint Package
+        run: pnpm run lint
+
+      - name: Build Library & Docs
+        run: pnpm run build
+
+      - name: Run Playwright Tests
+        run: |
+          pnpm --filter docs exec playwright install --with-deps chromium firefox
+          pnpm --filter docs test
+
+      - name: Check npm Version Not Already Published
+        working-directory: packages/astro-swiper-zosei
+        run: |
+          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if npm view "${PKG_NAME}@${PKG_VERSION}" version >/dev/null 2>&1; then
+            echo "::error::${PKG_NAME}@${PKG_VERSION} is already published on npm. Bump version first or use version_bump input."
+            exit 1
+          fi
 
       - name: Publish to npm (Trusted Publishing OIDC)
         working-directory: packages/astro-swiper-zosei
@@ -47,4 +85,4 @@ jobs:
       - name: Notify on Publish Failure
         if: failure()
         run: |
-          echo "::error title=NPM Publish Failed::Hubo un error al publicar en NPM. Revisa los detalles del log."
+          echo "::error title=NPM Publish Failed::Hubo un error al compilar, probar o publicar en NPM. Revisa los detalles del log."

@@ -17,45 +17,60 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: 'pnpm'
 
       - name: Update Target Dependencies
         run: |
-          npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile packages/astro-swiper-zosei/package.json
-          npx npm-check-updates -u -f swiper,astro,@tailwindcss/vite,tailwindcss --packageFile docs/package.json
+          npx --yes npm-check-updates -u --dep prod,dev -f swiper,astro,@biomejs/biome,prettier,prettier-plugin-astro,@types/node,typescript --packageFile packages/astro-swiper-zosei/package.json
+          npx --yes npm-check-updates -u --dep prod,dev -f astro,@tailwindcss/vite,tailwindcss,@playwright/test --packageFile docs/package.json
           pnpm install --no-frozen-lockfile
+
+      - name: Lint Package
+        id: test_lint
+        run: pnpm run lint
 
       - name: Verify Build with Latest Dependencies
         id: test_build
+        run: pnpm run build
+
+      - name: Run Playwright Tests
+        id: test_e2e
         run: |
-          pnpm run build
+          pnpm --filter docs exec playwright install --with-deps chromium firefox
+          pnpm --filter docs test
 
       - name: Create Pull Request with Updates
+        id: create_pr
         if: success()
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.AUTO_UPDATE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          commit-message: "chore(deps): update swiper and astro to latest versions"
-          title: "🚀 Automated Swiper & Astro Version Update"
+          commit-message: 'chore(deps): update swiper and astro to latest versions'
+          title: '🚀 Automated Swiper & Astro Version Update'
           body: |
-            Automated dependency update for `swiper`, `astro`, and Tailwind v4.
-            
-            ✅ Compilation and type checks succeeded on Ubuntu latest with Node 22.
-          branch: "chore/automated-deps-update"
+            Automated dependency update for `astro-swiper-zosei` and `docs` (`swiper`, `astro`, Tailwind CSS v4, `@biomejs/biome`, `@playwright/test`).
+
+            ✅ Lint, Astro build, and Playwright tests succeeded on Ubuntu latest with Node 24.
+          branch: 'chore/automated-deps-update'
           delete-branch: true
 
-      - name: Notify on Failure
-        if: failure()
+      - name: Notify on Build/Test Failure
+        if: failure() && (steps.test_lint.outcome == 'failure' || steps.test_build.outcome == 'failure' || steps.test_e2e.outcome == 'failure')
         run: |
-          echo "::error title=Dependency Update Failed::The latest versions of Swiper or Astro caused build errors. Please review breaking changes."
+          echo "::error title=Dependency Update Failed::The latest dependency versions caused lint, build, or Playwright test errors. Please review breaking changes."
+
+      - name: Notify on PR Creation Permission Error
+        if: failure() && steps.create_pr.outcome == 'failure'
+        run: |
+          echo "::error title=Pull Request Creation Failed::Enable 'Settings -> Actions -> General -> Workflow permissions -> Allow GitHub Actions to create and approve pull requests' or configure secrets.AUTO_UPDATE_GITHUB_TOKEN."

@@ -2,6 +2,7 @@
 // Copyright (c) Pascal Brand & Zosei
 // MIT License
 import type { HTMLAttributes } from 'astro/types';
+import ArrowIcon from './ArrowIcon.astro';
 
 export interface Props extends HTMLAttributes<'button'> {
   /** Variantes de diseño modernas en Tailwind CSS v4 */
@@ -67,7 +68,7 @@ const colorClasses = {
   aria-label="Slide anterior"
   class:list={[
     addDefaultClass ? 'swiper-button-prev' : null,
-    'relative z-10 flex items-center justify-center cursor-pointer transition-all duration-300 select-none outline-none focus-visible:ring-2 disabled:opacity-30 disabled:pointer-events-none disabled:cursor-not-allowed after:hidden after:content-none',
+    'group relative z-10 flex items-center justify-center cursor-pointer transition-all duration-300 select-none outline-none focus-visible:ring-2 disabled:opacity-30 disabled:pointer-events-none disabled:cursor-not-allowed after:hidden after:content-none',
     sizeClasses,
     roundedClasses,
     variantClasses,
@@ -77,15 +78,6 @@ const colorClasses = {
   {...props}
 >
   <slot>
-    <!-- Icono SVG Moderno y Nítido (reemplaza las flechas nativas de Swiper) -->
-    <svg
-      class="w-5 h-5 transition-transform group-hover:-translate-x-0.5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2.2"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-    </svg>
+    <ArrowIcon direction="prev" size={size} />
   </slot>
 </button>

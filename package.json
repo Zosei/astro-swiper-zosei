@@ -2,12 +2,14 @@
   "name": "astro-swiper-zosei",
   "scripts": {
     "preversion": "exit 1",
+    "lint": "pnpm --filter ./packages/astro-swiper-zosei lint",
+    "format": "pnpm --filter ./packages/astro-swiper-zosei format",
     "build": "pnpm run --filter docs build",
     "dev": "pnpm run --filter docs dev",
     "test": "pnpm run --filter docs test"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=22.12.0",
     "npm": ">=9.6.5",
     "pnpm": ">=7.1.0"
   },

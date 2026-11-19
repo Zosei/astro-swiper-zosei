@@ -6,8 +6,8 @@
  * en la raíz del proyecto consumidor (donde el usuario ejecutó npm i / pnpm add).
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 function getConsumerProjectRoot() {
   // 1. Prioridad: INIT_CWD proporcionado por npm/pnpm/yarn
@@ -50,7 +50,7 @@ try {
       fs.copyFileSync(sourceFile, targetFile);
     }
   }
-} catch (e) {
+} catch (_e) {
   // Silencioso para no interrumpir el flujo del instalador
   process.exit(0);
 }

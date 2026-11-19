@@ -5,9 +5,9 @@
  * Inspirado en @clack/prompts con cajas unicode, colores y generador de componentes.
  */
 
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+const fs = require('node:fs');
+const path = require('node:path');
+const readline = require('node:readline');
 
 // Colores ANSI estilo Astro CLI
 const c = {
@@ -238,7 +238,7 @@ async function runCli() {
       console.log(`${c.magenta}│${c.reset}`);
       console.log(`${c.magenta}└${c.reset}  ${c.yellow}ℹ  Generación de documentación omitida.${c.reset}\n`);
     }
-  } catch (err) {
+  } catch (_err) {
     createAgentDoc(root);
   } finally {
     rl.close();

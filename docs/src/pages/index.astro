@@ -60,6 +60,8 @@ import WatchSlidesVisibility from '../components/demos/WatchSlidesVisibility.ast
 import Zoom from '../components/demos/Zoom.astro';
 import IndexExample from '../components/demos/IndexExample.astro';
 import Thumbnail from '../components/demos/Thumbnail.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout>
@@ -88,14 +90,14 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
           <span>pnpm add astro-swiper-zosei swiper</span>
         </div>
         <a
-          href="/docs"
+          href={`${base}/docs`}
           data-i18n="home.viewDocs"
           class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:scale-105"
         >
           Guía de Props →
         </a>
         <a
-          href="/demos"
+          href={`${base}/demos`}
           data-i18n="home.viewDemos"
           class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/10 transition-all"
         >
@@ -143,7 +145,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
         <h2 data-i18n="home.catalogTitle" class="text-3xl font-extrabold text-white tracking-tight">Catálogo Completo de Demos</h2>
         <p data-i18n="home.catalogSubtitle" class="text-sm text-slate-400 mt-1">Explora más de 50 demostraciones interactivas funcionando con Tailwind CSS v4.</p>
       </div>
-      <a href="/demos" class="px-4 py-2 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold hover:bg-indigo-600/30 transition-colors self-start md:self-auto">
+      <a href={`${base}/demos`} class="px-4 py-2 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold hover:bg-indigo-600/30 transition-colors self-start md:self-auto">
         Ver Páginas Dedicadas (/demos) →
       </a>
     </div>
@@ -172,7 +174,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/coverflow"
+            href={`${base}/demos/coverflow`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -202,7 +204,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/cube"
+            href={`${base}/demos/cube`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -232,7 +234,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/creative"
+            href={`${base}/demos/creative`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -262,7 +264,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/fade"
+            href={`${base}/demos/fade`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -292,7 +294,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/flip"
+            href={`${base}/demos/flip`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -322,7 +324,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/cards"
+            href={`${base}/demos/cards`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -353,7 +355,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/autoplay"
+            href={`${base}/demos/autoplay`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -383,7 +385,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/autoplay"
+            href={`${base}/demos/autoplay`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -413,7 +415,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/autoplay-progress"
+            href={`${base}/demos/autoplay-progress`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -444,7 +446,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/navigation"
+            href={`${base}/demos/navigation`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -474,7 +476,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/pagination"
+            href={`${base}/demos/pagination`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -504,7 +506,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/pagination-custom"
+            href={`${base}/demos/pagination-custom`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -534,7 +536,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/pagination-dynamic"
+            href={`${base}/demos/pagination-dynamic`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -564,7 +566,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/pagination-fraction"
+            href={`${base}/demos/pagination-fraction`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -594,7 +596,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/pagination-progress"
+            href={`${base}/demos/pagination-progress`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -624,7 +626,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/scrollbar"
+            href={`${base}/demos/scrollbar`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -655,7 +657,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/thumbs"
+            href={`${base}/demos/thumbs`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -685,7 +687,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/thumbs-gallery"
+            href={`${base}/demos/thumbs-gallery`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -715,7 +717,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/thumbs-gallery-loop"
+            href={`${base}/demos/thumbs-gallery-loop`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -746,7 +748,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/responsive-breakpoints"
+            href={`${base}/demos/responsive-breakpoints`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -776,7 +778,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/ratio-breakpoints"
+            href={`${base}/demos/ratio-breakpoints`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -806,7 +808,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/slides-per-view"
+            href={`${base}/demos/slides-per-view`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -836,7 +838,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/slides-per-view-auto"
+            href={`${base}/demos/slides-per-view-auto`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -866,7 +868,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/centered"
+            href={`${base}/demos/centered`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -896,7 +898,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/centered-auto"
+            href={`${base}/demos/centered-auto`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -926,7 +928,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/grid"
+            href={`${base}/demos/grid`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -956,7 +958,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/vertical"
+            href={`${base}/demos/vertical`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -986,7 +988,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/autoheight"
+            href={`${base}/demos/autoheight`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1017,7 +1019,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/change-direction"
+            href={`${base}/demos/change-direction`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1047,7 +1049,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/lazy-load-images"
+            href={`${base}/demos/lazy-load-images`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1077,7 +1079,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/mousewheel-control"
+            href={`${base}/demos/mousewheel-control`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1107,7 +1109,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/keyboard-control"
+            href={`${base}/demos/keyboard-control`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1137,7 +1139,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/infinite-loop"
+            href={`${base}/demos/infinite-loop`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1167,7 +1169,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/rewind"
+            href={`${base}/demos/rewind`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1197,7 +1199,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/free-mode"
+            href={`${base}/demos/free-mode`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1227,7 +1229,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/zoom"
+            href={`${base}/demos/zoom`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1257,7 +1259,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/parallax"
+            href={`${base}/demos/parallax`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1288,7 +1290,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/css-mode"
+            href={`${base}/demos/css-mode`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1318,7 +1320,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/grab-cursor"
+            href={`${base}/demos/grab-cursor`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1348,7 +1350,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/default"
+            href={`${base}/demos/default`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1398,7 +1400,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/manipulation"
+            href={`${base}/demos/manipulation`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1428,7 +1430,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/virtual-slides"
+            href={`${base}/demos/virtual-slides`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1458,7 +1460,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/nested"
+            href={`${base}/demos/nested`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1488,7 +1490,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/multiple-swipers"
+            href={`${base}/demos/multiple-swipers`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1518,7 +1520,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/default"
+            href={`${base}/demos/default`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1548,7 +1550,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/space-between"
+            href={`${base}/demos/space-between`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1578,7 +1580,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/slides-per-group-skip"
+            href={`${base}/demos/slides-per-group-skip`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1618,7 +1620,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/hash-navigation"
+            href={`${base}/demos/hash-navigation`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1648,7 +1650,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/history"
+            href={`${base}/demos/history`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1678,7 +1680,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/rtl"
+            href={`${base}/demos/rtl`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1708,7 +1710,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/scroll-container"
+            href={`${base}/demos/scroll-container`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1738,7 +1740,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/slideable-menu"
+            href={`${base}/demos/slideable-menu`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>
@@ -1768,7 +1770,7 @@ import Thumbnail from '../components/demos/Thumbnail.astro';
             <span class="btn-text">Copiar Código</span>
           </button>
           <a
-            href="/demos/watch-slides-visibility"
+            href={`${base}/demos/watch-slides-visibility`}
             class="text-[11px] font-bold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
           >
             <span>Ver Demo</span>

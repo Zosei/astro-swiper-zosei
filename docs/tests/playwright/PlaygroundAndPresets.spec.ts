@@ -35,7 +35,9 @@ test.describe('Playground & Changelog Suites (v0.15.0)', () => {
     // 1. Verificar título
     await expect(page.locator('h1')).toContainText('Changelog');
 
-    // 2. Verificar que la versión v0.15.0 está listada
+    // 2. Verificar que la versión v0.17.0 y anteriores están listadas
+    await expect(page.locator('text=v0.17.0').first()).toBeVisible();
+    await expect(page.locator('text=v0.16.0').first()).toBeVisible();
     await expect(page.locator('text=v0.15.0').first()).toBeVisible();
 
     // 3. Verificar que versiones anteriores también existen en el timeline

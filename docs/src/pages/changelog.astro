@@ -9,10 +9,53 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const releases = [
   {
-    version: '0.15.0',
-    date: '25 de Agosto, 2026',
+    version: '0.17.0',
+    date: '19 de Noviembre, 2026',
     tag: 'Latest Release',
     badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+    title: '✨ Nuevo Icono Reutilizable <Sw.Arrow />, Últimas Dependencias y CI/Git Normalizados',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'ArrowIcon SVG',
+        text: 'Nuevo componente reutilizable `<Sw.Arrow />` (`ArrowIcon.astro`) usado en ambas direcciones por `<Sw.Prev />` y `<Sw.Next />`, eliminando el bug de relleno triangular en Swiper 14 y compatible con RTL y modo vertical.',
+      },
+      {
+        type: 'feature',
+        badge: 'Latest Stack',
+        text: 'Actualización completa a `astro@^7.4.13`, `swiper@^14.4.0`, `tailwindcss@^4.3.5`, `@biomejs/biome@^2.6.8` y `@playwright/test@^1.65.1`, restaurando `peerDependencies` amplias (`astro >=5.0.0`, `swiper >=11.0.0`).',
+      },
+      {
+        type: 'feature',
+        badge: 'CI & Automation',
+        text: 'Workflows migrados a acciones nativas de Node 24 (`checkout@v7`, `setup-node@v7`, `pnpm/action-setup@v6`), Playwright CI reparado, Dependabot agrupado, `.gitattributes` LF y documentación pública actualizada.',
+      },
+    ],
+  },
+  {
+    version: '0.16.0',
+    date: '12 de Septiembre, 2026',
+    tag: 'Trusted Publishing',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+    title: '🔐 Publicación npm sin Tokens (OIDC Provenance) y Modernización a Node 24',
+    highlights: [
+      {
+        type: 'feature',
+        badge: 'NPM Provenance',
+        text: 'Publicación automatizada en npm mediante Trusted Publishing OIDC con atestación Sigstore y alineación exacta de `repository.url`.',
+      },
+      {
+        type: 'feature',
+        badge: 'CI Stability',
+        text: 'Ajuste de targeting de Playwright en `docs` y modernización de workflows a Node 24.',
+      },
+    ],
+  },
+  {
+    version: '0.15.0',
+    date: '25 de Agosto, 2026',
+    tag: 'Presets & Integration',
+    badgeColor: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
     title: '🚀 Integración Oficial con Astro, Presets de Producción, View Transitions y Playground',
     highlights: [
       {
